@@ -10,7 +10,7 @@
 
 **使用本项目后：**
 
-成绩更新后自动发通知到微信 以节省您宝贵的时间
+成绩更新后**自动发通知到微信** 以节省您宝贵的时间
 
 ## 测试环境
 
@@ -61,6 +61,7 @@
 `Actions` → `CheckScores` → `Run workflow`
 
 _若你的程序正常运行且未报错，那么在此之后，程序将会每隔 30 分钟自动运行一次_
+
 _若你看不懂该使用方法，你可以查看[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")_
 
 ### 6. 程序逻辑
