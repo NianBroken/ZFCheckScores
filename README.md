@@ -57,10 +57,24 @@
 `Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow`
 
 ### 5. [运行](https://github.com/kekeaiaixueer/ZFCheckScores/actions/workflows/main.yml "运行")程序
+
 `Actions` → `CheckScores` → `Run workflow`
 
-*若你的程序正常运行且未报错，那么在此之后，程序将会每隔 30 分钟自动运行一次*
+_若你的程序正常运行且未报错，那么在此之后，程序将会每隔 30 分钟自动运行一次_
+_若你看不懂该使用方法，你可以查看[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")_
 
-### 5. 特别感谢
+### 6. 程序逻辑
+
+1. 清空文件 B 中的内容
+2. 将文件 A 中的内容写入到文件 B
+3. 清空文件 A 中的内容
+4. 将获取到的成绩进行 MD5 加密
+5. 将加密后的成绩写入到文件 A
+6. 比对文件 A 与文件 B 的内容是否一致
+7. 若一致则表示成绩未更新，若不一致则表示成绩已更新
+
+_若是第一次运行程序，该步骤会执行两遍_
+
+### 7. 特别感谢
 
 [openschoolcn/zfn_api](https://github.com/openschoolcn/zfn_api "openschoolcn/zfn_api")
