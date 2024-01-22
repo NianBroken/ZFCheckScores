@@ -52,7 +52,7 @@
 | PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                                                                                         |
 | TOKEN    | J65KWMBfyDh3YPLpcvm8       | [Pushplus 的 token](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token "Pushplus 的 token") |
 
-### 4. 开启 Actions
+### 4. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/actions "开启") Actions
 
 `Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow` → `Run workflow`
 
