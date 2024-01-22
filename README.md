@@ -1,4 +1,4 @@
-# 正方教务系统成绩推送
+# 正方教务管理系统成绩推送
 
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/19.png" style="zoom:60%;" />
 
