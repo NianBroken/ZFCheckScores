@@ -57,15 +57,14 @@
 
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/11.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/12.png" style="zoom:60%;" />
-
-当你的页面应该是类似下图所示时则表示程序正常运行且未报错
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/13.png" style="zoom:60%;" />
-在此之后，程序将会每隔 30 分钟自动运行一次
 
 ## 6. 查看运行结果
 
+当你的页面类似下图所示时则表示程序正常运行且未报错
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/14.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/15.png" style="zoom:60%;" />
+在此之后，程序将会每隔 30 分钟自动运行一次
 
 ## 7. 成绩更新通知
 
