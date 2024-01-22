@@ -41,9 +41,7 @@
 
 `Settings` → `Secrets and variables` → `Actions` → `Secrets` → `Repository secrets` → `New repository secret`
 
-> Name = Name
->
-> Secret = 例子
+> Name = Name，Secret = 例子
 
 | Name     | 例子                       | 说明                                                                                                                 |
 | -------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------- |
