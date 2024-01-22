@@ -13,6 +13,8 @@
 
 ## 3. 添加 Secrets
 
+> Name = Name，Secret = 例子
+
 | Name     | 例子                       | 说明              |
 | -------- | -------------------------- | ----------------- |
 | URL      | https://www.nianbroken.top | 教务系统地址      |
