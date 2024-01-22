@@ -6,7 +6,7 @@
 
 **使用本项目前：**
 
-早晨睡醒看一遍教务系统、上厕所看一遍教务系统、刷牙看一遍教务系统、洗脸看一遍教务系统、吃早餐看一遍教务系统、吃午饭看一遍教务系统、睡午觉前看一遍教务系统、午觉醒来看一遍教务系统、出门前看一遍教务系统、吃晚饭看一遍教务系统、洗澡看一遍教务系统、睡觉之前看一遍教务系统。
+早晨睡醒看一遍教务系统、上厕所看一遍教务系统、刷牙看一遍教务系统、洗脸看一遍教务系统、吃早餐看一遍教务系统、吃午饭看一遍教务系统、睡午觉前看一遍教务系统、午觉醒来看一遍教务系统、出门前看一遍教务系统、吃晚饭看一遍教务系统、洗澡看一遍教务系统、睡觉之前看一遍教务系统
 
 **使用本项目后：**
 
@@ -54,9 +54,12 @@
 
 ### 4. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/actions "开启") Actions
 
-`Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow` → `Run workflow`
+`Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow`
 
-_在此之后 程序将会每隔 30 分钟自动运行一次_
+### 5. [运行](https://github.com/kekeaiaixueer/ZFCheckScores/actions/workflows/main.yml "运行")程序
+`Actions` → `CheckScores` → `Run workflow`
+
+*若你的程序正常运行且未报错，那么在此之后，程序将会每隔 30 分钟自动运行一次*
 
 ### 5. 特别感谢
 
