@@ -25,7 +25,7 @@
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/6.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/7.png" style="zoom:60%;" />
 
-获取 TOKEN：
+### 获取 TOKEN：
 
 - [登录 Pushplus ](https://www.pushplus.plus/login.html)
   <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/17.png" style="zoom:60%;" />
