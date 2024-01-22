@@ -60,7 +60,7 @@
 
 _若你的程序正常运行且未报错，那么在此之后，程序将会每隔 30 分钟自动运行一次_
 
-_若你看不懂该使用方法，你可以查看[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")_
+_若你看不懂上述使用方法，你可以查看[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")_
 
 ## 程序逻辑
 
