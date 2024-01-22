@@ -64,7 +64,7 @@ _若你的程序正常运行且未报错，那么在此之后，程序将会每�
 
 _若你看不懂该使用方法，你可以查看[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")_
 
-### 6. 程序逻辑
+## 程序逻辑
 
 1. 清空文件 B 中的内容
 2. 将文件 A 中的内容写入到文件 B
@@ -76,6 +76,6 @@ _若你看不懂该使用方法，你可以查看[详细使用方法](https://gi
 
 _若是第一次运行程序，上述步骤会执行两遍_
 
-### 7. 特别感谢
+## 特别感谢
 
 [openschoolcn/zfn_api](https://github.com/openschoolcn/zfn_api "openschoolcn/zfn_api")
