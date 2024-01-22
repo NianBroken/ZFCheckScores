@@ -27,10 +27,10 @@
 
 ### 获取 TOKEN：
 
-- [登录 Pushplus ](https://www.pushplus.plus/login.html)
-  <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/17.png" style="zoom:60%;" />
+[登录 Pushplus ](https://www.pushplus.plus/login.html)
+<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/17.png" style="zoom:60%;" />
 
-- [获取 Token](https://www.pushplus.plus/api/open/user/token)
+[获取 Token](https://www.pushplus.plus/api/open/user/token)
 
 打开页面后，你会得到一个类似下列所示的 Json 代码块，`data`中的值就是 TOKEN
 
@@ -43,7 +43,7 @@
 }
 ```
 
-- [相关文档](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token)
+[相关文档](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token)
 
 当你的 Secrets 添加完成后，你的页面应该是类似下图所示
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/8.png" style="zoom:60%;" />
@@ -58,9 +58,9 @@
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/11.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/12.png" style="zoom:60%;" />
 
-当你的页面应该是类似下图所示时则表示程序运行结束且未报错
+当你的页面应该是类似下图所示时则表示程序正常运行且未报错
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/13.png" style="zoom:60%;" />
-在此之后 程序将会每隔 30 分钟自动运行一次
+在此之后，程序将会每隔 30 分钟自动运行一次
 
 ## 6. 查看运行结果
 
