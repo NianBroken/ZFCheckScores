@@ -10,6 +10,7 @@ from pushplus import send_message
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
+token = os.environ.get("TOKEN")
 
 
 # 定义一个md5加密的封装函数
