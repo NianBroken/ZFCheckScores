@@ -6,7 +6,7 @@ from pprint import pprint
 from zfn_api import Client
 from pushplus import send_message
 
-# 从环境变量获取教务系统的URL、用户名和密码
+# 从环境变量获取教务系统的URL、用户名、密码和TOKEN
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
