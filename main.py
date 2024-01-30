@@ -145,7 +145,7 @@ if grade_content == old_grade_content:
     print("成绩未更新")
 else:
     print("成绩已更新")
-    response_text = send_message("教务成绩已更新", integrate_send_info)
+    response_text = send_message(token, "教务成绩已更新", integrate_send_info)
     print(response_text)
 
 # 更新firstrun.txt文件内容为false
