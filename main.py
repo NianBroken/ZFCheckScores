@@ -66,7 +66,7 @@ integrate_info = (
     f"个人信息：\n" f"学号：{info['sid']}\n" f"班级：{info['class_name']}\n" f"姓名：{info['name']}"
 )
 
-# 获取成绩信息
+# 定义firstrun.txt文件变量
 firstrun_file_path = "firstrun.txt"
 
 # 如果firstrun.txt文件不存在，创建并写入true
