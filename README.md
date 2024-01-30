@@ -1,6 +1,6 @@
 # 正方教务管理系统成绩推送
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/19.png" style="zoom:60%;" />
+<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/21.png" style="zoom:60%;" />
 
 ## 简介
 
@@ -77,7 +77,7 @@ _若是第一次运行程序，上述步骤会执行两遍_
 
 ## 许可证
 
-该项目采用Apache-2.0许可证。简单来说，你可以自由使用、修改和分享该项目的代码，但前提是在其衍生作品中必须保留原始许可证和版权信息，并且必须以相同的许可证发布所有修改过的代码。
+该项目采用 Apache-2.0 许可证。简而言之，你可以自由使用、修改和分享该项目的代码，但前提是在其衍生作品中必须保留原始许可证和版权信息，并且必须以相同的许可证发布所有修改过的代码。
 
 ## 特别感谢
 
