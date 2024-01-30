@@ -6,7 +6,7 @@ from pprint import pprint
 from zfn_api import Client
 from pushplus import send_message
 
-# 教务系统的URL、用户名和密码
+# 从环境变量获取教务系统的URL、用户名和密码
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
@@ -14,21 +14,20 @@ password = os.environ.get("PASSWORD")
 
 # 定义一个md5加密的封装函数
 def md5_encrypt(string):
-    # 将字符串转换为字节
     byte_string = string.encode()
-    # 创建一个MD5对象
     md5_object = hashlib.md5(byte_string)
-    # 返回MD5加密后的十六进制字符串
     return md5_object.hexdigest()
 
 
 # 初始化相关变量
-cookies = {}  # 初始化cookies为空字典
+cookies = {}
 base_url = url
 raspisanie = []
 ignore_type = []
 detail_category_type = []
 timeout = 5
+
+# 创建教务系统客户端对象
 stu = Client(
     cookies=cookies,
     base_url=base_url,
@@ -40,24 +39,28 @@ stu = Client(
 
 # 如果cookies为空字典，则进行登录
 if not cookies:
-    lgn = stu.login(username, password)
-    if lgn["code"] == 1001:
-        verify_data = lgn["data"]
-        # 将验证码保存为图片文件
+    login_result = stu.login(username, password)
+
+    if login_result["code"] == 1001:
+        # 如果需要验证码，获取验证码并进行登录
+        verify_data = login_result["data"]
         with open(os.path.abspath("kaptcha.png"), "wb") as pic:
             pic.write(base64.b64decode(verify_data.pop("kaptcha_pic")))
         verify_data["kaptcha"] = input("输入验证码：")
-        ret = stu.login_with_kaptcha(**verify_data)
-        if ret["code"] != 1000:
-            pprint(ret)
+        login_result = stu.login_with_kaptcha(**verify_data)
+
+        if login_result["code"] != 1000:
+            pprint(login_result)
             sys.exit()
-        pprint(ret)
-    elif lgn["code"] != 1000:
-        pprint(lgn)
+        pprint(login_result)
+
+    elif login_result["code"] != 1000:
+        pprint(login_result)
         sys.exit()
 
 # 获取个人信息
 info = stu.get_info()["data"]
+
 # 整合个人信息
 integrate_info = (
     f"个人信息：\n" f"学号：{info['sid']}\n" f"班级：{info['class_name']}\n" f"姓名：{info['name']}"
@@ -73,14 +76,15 @@ if not os.path.exists(firstrun_file_path):
 
 # 第一次运行则运行两遍，否则运行一遍
 run_count = 2 if open(firstrun_file_path).read() == "true" else 1
+
 for _ in range(run_count):
     # 如果grade.txt文件不存在，创建文件
     if not os.path.exists("grade.txt"):
         open("grade.txt", "w").close()
 
     # 清空old_grade.txt文件内容
-    with open("old_grade.txt", "w"):
-        pass
+    with open("old_grade.txt", "w") as old_grade_file:
+        old_grade_file.truncate()
 
     # 将grade.txt文件中的内容写入到old_grade.txt文件内。
     with open("grade.txt", "r") as grade_file, open(
@@ -89,13 +93,20 @@ for _ in range(run_count):
         old_grade_file.write(grade_file.read())
 
     # 清空grade.txt文件内容
-    with open("grade.txt", "w"):
-        pass
+    with open("grade.txt", "w") as grade_file:
+        grade_file.truncate()
 
-    # 将下列代码输出的所有内容都写入到grade.txt文件内。
-    integrated_grade_info = "成绩信息："
+    # 获取成绩信息
     grade = stu.get_grade(2023)["data"]["courses"]
-    for course in grade:
+
+    # 按照提交时间降序排序
+    sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
+
+    # 初始化输出成绩信息字符串
+    integrated_grade_info = "成绩信息："
+
+    # 遍历前8条按时间降序排序后的成绩列表
+    for i, course in enumerate(sorted_grade[:8]):
         # 整合成绩信息
         integrated_grade_info += (
             f"\n课程ID: {course['course_id']}\n"
