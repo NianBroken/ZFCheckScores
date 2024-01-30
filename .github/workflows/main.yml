@@ -56,6 +56,10 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
 
+      - name: Delete __pycache__ folder # 删除__pycache__文件夹
+        run: |
+          rm -rf __pycache__
+
       - name: Add changes # 将当前目录中的所有更改添加到Git的暂存区
         run: |
           git add .
