@@ -97,7 +97,7 @@ for _ in range(run_count):
         grade_file.truncate()
 
     # 获取成绩信息
-    grade = stu.get_grade(2023)["data"]["courses"]
+    grade = stu.get_grade("")["data"]["courses"]
 
     # 按照提交时间降序排序
     sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
