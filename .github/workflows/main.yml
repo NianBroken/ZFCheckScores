@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout Repository # 使用GitHub Actions提供的动作来检出代码库
-        uses: actions/checkout@v2
+        uses: actions/checkout@main # 始终使用最新版本
 
       - name: Set up Python # 配置Python环境
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@main # 始终使用最新版本
         with:
           python-version: 3.x # 使用Python 3.x版本
 
