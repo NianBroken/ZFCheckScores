@@ -204,6 +204,3 @@ cache_folder = os.path.join(current_directory, "__pycache__")
 if os.path.exists(cache_folder):
     # 删除目录及其内容
     shutil.rmtree(cache_folder)
-
-# 其他日志
-print(f"run_count：{run_count}")
