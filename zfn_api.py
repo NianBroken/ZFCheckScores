@@ -210,8 +210,24 @@ class Client:
                 return self._get_info()
             result = {
                 "sid": info.get("xh"),
-                "class_name": info.get("bh_id", info.get("xjztdm")),
                 "name": info.get("xm"),
+                "college_name": info.get("zsjg_id", info.get("jg_id")),
+                "major_name": info.get("zszyh_id", info.get("zyh_id")),
+                "class_name": info.get("bh_id", info.get("xjztdm")),
+                "status": info.get("xjztdm"),
+                "enrollment_date": info.get("rxrq"),
+                "candidate_number": info.get("ksh"),
+                "graduation_school": info.get("byzx"),
+                "domicile": info.get("jg"),
+                "postal_code": info.get("yzbm"),
+                "politics_status": info.get("zzmmm"),
+                "nationality": info.get("mzm"),
+                "education": info.get("pyccdm"),
+                "phone_number": info.get("sjhm"),
+                "parents_number": info.get("gddh"),
+                "email": info.get("dzyx"),
+                "birthday": info.get("csrq"),
+                "id_number": info.get("zjhm"),
             }
             return {"code": 1000, "msg": "获取个人信息成功", "data": result}
         except exceptions.Timeout:
@@ -411,9 +427,18 @@ class Client:
                         "course_id": i.get("kch_id"),
                         "title": i.get("kcmc"),
                         "teacher": i.get("jsxm"),
+                        "class_name": i.get("jxbmc"),
+                        "credit": self.align_floats(i.get("xf")),
+                        "category": i.get("kclbmc"),
+                        "nature": i.get("kcxzmc"),
                         "grade": self.parse_int(i.get("cj")),
+                        "grade_point": self.align_floats(i.get("jd")),
+                        "grade_nature": i.get("ksxz"),
+                        "start_college": i.get("kkbmmc"),
+                        "mark": i.get("kcbj"),
                         "submission_time": i.get("tjsj"),
                         "name_of_submitter": i.get("tjrxm"),
+                        "xfjd": i.get("xfjd"),
                     }
                     for i in grade_items
                 ],
