@@ -78,8 +78,12 @@ _若是第一次运行程序，上述步骤会执行两遍_
 
 ## 许可证
 
-该项目采用 Apache-2.0 许可证。简而言之，你可以自由使用、修改和分享该项目的代码，但前提是在其衍生作品中必须保留原始许可证和版权信息，并且必须以相同的许可证发布所有修改过的代码。
+该项目采用 [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0 "Apache-2.0") 许可证。简而言之，你可以自由使用、修改和分享该项目的代码，但前提是在其衍生作品中必须保留原始许可证和版权信息，并且必须以相同的许可证发布所有修改过的代码。
 
 ## 特别感谢
 
 [openschoolcn/zfn_api](https://github.com/openschoolcn/zfn_api "openschoolcn/zfn_api")
+
+## 其他
+
+欢迎提交 `Issues` 和 `Pull requests`
