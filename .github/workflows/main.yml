@@ -35,7 +35,10 @@ jobs:
       - name: Backup local .txt files # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
         run: |
           mkdir backup
-          cp *.txt backup/
+          if [ -e *.txt ]; then
+            cp *.txt backup/
+          fi
+        shell: /usr/bin/bash -e {0}
 
       - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
         run: |
