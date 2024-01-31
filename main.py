@@ -96,7 +96,7 @@ else:
         info_file_content = info_file.read()
         # 如果info.txt文件中保存的个人信息与获取到的个人信息不一致，则代表是第一次运行程序
         if info_file_content == encrypted_info:
-            # 非二次运行程序
+            # 非第一次运行程序
             run_count = 1
 
 # 第一次运行程序则运行两遍，否则运行一遍
