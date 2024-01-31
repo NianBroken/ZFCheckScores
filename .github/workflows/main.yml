@@ -48,8 +48,11 @@ jobs:
 
       - name: Restore local .txt files and delete backup # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
         run: |
-          cp backup/*.txt .
+          if [ -e backup/*.txt ]; then
+            cp backup/*.txt .
+          fi
           rm -rf backup
+        shell: /usr/bin/bash -e {0}
 
       - name: Run main.py # 运行主程序main.py
         run: python main.py
