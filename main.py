@@ -134,6 +134,7 @@ for _ in range(run_count):
     # (学分*绩点)的总和/学分总和
     gpa = "{:.2f}".format(total_xfjd / total_credit)
 
+    # 整合个人信息
     integrated_info += f"当前GPA：{gpa}\n------"
 
     # 初始化输出成绩信息字符串
