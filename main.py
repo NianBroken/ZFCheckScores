@@ -136,13 +136,13 @@ for _ in range(run_count):
         float(course["percentage_grades"]) * float(course["credit"]) for course in grade
     )
 
+    # GPA计算 (学分*绩点)的总和/学分总和
+    gpa = "{:.2f}".format(total_xfjd / total_credit)
+
     # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
     percentage_gpa = "{:.2f}".format(
         sum_of_percentage_grades_multiplied_by_credits / total_credit
     )
-
-    # GPA计算 (学分*绩点)的总和/学分总和
-    gpa = "{:.2f}".format(total_xfjd / total_credit)
 
     # 整合个人信息
     integrated_info += f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
