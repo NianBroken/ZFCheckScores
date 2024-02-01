@@ -125,17 +125,27 @@ for _ in range(run_count):
     # 按照提交时间降序排序
     sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
 
-    # 学分绩点总和
-    total_xfjd = sum(float(course["xfjd"]) for course in grade)
-
     # 学分总和
     total_credit = sum(float(course["credit"]) for course in grade)
 
-    # (学分*绩点)的总和/学分总和
+    # 学分绩点总和
+    total_xfjd = sum(float(course["xfjd"]) for course in grade)
+
+    # (百分制成绩*学分)的总和
+    sum_of_percentage_grades_multiplied_by_credits = sum(
+        float(course["percentage_grades"]) * float(course["credit"]) for course in grade
+    )
+
+    # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
+    percentage_gpa = "{:.2f}".format(
+        sum_of_percentage_grades_multiplied_by_credits / total_credit
+    )
+
+    # GPS计算 (学分*绩点)的总和/学分总和
     gpa = "{:.2f}".format(total_xfjd / total_credit)
 
     # 整合个人信息
-    integrated_info += f"当前GPA：{gpa}\n------"
+    integrated_info += f"当前GPA：{gpa}(百分制：{percentage_gpa})\n" f"------"
 
     # 初始化输出成绩信息字符串
     integrated_grade_info = "成绩信息："

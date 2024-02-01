@@ -6,7 +6,6 @@ import time
 import traceback
 import unicodedata
 from urllib.parse import urljoin
-
 import requests
 import rsa
 from pyquery import PyQuery as pq
@@ -439,6 +438,7 @@ class Client:
                         "submission_time": i.get("tjsj"),
                         "name_of_submitter": i.get("tjrxm"),
                         "xfjd": i.get("xfjd"),
+                        "percentage_grades": i.get("bfzcj"),
                     }
                     for i in grade_items
                 ],
