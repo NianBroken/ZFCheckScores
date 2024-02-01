@@ -181,7 +181,7 @@ print("------")
 
 # 整合所有信息
 # 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
-# 若是在 Github Actions 等平台运行，请不要使用print(integrated_send_info)
+# 若是在 GithubActions 等平台运行，请不要使用print(integrated_send_info)
 integrated_send_info = f"{integrated_info}\n{integrated_grade_info}"
 
 # 对grade.txt和old_grade.txt两个文件的内容进行比对，输出成绩是否更新
