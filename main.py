@@ -145,7 +145,7 @@ for _ in range(run_count):
     gpa = "{:.2f}".format(total_xfjd / total_credit)
 
     # 整合个人信息
-    integrated_info += f"当前GPA：{gpa}\n" f"百分制GPA：{percentage_gpa}\n" f"------"
+    integrated_info += f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
 
     # 初始化输出成绩信息字符串
     integrated_grade_info = "成绩信息："
