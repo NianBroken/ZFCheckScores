@@ -141,7 +141,7 @@ for _ in range(run_count):
         sum_of_percentage_grades_multiplied_by_credits / total_credit
     )
 
-    # GPS计算 (学分*绩点)的总和/学分总和
+    # GPA计算 (学分*绩点)的总和/学分总和
     gpa = "{:.2f}".format(total_xfjd / total_credit)
 
     # 整合个人信息
