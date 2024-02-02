@@ -35,10 +35,7 @@ jobs:
       - name: Backup local .txt files # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
         run: |
           mkdir backup
-          if [ -e *.txt ]; then
-            cp *.txt backup/
-          fi
-        shell: /usr/bin/bash -e {0}
+          cp *.txt backup/
 
       - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
         run: |
@@ -48,11 +45,8 @@ jobs:
 
       - name: Restore local .txt files and delete backup # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
         run: |
-          if [ -e backup/*.txt ]; then
-            cp backup/*.txt .
-          fi
+          cp backup/*.txt .
           rm -rf backup
-        shell: /usr/bin/bash -e {0}
 
       - name: Run main.py # 运行主程序main.py
         run: python main.py
