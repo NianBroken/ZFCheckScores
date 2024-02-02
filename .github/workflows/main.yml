@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@main
         with:
-          python-version: "latest-minor"
+          python-version: "3.x"
 
       # 使用pip安装项目的依赖项
       - name: Install dependencies
