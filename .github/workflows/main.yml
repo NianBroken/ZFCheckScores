@@ -49,7 +49,7 @@ jobs:
         run: |
           git checkout main
           git reset --hard upstream/main
-          git push origin main --force || (for i in {1..12}; do echo "你需要手动同步上游分支\n"; done)
+          git push origin main --force || (for i in {1..10}; do echo "------" && echo "你需要手动同步上游分支" && echo "同步方法如下：" && echo "1. 打开你的仓库首页：https://github.com/${{ github.repository }}" && echo "2. 点击 Sync fork" && echo "3. 点击 Update branch" &&; done; exit 1)
 
       # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
       - name: Restore local .txt files and delete backup
