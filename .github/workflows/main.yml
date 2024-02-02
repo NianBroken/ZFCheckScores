@@ -66,18 +66,21 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
           python main.py
-          echo "------"
           # 判断环境变量是否为空
           if [ -z "$URL" ]; then
+            echo "------"
             echo "URL secret is empty!"
           fi
           if [ -z "$USERNAME" ]; then
+            echo "------"
             echo "USERNAME secret is empty!"
           fi
           if [ -z "$PASSWORD" ]; then
+            echo "------"
             echo "PASSWORD secret is empty!"
           fi
           if [ -z "$TOKEN" ]; then
+            echo "------"
             echo "TOKEN secret is empty!"
           fi
           # 方便通过截图快速定位到用户
