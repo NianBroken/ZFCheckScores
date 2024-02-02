@@ -65,6 +65,7 @@ jobs:
           echo "------"
           echo "Repository Name: ${{ github.repository }}"
           echo "Current Workflow: ${{ github.workflow }}"
+          echo "Commit SHA: ${{ github.sha }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
           echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
