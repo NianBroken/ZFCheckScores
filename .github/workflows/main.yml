@@ -36,7 +36,7 @@ jobs:
       - name: Backup local .txt files
         run: |
           mkdir backup
-          if [ -e *.txt ]; then
+          if ls *.txt &> /dev/null; then
             cp *.txt backup/
           else
             echo "No .txt files to backup"
@@ -51,7 +51,7 @@ jobs:
       # Restore local .txt files and delete backup
       - name: Restore local .txt files and delete backup
         run: |
-          if [ -e backup/*.txt ]; then
+          if ls backup/*.txt &> /dev/null; then
             cp backup/*.txt .
             rm -rf backup
           else
