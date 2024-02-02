@@ -63,6 +63,8 @@ jobs:
           python main.py
           # 为了方便通过截图快速定位到用户 所以会输出部分信息
           echo "Repository Name: ${{ github.repository }}"
+          echo "Current Workflow Number: ${{ github.run_number }}"
+          run: echo "Workflow Run Number: ${{ github.run_id }}"
           echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
         env:
           URL: ${{ secrets.URL }}
