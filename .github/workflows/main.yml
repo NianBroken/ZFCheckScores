@@ -29,8 +29,8 @@ jobs:
       # 配置Git用户信息
       - name: Configure Git
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "suinian666@gmail.com"
+          git config --global user.name "NianBroken"
 
       # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
       - name: Fetch upstream changes
