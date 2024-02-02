@@ -32,15 +32,10 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # Backup local .txt files
-      - name: Backup local .txt files
+      - name: Backup local .txt files # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
         run: |
           mkdir backup
-          if find . -maxdepth 1 -name "*.txt" -print -quit | grep -q .; then
-            cp *.txt backup/
-          else
-            echo "No .txt files to backup"
-          fi
+          cp *.txt backup/ || echo "No .txt files to backup"
 
       - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
         run: |
@@ -48,18 +43,10 @@ jobs:
           git reset --hard upstream/main
           git push origin main --force
 
-      # Restore local .txt files and delete backup
-      - name: Restore local .txt files and delete backup
+      - name: Restore local .txt files and delete backup # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
         run: |
-          if find backup -maxdepth 1 -name "*.txt" -print -quit | grep -q .; then
-            cp backup/*.txt .
-            rm -rf backup
-            git checkout main
-            git reset --hard upstream/main
-            git push origin main --force
-          else
-            echo "No .txt files to restore"
-          fi
+          cp backup/*.txt . || echo "No .txt files to restore"
+          rm -rf backup
 
       - name: Run main.py # 运行主程序main.py
         run: python main.py
@@ -81,6 +68,4 @@ jobs:
         run: |
           git commit -m "Update from GitHub Actions" || true  # 如果没有更改，则允许提交失败，但不中断workflow
 
-      - name: Force push changes to main branch # 将更改强制推送到main分支
-        run: |
-          git push origin main --force
+      - name: Force push changes to main branch # 将更改强
