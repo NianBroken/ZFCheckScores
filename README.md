@@ -16,6 +16,10 @@
 
 正方教务管理系统 版本 V8.0.0
 
+如果你的教务系统页面与下图所示的页面**完全一致**或**几乎一致**，则代表你可以使用本项目。
+
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/26.png" style="zoom:60%;" />
+
 ## 目前支持的功能
 
 1. 主要功能
