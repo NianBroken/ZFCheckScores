@@ -61,7 +61,7 @@ jobs:
       - name: Run main.py
         run: |
           python main.py
-          # 为了方便通过截图快速定位到用户 所以会输出部分信息
+          # 方便通过截图快速定位到用户
           echo "------"
           echo "Repository Name: ${{ github.repository }}"
           echo "Current Workflow: ${{ github.workflow }}"
