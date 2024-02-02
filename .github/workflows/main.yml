@@ -68,4 +68,6 @@ jobs:
         run: |
           git commit -m "Update from GitHub Actions" || true  # 如果没有更改，则允许提交失败，但不中断workflow
 
-      - name: Force push changes to main branch # 将更改强
+      - name: Force push changes to main branch # 将更改强制推送到main分支
+        run: |
+          git push origin main --force
