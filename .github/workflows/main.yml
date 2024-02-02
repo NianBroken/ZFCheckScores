@@ -32,10 +32,15 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      - name: Backup local .txt files # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
+      # Backup local .txt files
+      - name: Backup local .txt files
         run: |
           mkdir backup
-          cp *.txt backup/
+          if [ -e *.txt ]; then
+            cp *.txt backup/
+          else
+            echo "No .txt files to backup"
+          fi
 
       - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
         run: |
@@ -43,10 +48,15 @@ jobs:
           git reset --hard upstream/main
           git push origin main --force
 
-      - name: Restore local .txt files and delete backup # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
+      # Restore local .txt files and delete backup
+      - name: Restore local .txt files and delete backup
         run: |
-          cp backup/*.txt .
-          rm -rf backup
+          if [ -e backup/*.txt ]; then
+            cp backup/*.txt .
+            rm -rf backup
+          else
+            echo "No .txt files to restore"
+          fi
 
       - name: Run main.py # 运行主程序main.py
         run: python main.py
