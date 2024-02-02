@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@main
         with:
-          python-version: "3.x"
+          python-version: "*"
 
       # 使用pip安装项目的依赖项
       - name: Install dependencies
@@ -62,7 +62,7 @@ jobs:
         run: |
           python main.py
           echo "GitHub Username: ${{ github.actor }}"
-          echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S.%3N')"
+          echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
         env:
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
