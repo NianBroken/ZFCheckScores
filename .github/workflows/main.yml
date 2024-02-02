@@ -7,67 +7,84 @@ on:
 
 jobs:
   CheckScores:
-    runs-on: ubuntu-latest # 在最新版的Ubuntu系统上运行
+    # 在最新版的Ubuntu系统上运行
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository # 使用GitHub Actions提供的动作来检出代码库
-        uses: actions/checkout@main # 始终使用最新版本
+      # 使用GitHub Actions提供的动作来检出代码库
+      - name: Checkout Repository
+        uses: actions/checkout@main
 
-      - name: Set up Python # 配置Python环境
-        uses: actions/setup-python@main # 始终使用最新版本
+      # 配置Python环境
+      - name: Set up Python
+        uses: actions/setup-python@main
         with:
-          python-version: 'latest'  # 使用最新版本的Python
+          python-version: "latest-minor"
 
-      - name: Install dependencies # 使用pip安装项目的依赖项
+      # 使用pip安装项目的依赖项
+      - name: Install dependencies
         run: |
           pip install requests rsa pyquery
 
-      - name: Configure Git # 配置Git用户信息
+      # 配置Git用户信息
+      - name: Configure Git
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Fetch upstream changes # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
+      # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
+      - name: Fetch upstream changes
         run: |
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      - name: Backup local .txt files # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
+      # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
+      - name: Backup local .txt files
         run: |
           mkdir backup
           cp *.txt backup/ || echo "No .txt files to backup"
 
-      - name: Force push changes from upstream to current main branch # 将上游main分支的更改强制推送到当前main分支
+      # 将上游main分支的更改强制推送到当前main分支
+      - name: Force push changes from upstream to current main branch
         run: |
           git checkout main
           git reset --hard upstream/main
           git push origin main --force
 
-      - name: Restore local .txt files and delete backup # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
+      # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
+      - name: Restore local .txt files and delete backup
         run: |
           cp backup/*.txt . || echo "No .txt files to restore"
           rm -rf backup
 
-      - name: Run main.py # 运行主程序main.py
-        run: python main.py
+      # 运行主程序main.py
+      - name: Run main.py
+        run: |
+          python main.py
+          echo "GitHub Username: ${{ github.actor }}"
+          echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S.%3N')"
         env:
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
 
-      - name: Delete __pycache__ folder # 删除__pycache__文件夹
+      # 删除__pycache__文件夹
+      - name: Delete __pycache__ folder
         run: |
           rm -rf __pycache__
 
-      - name: Add changes # 将当前目录中的所有更改添加到Git的暂存区
+      # 将当前目录中的所有更改添加到Git的暂存区
+      - name: Add changes
         run: |
           git add .
 
-      - name: Commit changes # 提交更改到Git仓库
+      # 提交更改到Git仓库
+      - name: Commit changes
         run: |
-          git commit -m "Update from GitHub Actions" || true  # 如果没有更改，则允许提交失败，但不中断workflow
+          git commit -m "Update from GitHub Actions" || true
 
-      - name: Force push changes to main branch # 将更改强制推送到main分支
+      # 将更改强制推送到main分支
+      - name: Force push changes to main branch
         run: |
           git push origin main --force
