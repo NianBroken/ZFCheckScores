@@ -59,8 +59,27 @@ jobs:
 
       # 运行主程序main.py
       - name: Run main.py
+        env:
+          URL: ${{ secrets.URL }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           python main.py
+          echo "------"
+          # 判断环境变量是否为空
+          if [ -z "$URL" ]; then
+            echo "URL secret is empty!"
+          fi
+          if [ -z "$USERNAME" ]; then
+            echo "USERNAME secret is empty!"
+          fi
+          if [ -z "$PASSWORD" ]; then
+            echo "PASSWORD secret is empty!"
+          fi
+          if [ -z "$TOKEN" ]; then
+            echo "TOKEN secret is empty!"
+          fi
           # 方便通过截图快速定位到用户
           echo "------"
           echo "Repository Name: ${{ github.repository }}"
@@ -69,11 +88,7 @@ jobs:
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
           echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
-        env:
-          URL: ${{ secrets.URL }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          TOKEN: ${{ secrets.TOKEN }}
+          echo "------"
 
       # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
