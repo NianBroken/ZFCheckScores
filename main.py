@@ -165,19 +165,19 @@ for _ in range(run_count):
     )
 
     # 初始化输出成绩信息字符串
-    integrated_grade_info = "成绩信息："
+    integrated_grade_info = "成绩信息：\n"
 
     # 遍历前8条成绩信息
     for i, course in enumerate(sorted_grade[:8]):
         # 整合成绩信息
         integrated_grade_info += (
-            f"\n课程ID: {course['course_id']}\n"
+            f"课程ID: {course['course_id']}\n"
             f"课程名称: {course['title']}\n"
             f"任课教师: {course['teacher']}\n"
             f"成绩: {course['grade']}\n"
             f"提交时间: {course['submission_time']}\n"
             f"提交人姓名: {course['name_of_submitter']}\n"
-            f"------\n"
+            f"------"
         )
 
     # 加密保存成绩
@@ -198,10 +198,7 @@ print(f"旧成绩：{old_grade_content}")
 print("------")
 
 # 输出MD5值
-integrated_grade_info += (
-    f"MD5：{encrypted_integrated_grade_info}\n"
-    f"------"
-)
+integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n" f"------"
 
 # 工作流信息
 workflow_info = "工作流信息：\n"
