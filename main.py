@@ -111,7 +111,7 @@ else:
 # 第一次运行程序则运行两遍，否则运行一遍
 for _ in range(run_count):
     # 获取成绩信息
-    grade_data = student_client.get_grade("2024").get("data", {})
+    grade_data = student_client.get_grade("").get("data", {})
     grade = grade_data.get("courses", [])
 
     if not grade:
