@@ -177,7 +177,7 @@ for _ in range(run_count):
             f"成绩: {course['grade']}\n"
             f"提交时间: {course['submission_time']}\n"
             f"提交人姓名: {course['name_of_submitter']}\n"
-            f"------"
+            f"------\n"
         )
 
     # 加密保存成绩
@@ -196,6 +196,12 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
 print(f"新成绩：{encrypted_integrated_grade_info}")
 print(f"旧成绩：{old_grade_content}")
 print("------")
+
+# 输出MD5值
+integrated_grade_info += (
+    f"MD5：{encrypted_integrated_grade_info}\n"
+    f"------"
+)
 
 # 工作流信息
 workflow_info = "工作流信息：\n"
