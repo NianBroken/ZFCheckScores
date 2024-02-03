@@ -197,7 +197,7 @@ print(f"新成绩：{encrypted_integrated_grade_info}")
 print(f"旧成绩：{old_grade_content}")
 print("------")
 
-# 输出MD5值
+# 整合MD5值
 integrated_grade_info += f"MD5：{encrypted_integrated_grade_info}\n" f"------"
 
 # 工作流信息
