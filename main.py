@@ -191,9 +191,8 @@ print(f"新成绩：{encrypted_integrated_grade_info}")
 print(f"旧成绩：{old_grade_content}")
 print("------")
 
-
 # 工作流信息
-workflow_info = "工作流信息："
+workflow_info = "工作流信息：\n"
 workflow_info += (
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"

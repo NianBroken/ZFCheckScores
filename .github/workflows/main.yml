@@ -69,8 +69,8 @@ jobs:
           GITHUB_WORKFLOW: ${{ github.workflow }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
-          BEIJING_TIME: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')
         run: |
+          BEIJING_TIME = "$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           python main.py
           echo "------"
           # 判断环境变量是否为空
@@ -92,7 +92,7 @@ jobs:
           echo "Current Workflow: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
-          echo "Beijing Time: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          echo "Beijing Time: ${BEIJING_TIME}"
 
       # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
