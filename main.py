@@ -129,7 +129,12 @@ for _ in range(run_count):
         grade_file.truncate()
 
     # 获取成绩信息
-    grade = student_client.get_grade("")["data"]["courses"]
+    grade_data = student_client.get_grade("2024").get("data", {})
+    grade = grade_data.get("courses", [])
+
+    if not grade:
+        print("成绩为空")
+        sys.exit()
 
     # 按照提交时间降序排序
     sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
