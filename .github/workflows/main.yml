@@ -64,6 +64,12 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
+          REPOSITORY_NAME: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          BEIJING_TIME: $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')
         run: |
           python main.py
           echo "------"

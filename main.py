@@ -9,11 +9,17 @@ from pprint import pprint
 from zfn_api import Client
 from pushplus import send_message
 
-# 从环境变量中提取教务系统的URL、用户名、密码和TOKEN
+# 从环境变量中提取教务系统的URL、用户名、密码和TOKEN等信息
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
 token = os.environ.get("TOKEN")
+repository_name = os.environ.get("REPOSITORY_NAME")
+github_sha = os.environ.get("GITHUB_SHA")
+github_workflow = os.environ.get("GITHUB_WORKFLOW")
+github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
+github_run_id = os.environ.get("GITHUB_RUN_ID")
+beijing_time = os.environ.get("BEIJING_TIME")
 
 
 # 定义一个封装MD5加密的函数
@@ -73,7 +79,10 @@ info = student_client.get_info()["data"]
 
 # 整合个人信息
 integrated_info = (
-    f"个人信息：\n" f"学号：{info['sid']}\n" f"班级：{info['class_name']}\n" f"姓名：{info['name']}\n"
+    f"个人信息：\n"
+    f"学号：{info['sid']}\n"
+    f"班级：{info['class_name']}\n"
+    f"姓名：{info['name']}\n"
 )
 
 # 加密个人信息
@@ -145,7 +154,9 @@ for _ in range(run_count):
     )
 
     # 整合个人信息
-    integrated_info += f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+    integrated_info += (
+        f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+    )
 
     # 初始化输出成绩信息字符串
     integrated_grade_info = "成绩信息："
@@ -159,7 +170,8 @@ for _ in range(run_count):
             f"任课教师: {course['teacher']}\n"
             f"成绩: {course['grade']}\n"
             f"提交时间: {course['submission_time']}\n"
-            f"提交人姓名: {course['name_of_submitter']}\n------"
+            f"提交人姓名: {course['name_of_submitter']}\n"
+            f"------"
         )
 
     # 加密保存成绩
@@ -179,10 +191,23 @@ print(f"新成绩：{encrypted_integrated_grade_info}")
 print(f"旧成绩：{old_grade_content}")
 print("------")
 
+
+# 工作流信息
+workflow_info = "工作流信息："
+workflow_info += (
+    f"Repository Name：{repository_name}\n"
+    f"Commit SHA：{github_sha}\n"
+    f"Current Workflow：{github_workflow}\n"
+    f"Workflow Number：{github_run_number}\n"
+    f"Workflow ID：{github_run_id}\n"
+    f"Beijing Time：{beijing_time}"
+)
+
 # 整合所有信息
 # 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
 # 若是在 Github Actions 等平台运行，请不要使用print(integrated_send_info)
-integrated_send_info = f"{integrated_info}\n{integrated_grade_info}"
+integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
+
 
 # 对grade.txt和old_grade.txt两个文件的内容进行比对，输出成绩是否更新
 if grade_content == old_grade_content:
