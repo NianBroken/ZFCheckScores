@@ -151,7 +151,7 @@ for _ in range(run_count):
     integrated_grade_info = "成绩信息："
 
     # 遍历前8条成绩信息
-    for i, course in enumerate(sorted_grade[:15]):
+    for i, course in enumerate(sorted_grade[:8]):
         # 整合成绩信息
         integrated_grade_info += (
             f"\n课程ID: {course['course_id']}\n"
