@@ -110,14 +110,6 @@ else:
 
 # 第一次运行程序则运行两遍，否则运行一遍
 for _ in range(run_count):
-    # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
-    grade = grade_data.get("courses", [])
-
-    if not grade:
-        print("成绩为空")
-        sys.exit()
-
     # 如果grade.txt文件不存在，创建文件
     if not os.path.exists("grade.txt"):
         open("grade.txt", "w").close()
@@ -125,6 +117,15 @@ for _ in range(run_count):
     # 清空old_grade.txt文件内容
     with open("old_grade.txt", "w") as old_grade_file:
         old_grade_file.truncate()
+
+    # 获取成绩信息
+    grade_data = student_client.get_grade("").get("data", {})
+    grade = grade_data.get("courses", [])
+
+    # 成绩为空时退出
+    if not grade:
+        print("成绩为空")
+        sys.exit()
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内。
     with open("grade.txt", "r") as grade_file, open(
