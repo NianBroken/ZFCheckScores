@@ -89,7 +89,7 @@ jobs:
           # 方便通过截图快速定位到用户
           echo "Repository Name: ${{ github.repository }}"
           echo "Commit SHA: ${{ github.sha }}"
-          echo "Parent SHA: ${{ github.event.before }}"
+          echo "Parent SHA: ${{ github.event.head_before }}"
           echo "Current Workflow: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
