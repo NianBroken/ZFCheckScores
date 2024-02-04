@@ -218,7 +218,8 @@ if run_count == 1:
     print(f"旧成绩：{old_grade_content}")
     print("------")
 else:
-    print(first_run_text)
+    print(f"你的程序运行成功\n{first_run_text}")
+
     # 推送信息
     first_run_text_response_text = send_message(
         token, "你的程序运行成功", f"{first_run_text}\n{workflow_info}"
