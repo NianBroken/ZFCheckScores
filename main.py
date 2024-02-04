@@ -217,7 +217,7 @@ if run_count == 2:
 
     # 推送信息
     first_run_text_response_text = send_message(
-        token, "正方教务管理系统成绩推送", f"{first_run_text}\n{workflow_info}"
+        token, "正方教务管理系统成绩推送", f"{first_run_text}\n{integrated_info}\n{workflow_info}"
     )
 
     # 解析 JSON 数据
