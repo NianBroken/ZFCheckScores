@@ -125,6 +125,8 @@ for _ in range(run_count):
     # 成绩为空时退出
     if not grade:
         print("成绩为空")
+        with open("info.txt", "w") as info_file:
+            info_file.write(encrypted_info)
         sys.exit()
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内。
@@ -165,19 +167,20 @@ for _ in range(run_count):
     )
 
     # 初始化输出成绩信息字符串
-    integrated_grade_info = "成绩信息：\n"
+    integrated_grade_info = "成绩信息："
 
     # 遍历前8条成绩信息
     for i, course in enumerate(sorted_grade[:8]):
         # 整合成绩信息
         integrated_grade_info += (
+            f"\n"
             f"课程ID: {course['course_id']}\n"
             f"课程名称: {course['title']}\n"
             f"任课教师: {course['teacher']}\n"
             f"成绩: {course['grade']}\n"
             f"提交时间: {course['submission_time']}\n"
             f"提交人姓名: {course['name_of_submitter']}\n"
-            f"------\n"
+            f"------"
         )
 
     # 加密保存成绩
@@ -198,7 +201,11 @@ print(f"旧成绩：{old_grade_content}")
 print("------")
 
 # 整合MD5值
-integrated_grade_info += f"MD5：{encrypted_integrated_grade_info}\n" f"------"
+integrated_grade_info += (
+    f"\n"
+    f"MD5：{encrypted_integrated_grade_info}\n"
+    f"------"
+)
 
 # 工作流信息
 workflow_info = "工作流信息：\n"
@@ -215,7 +222,6 @@ workflow_info += (
 # 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
 # 若是在 Github Actions 等平台运行，请不要使用print(integrated_send_info)
 integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
-
 
 # 对grade.txt和old_grade.txt两个文件的内容进行比对，输出成绩是否更新
 if grade_content == old_grade_content:
