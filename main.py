@@ -151,11 +151,6 @@ for _ in range(run_count):
             sum_of_percentage_grades_multiplied_by_credits / total_credit
         )
 
-        # 整合个人信息
-        integrated_info += (
-            f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
-        )
-
         # 初始化输出成绩信息字符串
         integrated_grade_info = "成绩信息："
 
@@ -175,6 +170,11 @@ for _ in range(run_count):
     else:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩为空\n------"
+
+    # 整合个人信息
+    integrated_info += (
+        f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+    )
 
     # 加密保存成绩
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
