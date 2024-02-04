@@ -231,7 +231,7 @@ else:
     first_run_text_response_text = send_message(token, "你的程序运行成功", f"{first_run_text}{workflow_info}")
 
     # 解析 JSON 数据
-    first_run_text_response_dict = json.loads(first_run_text)
+    first_run_text_response_dict = json.loads(first_run_text_response_text)
 
     # 删除 "data" 字段
     if "data" in first_run_text_response_dict:
