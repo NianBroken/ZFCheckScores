@@ -104,7 +104,7 @@ else:
 
 # 第一次运行程序则运行两遍，否则运行一遍
 for _ in range(run_count):
-    # 如果grade.txt文件不存在，创建文件
+    # 如果grade.txt文件不存在，则创建文件
     if not os.path.exists("grade.txt"):
         open("grade.txt", "w").close()
 
@@ -202,8 +202,8 @@ first_run_text = (
 integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n" f"------"
 
 # 工作流信息
-workflow_info = "工作流信息：\n"
-workflow_info += (
+workflow_info = (
+    f"工作流信息：\n"
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"
     f"Current Workflow：{github_workflow}\n"
@@ -257,6 +257,7 @@ else:
     # 删除 "data" 字段
     if "data" in response_dict:
         response_dict.pop("data")
+
     # 输出响应内容
     print(response_dict)
 
