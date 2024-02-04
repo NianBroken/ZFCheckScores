@@ -116,17 +116,18 @@ for _ in range(run_count):
     grade_data = student_client.get_grade("2024").get("data", {})
     grade = grade_data.get("courses", [])
 
+    # 将grade.txt文件中的内容写入old_grade.txt文件内
+    with open("grade.txt", "r") as grade_file, open(
+        "old_grade.txt", "w"
+    ) as old_grade_file:
+        old_grade_file.write(grade_file.read())
+
+    # 清空grade.txt文件内容
+    with open("grade.txt", "w") as grade_file:
+        grade_file.truncate()
+
     # 成绩不为空时则对成绩信息进行处理
     if grade:
-        # 将grade.txt文件中的内容写入old_grade.txt文件内
-        with open("grade.txt", "r") as grade_file, open(
-            "old_grade.txt", "w"
-        ) as old_grade_file:
-            old_grade_file.write(grade_file.read())
-
-        # 清空grade.txt文件内容
-        with open("grade.txt", "w") as grade_file:
-            grade_file.truncate()
 
         # 按照提交时间降序排序
         sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
