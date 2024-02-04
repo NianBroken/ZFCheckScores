@@ -195,10 +195,11 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
-# 输出成绩信息
-print(f"新成绩：{encrypted_integrated_grade_info}")
-print(f"旧成绩：{old_grade_content}")
-print("------")
+first_run_text = (
+    "你的程序运行成功\n"
+    "从现在开始，程序将会每隔 30 分钟自动检测成绩是否有更新\n"
+    "若有更新，将通过微信推送及时通知你"
+)
 
 # 整合MD5值
 integrated_grade_info += (
@@ -217,6 +218,28 @@ workflow_info += (
     f"Workflow ID：{github_run_id}\n"
     f"Beijing Time：{beijing_time}"
 )
+
+print(run_count)
+
+# 输出成绩信息
+if run_count == 1:
+    print(f"新成绩：{encrypted_integrated_grade_info}")
+    print(f"旧成绩：{old_grade_content}")
+    print("------")
+else:
+    print(first_run_text)
+    first_run_text_response_text = send_message(token, "你的程序运行成功", f"{first_run_text}{workflow_info}")
+
+    # 解析 JSON 数据
+    first_run_text_response_dict = json.loads(first_run_text)
+
+    # 删除 "data" 字段
+    if "data" in first_run_text_response_dict:
+        first_run_text_response_dict.pop("data")
+
+    # 输出响应内容
+    print(first_run_text_response_dict)
+
 
 # 整合所有信息
 # 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
