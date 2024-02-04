@@ -198,10 +198,11 @@ first_run_text = (
 )
 
 # 整合MD5值
-integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n" f"------"
+integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n"
 
 # 工作流信息
 workflow_info = (
+    f"------\n"
     f"工作流信息：\n"
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"
