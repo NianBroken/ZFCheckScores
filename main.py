@@ -224,7 +224,7 @@ if run_count == 1:
 else:
     print(first_run_text)
     first_run_text_response_text = send_message(
-        token, "你的程序运行成功", f"{first_run_text}{workflow_info}"
+        token, "你的程序运行成功", f"{first_run_text}\n{workflow_info}"
     )
 
     # 解析 JSON 数据
