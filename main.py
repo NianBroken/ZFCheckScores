@@ -199,6 +199,7 @@ first_run_text = (
     "你的程序运行成功\n"
     "从现在开始，程序将会每隔 30 分钟自动检测成绩是否有更新\n"
     "若有更新，将通过微信推送及时通知你"
+    "------"
 )
 
 # 整合MD5值
@@ -218,8 +219,6 @@ workflow_info += (
     f"Workflow ID：{github_run_id}\n"
     f"Beijing Time：{beijing_time}"
 )
-
-print(run_count)
 
 # 输出成绩信息
 if run_count == 1:
@@ -248,7 +247,8 @@ integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_i
 
 # 对grade.txt和old_grade.txt两个文件的内容进行比对，输出成绩是否更新
 if grade_content == old_grade_content:
-    print("成绩未更新")
+    if run_count == 1:
+        print("成绩未更新")
 else:
     print("成绩已更新")
     response_text = send_message(token, "教务成绩已更新", integrated_send_info)
