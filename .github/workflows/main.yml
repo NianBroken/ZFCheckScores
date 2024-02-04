@@ -88,7 +88,6 @@ jobs:
           fi
           # 方便通过截图快速定位到用户
           echo "Repository Name: ${{ github.repository }}"
-          echo "Parent Commit SHA: $(git rev-parse ${{ github.sha }}^1)"
           echo "Commit SHA: ${{ github.sha }}"
           echo "Current Workflow: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
