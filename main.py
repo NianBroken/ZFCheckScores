@@ -198,7 +198,7 @@ first_run_text = (
 )
 
 # 整合MD5值
-integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n"
+integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 
 # 工作流信息
 workflow_info = (
