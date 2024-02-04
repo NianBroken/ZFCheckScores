@@ -192,6 +192,7 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
 
 # 第一次运行时的提示文本
 first_run_text = (
+    "你的程序运行成功\n"
     "从现在开始，程序将会每隔 30 分钟自动检测成绩是否有更新\n"
     "若有更新，将通过微信推送及时通知你\n"
     "------"
@@ -218,11 +219,11 @@ if run_count == 1:
     print(f"旧成绩：{old_grade_content}")
     print("------")
 else:
-    print(f"你的程序运行成功\n{first_run_text}")
+    print(first_run_text)
 
     # 推送信息
     first_run_text_response_text = send_message(
-        token, "你的程序运行成功", f"{first_run_text}\n{workflow_info}"
+        token, "正方教务管理系统成绩推送", f"{first_run_text}\n{workflow_info}"
     )
 
     # 解析 JSON 数据
