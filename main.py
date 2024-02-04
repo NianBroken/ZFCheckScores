@@ -22,14 +22,9 @@ github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
 
 
-# 定义一个封装MD5加密的函数
+# 定义封装MD5加密的函数
 def md5_encrypt(string):
-    # 将字符串编码为字节
-    byte_string = string.encode()
-    # 创建MD5对象
-    md5_object = hashlib.md5(byte_string)
-    # 返回MD5哈希值的十六进制表示
-    return md5_object.hexdigest()
+    return hashlib.md5(string.encode()).hexdigest()
 
 
 # 初始化相关变量
@@ -53,7 +48,6 @@ student_client = Client(
 # 如果cookies为空字典，则进行登录
 if not cookies:
     login_result = student_client.login(username, password)
-
     if login_result["code"] == 1001:
         # 如果需要验证码，获取验证码并进行登录
         verify_data = login_result["data"]
@@ -122,14 +116,15 @@ for _ in range(run_count):
     grade_data = student_client.get_grade("").get("data", {})
     grade = grade_data.get("courses", [])
 
-    # 成绩为空时退出
+    # 成绩为空时退出程序
     if not grade:
         print("成绩为空")
         with open("info.txt", "w") as info_file:
+            # 将加密后的个人信息写入info.txt文件
             info_file.write(encrypted_info)
         sys.exit()
 
-    # 将grade.txt文件中的内容写入old_grade.txt文件内。
+    # 将grade.txt文件中的内容写入old_grade.txt文件内
     with open("grade.txt", "r") as grade_file, open(
         "old_grade.txt", "w"
     ) as old_grade_file:
@@ -216,13 +211,15 @@ workflow_info += (
     f"Beijing Time：{beijing_time}"
 )
 
-# 输出成绩信息
+# 如果是第一次运行 则提示程序运行成功
+# 如果非第一次运行则输出成绩信息
 if run_count == 1:
     print(f"新成绩：{encrypted_integrated_grade_info}")
     print(f"旧成绩：{old_grade_content}")
     print("------")
 else:
     print(first_run_text)
+    # 推送信息
     first_run_text_response_text = send_message(
         token, "你的程序运行成功", f"{first_run_text}\n{workflow_info}"
     )
@@ -237,7 +234,6 @@ else:
     # 输出响应内容
     print(first_run_text_response_dict)
 
-
 # 整合所有信息
 # 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
 # 若是在 Github Actions 等平台运行，请不要使用print(integrated_send_info)
@@ -249,6 +245,8 @@ if grade_content == old_grade_content:
         print("成绩未更新")
 else:
     print("成绩已更新")
+
+    # 推送信息
     response_text = send_message(token, "教务成绩已更新", integrated_send_info)
 
     # 解析 JSON 数据
@@ -257,7 +255,6 @@ else:
     # 删除 "data" 字段
     if "data" in response_dict:
         response_dict.pop("data")
-
     # 输出响应内容
     print(response_dict)
 
