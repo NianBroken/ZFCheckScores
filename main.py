@@ -255,6 +255,10 @@ else:
         f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
     )
 
+    grades_updated_push_integrated_send_info = (
+        f"教务管理系统成绩已更新\n" f"------\n" f"{integrated_send_info}"
+    )
+
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content == old_grade_content:
         print("成绩未更新")
@@ -263,9 +267,7 @@ else:
 
         # 推送信息
         response_text = send_message(
-            token,
-            "正方教务管理系统成绩推送",
-            f"教务管理系统成绩已更新\n------\n{integrated_send_info}",
+            token, "正方教务管理系统成绩推送", grades_updated_push_integrated_send_info
         )
 
         # 解析 JSON 数据
