@@ -45,11 +45,11 @@ student_client = Client(
     timeout=timeout,
 )
 
-# 如果cookies为空字典，则进行登录
+# 如果cookies为空字典,则进行登录
 if not cookies:
     login_result = student_client.login(username, password)
     if login_result["code"] == 1001:
-        # 如果需要验证码，获取验证码并进行登录
+        # 如果需要验证码,获取验证码并进行登录
         verify_data = login_result["data"]
         # 将验证码图片写入文件
         with open(os.path.abspath("kaptcha.png"), "wb") as pic:
@@ -90,21 +90,21 @@ run_count = 2
 
 # 判断info.txt文件是否存在
 if not os.path.exists(info_file_path):
-    # 如果文件不存在，创建并写入encrypted_info的内容
+    # 如果文件不存在,创建并写入encrypted_info的内容
     with open(info_file_path, "w") as info_file:
         info_file.write(encrypted_info)
 else:
-    # 如果文件存在，读取文件内容并比较
+    # 如果文件存在,读取文件内容并比较
     with open(info_file_path, "r") as info_file:
         info_file_content = info_file.read()
-        # 如果info.txt文件中保存的个人信息与获取到的个人信息不一致，则代表是第一次运行程序
+        # 若info.txt文件中保存的个人信息与获取到的个人信息一致,则代表非第一次运行程序
         if info_file_content == encrypted_info:
             # 非第一次运行程序
             run_count = 1
 
-# 第一次运行程序则运行两遍，否则运行一遍
+# 第一次运行程序则运行两遍,否则运行一遍
 for _ in range(run_count):
-    # 如果grade.txt文件不存在，则创建文件
+    # 如果grade.txt文件不存在,则创建文件
     if not os.path.exists("grade.txt"):
         open("grade.txt", "w").close()
 
@@ -113,70 +113,68 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
+    grade_data = student_client.get_grade("2024").get("data", {})
     grade = grade_data.get("courses", [])
 
-    # 成绩为空时退出程序
-    if not grade:
-        print("成绩为空")
-        with open("info.txt", "w") as info_file:
-            # 将加密后的个人信息写入info.txt文件
-            info_file.write(encrypted_info)
-        sys.exit()
+    # 成绩不为空时则对成绩信息进行处理
+    if grade:
+        # 将grade.txt文件中的内容写入old_grade.txt文件内
+        with open("grade.txt", "r") as grade_file, open(
+            "old_grade.txt", "w"
+        ) as old_grade_file:
+            old_grade_file.write(grade_file.read())
 
-    # 将grade.txt文件中的内容写入old_grade.txt文件内
-    with open("grade.txt", "r") as grade_file, open(
-        "old_grade.txt", "w"
-    ) as old_grade_file:
-        old_grade_file.write(grade_file.read())
+        # 清空grade.txt文件内容
+        with open("grade.txt", "w") as grade_file:
+            grade_file.truncate()
 
-    # 清空grade.txt文件内容
-    with open("grade.txt", "w") as grade_file:
-        grade_file.truncate()
+        # 按照提交时间降序排序
+        sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
 
-    # 按照提交时间降序排序
-    sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
+        # 学分总和
+        total_credit = sum(float(course["credit"]) for course in grade)
 
-    # 学分总和
-    total_credit = sum(float(course["credit"]) for course in grade)
+        # 学分绩点总和
+        total_xfjd = sum(float(course["xfjd"]) for course in grade)
 
-    # 学分绩点总和
-    total_xfjd = sum(float(course["xfjd"]) for course in grade)
-
-    # (百分制成绩*学分)的总和
-    sum_of_percentage_grades_multiplied_by_credits = sum(
-        float(course["percentage_grades"]) * float(course["credit"]) for course in grade
-    )
-
-    # GPA计算 (学分*绩点)的总和/学分总和
-    gpa = "{:.2f}".format(total_xfjd / total_credit)
-
-    # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
-    percentage_gpa = "{:.2f}".format(
-        sum_of_percentage_grades_multiplied_by_credits / total_credit
-    )
-
-    # 整合个人信息
-    integrated_info += (
-        f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
-    )
-
-    # 初始化输出成绩信息字符串
-    integrated_grade_info = "成绩信息："
-
-    # 遍历前8条成绩信息
-    for i, course in enumerate(sorted_grade[:8]):
-        # 整合成绩信息
-        integrated_grade_info += (
-            f"\n"
-            f"课程ID: {course['course_id']}\n"
-            f"课程名称: {course['title']}\n"
-            f"任课教师: {course['teacher']}\n"
-            f"成绩: {course['grade']}\n"
-            f"提交时间: {course['submission_time']}\n"
-            f"提交人姓名: {course['name_of_submitter']}\n"
-            f"------"
+        # (百分制成绩*学分)的总和
+        sum_of_percentage_grades_multiplied_by_credits = sum(
+            float(course["percentage_grades"]) * float(course["credit"])
+            for course in grade
         )
+
+        # GPA计算 (学分*绩点)的总和/学分总和
+        gpa = "{:.2f}".format(total_xfjd / total_credit)
+
+        # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
+        percentage_gpa = "{:.2f}".format(
+            sum_of_percentage_grades_multiplied_by_credits / total_credit
+        )
+
+        # 整合个人信息
+        integrated_info += (
+            f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+        )
+
+        # 初始化输出成绩信息字符串
+        integrated_grade_info = "成绩信息："
+
+        # 遍历前8条成绩信息
+        for i, course in enumerate(sorted_grade[:8]):
+            # 整合成绩信息
+            integrated_grade_info += (
+                f"\n"
+                f"课程ID: {course['course_id']}\n"
+                f"课程名称: {course['title']}\n"
+                f"任课教师: {course['teacher']}\n"
+                f"成绩: {course['grade']}\n"
+                f"提交时间: {course['submission_time']}\n"
+                f"提交人姓名: {course['name_of_submitter']}\n"
+                f"------"
+            )
+    else:
+        # 成绩为空时将成绩信息定义为"成绩为空"
+        integrated_grade_info = "成绩为空\n------"
 
     # 加密保存成绩
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
@@ -193,8 +191,8 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
 # 第一次运行时的提示文本
 first_run_text = (
     "你的程序运行成功\n"
-    "从现在开始，程序将会每隔 30 分钟自动检测成绩是否有更新\n"
-    "若有更新，将通过微信推送及时通知你\n"
+    "从现在开始,程序将会每隔 30 分钟自动检测成绩是否有更新\n"
+    "若有更新,将通过微信推送及时通知你\n"
     "------"
 )
 
@@ -212,13 +210,8 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
-# 如果是第一次运行 则提示程序运行成功
-# 如果非第一次运行 则输出成绩信息
-if run_count == 1:
-    print(f"新成绩：{encrypted_integrated_grade_info}")
-    print(f"旧成绩：{old_grade_content}")
-    print("------")
-else:
+# 如果是第一次运行,则提示程序运行成功
+if run_count == 2:
     print(first_run_text)
 
     # 推送信息
@@ -235,16 +228,23 @@ else:
 
     # 输出响应内容
     print(first_run_text_response_dict)
+else:
+    # 如果非第一次运行,则输出成绩信息
+    if grade:
+        print(f"新成绩：{encrypted_integrated_grade_info}")
+        print(f"旧成绩：{old_grade_content}")
+    else:
+        print("成绩为空")
+    print("------")
 
 # 整合所有信息
-# 注意此处integrated_send_info保存的是未加密的信息，仅用于信息推送
-# 若是在 Github Actions 等平台运行，请不要使用print(integrated_send_info)
+# 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
+# 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
 integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
 
-# 对grade.txt和old_grade.txt两个文件的内容进行比对，输出成绩是否更新
+# 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
 if grade_content == old_grade_content:
-    if run_count == 1:
-        print("成绩未更新")
+    print("成绩未更新")
 else:
     print("成绩已更新")
 
@@ -260,6 +260,7 @@ else:
 
     # 输出响应内容
     print(response_dict)
+
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
