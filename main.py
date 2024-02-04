@@ -113,7 +113,7 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 获取成绩信息
-    grade_data = student_client.get_grade("2025").get("data", {})
+    grade_data = student_client.get_grade("").get("data", {})
     grade = grade_data.get("courses", [])
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内
