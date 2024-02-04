@@ -195,19 +195,15 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
+# 第一次运行时的提示文本
 first_run_text = (
-    "你的程序运行成功\n"
     "从现在开始，程序将会每隔 30 分钟自动检测成绩是否有更新\n"
-    "若有更新，将通过微信推送及时通知你"
+    "若有更新，将通过微信推送及时通知你\n"
     "------"
 )
 
 # 整合MD5值
-integrated_grade_info += (
-    f"\n"
-    f"MD5：{encrypted_integrated_grade_info}\n"
-    f"------"
-)
+integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}\n" f"------"
 
 # 工作流信息
 workflow_info = "工作流信息：\n"
@@ -227,7 +223,9 @@ if run_count == 1:
     print("------")
 else:
     print(first_run_text)
-    first_run_text_response_text = send_message(token, "你的程序运行成功", f"{first_run_text}{workflow_info}")
+    first_run_text_response_text = send_message(
+        token, "你的程序运行成功", f"{first_run_text}{workflow_info}"
+    )
 
     # 解析 JSON 数据
     first_run_text_response_dict = json.loads(first_run_text_response_text)
