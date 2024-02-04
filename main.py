@@ -113,7 +113,7 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
+    grade_data = student_client.get_grade("2024").get("data", {})
     grade = grade_data.get("courses", [])
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内
@@ -171,17 +171,17 @@ for _ in range(run_count):
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩为空\n------"
 
-    # 整合个人信息
-    integrated_info += (
-        f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
-    )
-
     # 加密保存成绩
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
 
     # 将加密后的成绩信息写入grade.txt文件
     with open("grade.txt", "w") as grade_file:
         grade_file.write(encrypted_integrated_grade_info)
+
+# 整合个人信息
+integrated_info += (
+    f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+)
 
 # 读取grade.txt和old_grade.txt文件的内容
 with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_grade_file:
