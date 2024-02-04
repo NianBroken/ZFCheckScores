@@ -1,4 +1,4 @@
-# 导入必要的库
+# 必要的库
 import base64
 import hashlib
 import os
@@ -22,12 +22,12 @@ github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
 
 
-# 定义封装MD5加密的函数
+# MD5加密
 def md5_encrypt(string):
     return hashlib.md5(string.encode()).hexdigest()
 
 
-# 初始化相关变量
+# 初始化变量
 cookies = {}
 base_url = url
 raspisanie = []
@@ -45,7 +45,7 @@ student_client = Client(
     timeout=timeout,
 )
 
-# 如果cookies为空字典,则进行登录
+# 登录
 if not cookies:
     login_result = student_client.login(username, password)
     if login_result["code"] == 1001:
@@ -122,12 +122,11 @@ for _ in range(run_count):
     ) as old_grade_file:
         old_grade_file.write(grade_file.read())
 
-    # 清空grade.txt文件内容
-    with open("grade.txt", "w") as grade_file:
-        grade_file.truncate()
-
     # 成绩不为空时则对成绩信息进行处理
     if grade:
+        # 清空grade.txt文件内容
+        with open("grade.txt", "w") as grade_file:
+            grade_file.truncate()
 
         # 按照提交时间降序排序
         sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
@@ -218,7 +217,9 @@ if run_count == 2:
 
     # 推送信息
     first_run_text_response_text = send_message(
-        token, "正方教务管理系统成绩推送", f"{first_run_text}\n{integrated_info}\n{workflow_info}"
+        token,
+        "正方教务管理系统成绩推送",
+        f"{first_run_text}\n{integrated_info}\n{workflow_info}",
     )
 
     # 解析 JSON 数据
@@ -242,7 +243,9 @@ else:
     # 整合所有信息
     # 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
     # 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
-    integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
+    integrated_send_info = (
+        f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
+    )
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content == old_grade_content:
@@ -262,7 +265,6 @@ else:
 
         # 输出响应内容
         print(response_dict)
-
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
