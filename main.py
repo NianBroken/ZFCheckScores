@@ -113,7 +113,7 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
+    grade_data = student_client.get_grade("2024").get("data", {})
     grade = grade_data.get("courses", [])
 
     # 成绩不为空时则对成绩信息进行处理
@@ -174,7 +174,7 @@ for _ in range(run_count):
             )
     else:
         # 成绩为空时将成绩信息定义为"成绩为空"
-        integrated_grade_info = "成绩为空\n------"
+        integrated_grade_info = "------\n成绩为空\n------"
 
     # 加密保存成绩
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
