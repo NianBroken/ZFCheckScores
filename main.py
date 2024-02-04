@@ -159,12 +159,12 @@ for _ in range(run_count):
             # 整合成绩信息
             integrated_grade_info += (
                 f"\n"
-                f"课程ID: {course['course_id']}\n"
-                f"课程名称: {course['title']}\n"
-                f"任课教师: {course['teacher']}\n"
-                f"成绩: {course['grade']}\n"
-                f"提交时间: {course['submission_time']}\n"
-                f"提交人姓名: {course['name_of_submitter']}\n"
+                f"课程ID：{course['course_id']}\n"
+                f"课程名称：{course['title']}\n"
+                f"任课教师：{course['teacher']}\n"
+                f"成绩：{course['grade']}\n"
+                f"提交时间：{course['submission_time']}\n"
+                f"提交人姓名：{course['name_of_submitter']}\n"
                 f"------"
             )
     else:
