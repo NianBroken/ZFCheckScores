@@ -178,10 +178,12 @@ for _ in range(run_count):
     with open("grade.txt", "w") as grade_file:
         grade_file.write(encrypted_integrated_grade_info)
 
-# 整合个人信息
-integrated_info += (
-    f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
-)
+# 成绩信息不为空时整合GPA信息
+if grade:
+    # 整合个人信息
+    integrated_info += (
+        f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+    )
 
 # 读取grade.txt和old_grade.txt文件的内容
 with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_grade_file:
