@@ -213,7 +213,7 @@ workflow_info = (
 )
 
 # 如果是第一次运行 则提示程序运行成功
-# 如果非第一次运行则输出成绩信息
+# 如果非第一次运行 则输出成绩信息
 if run_count == 1:
     print(f"新成绩：{encrypted_integrated_grade_info}")
     print(f"旧成绩：{old_grade_content}")
