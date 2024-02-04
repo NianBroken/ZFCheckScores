@@ -76,7 +76,7 @@ integrated_info = (
     f"个人信息：\n"
     f"学号：{info['sid']}\n"
     f"班级：{info['class_name']}\n"
-    f"姓名：{info['name']}\n"
+    f"姓名：{info['name']}"
 )
 
 # 加密个人信息
@@ -153,7 +153,7 @@ for _ in range(run_count):
 
         # 整合个人信息
         integrated_info += (
-            f"当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+            f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
         )
 
         # 初始化输出成绩信息字符串
