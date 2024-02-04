@@ -213,15 +213,21 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
+# 整合首次运行时需要使用到的所有信息
+first_time_run_integrated_send_info = (
+    f"{first_run_text}\n"
+    f"{integrated_info}\n"
+    f"{integrated_grade_info}\n"
+    f"{workflow_info}"
+)
+
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
     print(first_run_text)
 
     # 推送信息
     first_run_text_response_text = send_message(
-        token,
-        "正方教务管理系统成绩推送",
-        f"{first_run_text}\n{integrated_info}\n{integrated_grade_info}\n{workflow_info}",
+        token, "正方教务管理系统成绩推送", first_time_run_integrated_send_info
     )
 
     # 解析 JSON 数据
@@ -256,7 +262,11 @@ else:
         print("成绩已更新")
 
         # 推送信息
-        response_text = send_message(token, "教务成绩已更新", integrated_send_info)
+        response_text = send_message(
+            token,
+            "正方教务管理系统成绩推送",
+            f"教务管理系统成绩已更新\n------\n{integrated_send_info}",
+        )
 
         # 解析 JSON 数据
         response_dict = json.loads(response_text)
