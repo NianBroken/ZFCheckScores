@@ -113,7 +113,7 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
+    grade_data = student_client.get_grade("2024").get("data", {})
     grade = grade_data.get("courses", [])
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内
@@ -238,29 +238,29 @@ else:
         print("成绩为空")
     print("------")
 
-# 整合所有信息
-# 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
-# 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
-integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
+    # 整合所有信息
+    # 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
+    # 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
+    integrated_send_info = f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
 
-# 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
-if grade_content == old_grade_content:
-    print("成绩未更新")
-else:
-    print("成绩已更新")
+    # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
+    if grade_content == old_grade_content:
+        print("成绩未更新")
+    else:
+        print("成绩已更新")
 
-    # 推送信息
-    response_text = send_message(token, "教务成绩已更新", integrated_send_info)
+        # 推送信息
+        response_text = send_message(token, "教务成绩已更新", integrated_send_info)
 
-    # 解析 JSON 数据
-    response_dict = json.loads(response_text)
+        # 解析 JSON 数据
+        response_dict = json.loads(response_text)
 
-    # 删除 "data" 字段
-    if "data" in response_dict:
-        response_dict.pop("data")
+        # 删除 "data" 字段
+        if "data" in response_dict:
+            response_dict.pop("data")
 
-    # 输出响应内容
-    print(response_dict)
+        # 输出响应内容
+        print(response_dict)
 
 
 # 更新info.txt
