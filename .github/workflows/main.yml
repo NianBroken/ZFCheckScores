@@ -71,6 +71,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
           REPOSITORY_NAME: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
@@ -95,6 +96,7 @@ jobs:
             echo "TOKEN secret is empty!"
           fi
           # 方便通过截图快速定位到用户
+          echo "Triggered By: ${{ github.triggering_actor }}"
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
           echo "Commit SHA: ${{ github.sha }}"
