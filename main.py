@@ -182,7 +182,9 @@ for _ in range(run_count):
 if grade:
     # 整合个人信息
     integrated_info += (
-        f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+        f"\n当前GPA：{gpa}\n"
+        f"当前百分制GPA：{percentage_gpa}\n"
+        f"------"
     )
 
 # 读取grade.txt和old_grade.txt文件的内容
@@ -213,12 +215,26 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
-# 整合首次运行时需要使用到的所有信息
-first_time_run_integrated_send_info = (
-    f"{first_run_text}\n"
+# 整合所有信息
+# 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
+# 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
+integrated_send_info = (
     f"{integrated_info}\n"
     f"{integrated_grade_info}\n"
     f"{workflow_info}"
+)
+
+# 整合首次运行时需要使用到的所有信息
+first_time_run_integrated_send_info = (
+    f"{first_run_text}\n"
+    f"{integrated_send_info}"
+)
+
+# 整合成绩已更新时需要使用到的所有信息
+grades_updated_push_integrated_send_info = (
+    f"教务管理系统成绩已更新\n"
+    f"------\n"
+    f"{integrated_send_info}"
 )
 
 # 如果是第一次运行,则提示程序运行成功
@@ -227,7 +243,9 @@ if run_count == 2:
 
     # 推送信息
     first_run_text_response_text = send_message(
-        token, "正方教务管理系统成绩推送", first_time_run_integrated_send_info
+        token,
+        "正方教务管理系统成绩推送",
+        first_time_run_integrated_send_info,
     )
 
     # 解析 JSON 数据
@@ -248,17 +266,6 @@ else:
         print("成绩为空")
     print("------")
 
-    # 整合所有信息
-    # 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
-    # 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
-    integrated_send_info = (
-        f"{integrated_info}\n{integrated_grade_info}\n{workflow_info}"
-    )
-
-    grades_updated_push_integrated_send_info = (
-        f"教务管理系统成绩已更新\n" f"------\n" f"{integrated_send_info}"
-    )
-
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content == old_grade_content:
         print("成绩未更新")
@@ -267,7 +274,9 @@ else:
 
         # 推送信息
         response_text = send_message(
-            token, "正方教务管理系统成绩推送", grades_updated_push_integrated_send_info
+            token,
+            "正方教务管理系统成绩推送",
+            grades_updated_push_integrated_send_info,
         )
 
         # 解析 JSON 数据
