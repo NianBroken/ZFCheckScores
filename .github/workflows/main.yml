@@ -71,6 +71,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
           REPOSITORY_NAME: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_WORKFLOW: ${{ github.workflow }}
@@ -97,7 +98,7 @@ jobs:
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
           echo "Commit SHA: ${{ github.sha }}"
-          echo "Current Workflow: ${{ github.workflow }}"
+          echo "Workflow Name: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
           echo "Beijing Time: $BEIJING_TIME"
