@@ -211,7 +211,7 @@ workflow_info = (
     f"Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"
-    f"Current Workflow：{github_workflow}\n"
+    f"Workflow Name：{github_workflow}\n"
     f"Workflow Number：{github_run_number}\n"
     f"Workflow ID：{github_run_id}\n"
     f"Beijing Time：{beijing_time}"
