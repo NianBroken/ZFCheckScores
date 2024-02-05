@@ -14,6 +14,7 @@ url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
 token = os.environ.get("TOKEN")
+github_triggering_actor = os.environ.get("GITHUB_TRIGGERING_ACTOR")
 repository_name = os.environ.get("REPOSITORY_NAME")
 github_sha = os.environ.get("GITHUB_SHA")
 github_workflow = os.environ.get("GITHUB_WORKFLOW")
@@ -207,6 +208,7 @@ integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 workflow_info = (
     f"------\n"
     f"工作流信息：\n"
+    f"Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"
     f"Current Workflow：{github_workflow}\n"
