@@ -137,7 +137,9 @@ for _ in range(run_count):
     if grade:
         # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
         for course_data_grade in grade:
-            course_data_grade["title"] = course_data_grade["title"].replace("（", "(").replace("）", ")")
+            course_data_grade["title"] = (
+                course_data_grade["title"].replace("（", "(").replace("）", ")")
+            )
 
         # 清空grade.txt文件内容
         with open("grade.txt", "w") as grade_file:
@@ -217,7 +219,7 @@ first_run_text = (
 )
 
 # 整合MD5值
-integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_grade_info}"
+integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 
 # 已选课程信息不为空时,处理未公布成绩的课程和异常课程
 if selected_courses:
