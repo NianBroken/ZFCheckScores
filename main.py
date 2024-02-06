@@ -213,7 +213,7 @@ first_run_text = (
 integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_grade_info}"
 
 
-if selected_courses:
+if not selected_courses:
     # 初始化空字典用于存储未公布成绩的课程，按学年学期分组
     ungraded_courses_by_semester = {}
     # 初始化空字典用于存储异常的课程，按学年学期分组
