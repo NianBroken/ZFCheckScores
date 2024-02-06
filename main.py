@@ -120,18 +120,22 @@ for _ in range(run_count):
     with open("old_grade.txt", "w") as old_grade_file:
         old_grade_file.truncate()
 
-    # 获取成绩信息
-    grade_data = student_client.get_grade("").get("data", {})
-    grade = grade_data.get("courses", [])
-
     # 将grade.txt文件中的内容写入old_grade.txt文件内
     with open("grade.txt", "r") as grade_file, open(
         "old_grade.txt", "w"
     ) as old_grade_file:
         old_grade_file.write(grade_file.read())
 
+    # 获取成绩信息
+    grade_data = student_client.get_grade("").get("data", {})
+    grade = grade_data.get("courses", [])
+
     # 成绩不为空时则对成绩信息进行处理
     if grade:
+        # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
+        for course_data_grade in grade:
+            course_data_grade["title"] = course_data_grade["title"].replace("（", "(").replace("）", ")")
+
         # 清空grade.txt文件内容
         with open("grade.txt", "w") as grade_file:
             grade_file.truncate()
@@ -278,6 +282,7 @@ else:
 workflow_info = (
     f"------\n"
     f"工作流信息：\n"
+    f"Force Push Message：{force_push_message}\n"
     f"Triggered By：{github_event_name}\n"
     f"Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
@@ -338,7 +343,7 @@ else:
     print("------")
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
-    if grade_content == old_grade_content or force_push_message:
+    if grade_content != old_grade_content or force_push_message:
         print("成绩已更新")
 
         # 推送信息
