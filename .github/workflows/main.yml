@@ -114,7 +114,7 @@ jobs:
           echo "Workflow Name: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
-          echo "Beijing Time: $BEIJING_TIME"
+          echo "Beijing Time: $BEIJING_TIME" > time.txt
 
       # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
