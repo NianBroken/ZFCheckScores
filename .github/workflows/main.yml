@@ -7,7 +7,7 @@ on:
     inputs:
       send_message:
         description: "是否发送信息？"
-        default: "False"
+        default: false
         required: false
 
 jobs:
