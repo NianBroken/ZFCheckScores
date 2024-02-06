@@ -213,6 +213,7 @@ integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_g
 
 
 if selected_courses:
+    print("------")
     # 初始化空字典用于存储未公布成绩的课程，按学年学期分组
     ungraded_courses_by_semester = {}
     # 初始化空字典用于存储异常的课程，按学年学期分组
@@ -264,7 +265,7 @@ if selected_courses:
             for course in courses:
                 selected_courses_filtering += f"\n{course}"
 else:
-    selected_courses_filtering = "已选课程详细为空"
+    selected_courses_filtering = "------\n已选课程详细为空"
 
 # 工作流信息
 workflow_info = (
