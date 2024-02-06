@@ -212,11 +212,11 @@ first_run_text = (
 # 整合MD5值
 integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_grade_info}"
 
-
-if not selected_courses:
-    # 初始化空字典用于存储未公布成绩的课程，按学年学期分组
+# 已选课程信息不为空时,处理未公布成绩的课程和异常课程
+if selected_courses:
+    # 初始化空字典用于存储未公布成绩的课程,按学年学期分组
     ungraded_courses_by_semester = {}
-    # 初始化空字典用于存储异常的课程，按学年学期分组
+    # 初始化空字典用于存储异常的课程,按学年学期分组
     abnormal_courses_by_semester = {}
 
     # 获取成绩列表中的class_id集合
@@ -231,21 +231,26 @@ if not selected_courses:
         yearsemester_id = course["class_name"].split("(")[1].split(")")[0]
         year, semester, seq = yearsemester_id.split("-")
 
-        # 构建年学期名称，例如 "a至b学年第c学期"
+        # 构建年学期名称,例如 "a至b学年第c学期"
         yearsemester_name = f"{year}至{semester}学年第{seq}学期"
 
         # 判断课程是否未公布成绩或为异常课程
-        if course["class_id"] not in grade_class_ids:  # 未公布成绩
+        if course["class_id"] not in grade_class_ids:
+            # 未公布成绩
             ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(
                 f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
             )
-        elif course["class_id"] not in {course["class_id"] for course in selected_courses}:  # 异常课程
+        elif course["class_id"] not in {
+            course["class_id"] for course in selected_courses
+        }:
+            # 异常课程
             abnormal_courses_by_semester.setdefault(yearsemester_name, []).append(
                 f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
             )
 
     # 构建输出内容
-    if ungraded_courses_by_semester:  # 存在未公布成绩的课程
+    if ungraded_courses_by_semester:
+        # 存在未公布成绩的课程
         selected_courses_filtering += "------\n未公布成绩的课程："
         for i, (semester, courses) in enumerate(ungraded_courses_by_semester.items()):
             if i > 0:
@@ -254,8 +259,10 @@ if not selected_courses:
             for course in courses:
                 selected_courses_filtering += f"\n{course}"
 
-    if abnormal_courses_by_semester:  # 存在异常的课程
-        if ungraded_courses_by_semester:  # 如果存在未公布成绩的课程，添加分隔线
+    if abnormal_courses_by_semester:
+        # 存在异常的课程
+        if ungraded_courses_by_semester:
+            # 如果存在课程,添加分隔线
             selected_courses_filtering += "\n"
         selected_courses_filtering += "------\n异常的课程："
         for i, (semester, courses) in enumerate(abnormal_courses_by_semester.items()):
@@ -265,7 +272,7 @@ if not selected_courses:
             for course in courses:
                 selected_courses_filtering += f"\n{course}"
 else:
-    selected_courses_filtering = "------\n已选课程详细为空"
+    selected_courses_filtering = "------\n已选课程信息为空"
 
 # 工作流信息
 workflow_info = (
@@ -292,10 +299,7 @@ integrated_send_info = (
 )
 
 # 整合首次运行时需要使用到的所有信息
-first_time_run_integrated_send_info = (
-    f"{first_run_text}\n"
-    f"{integrated_send_info}"
-)
+first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_info}"
 
 # 整合成绩已更新时需要使用到的所有信息
 grades_updated_push_integrated_send_info = (
