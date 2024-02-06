@@ -5,9 +5,9 @@ on:
     - cron: "*/30 * * * *" # 每30分钟执行一次
   workflow_dispatch:
     inputs:
-      send_message:
+      force_push_message:
         description: "是否发送信息"
-        required: false
+        required: true
         default: "False"
         type: choice
         options:
@@ -76,7 +76,7 @@ jobs:
       # 运行主程序main.py
       - name: Run main.py
         env:
-          Force_Push_Message: ${{ github.event.inputs.send_message }}
+          Force_Push_Message: ${{ github.event.inputs.force_push_message }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
@@ -106,7 +106,7 @@ jobs:
             echo "TOKEN secret is empty!"
           fi
           # 方便通过截图快速定位到用户
-          echo "Force Push Message: ${{ github.event.inputs.send_message }}"
+          echo "Force Push Message: ${{ github.event.inputs.force_push_message }}"
           echo "Triggered By: ${{ github.event_name }}"
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
