@@ -104,6 +104,11 @@ else:
             # 非第一次运行程序
             run_count = 1
 
+
+# 获取已选课程信息
+selected_courses_data = student_client.get_selected_courses().get("data", {})
+selected_courses = selected_courses_data.get("courses", [])
+
 # 第一次运行程序则运行两遍,否则运行一遍
 for _ in range(run_count):
     # 如果grade.txt文件不存在,则创建文件
@@ -161,7 +166,7 @@ for _ in range(run_count):
             # 整合成绩信息
             integrated_grade_info += (
                 f"\n"
-                f"课程ID：{course['course_id']}\n"
+                f"教学班ID：{course['class_id']}\n"
                 f"课程名称：{course['title']}\n"
                 f"任课教师：{course['teacher']}\n"
                 f"成绩：{course['grade']}\n"
@@ -179,6 +184,7 @@ for _ in range(run_count):
     # 将加密后的成绩信息写入grade.txt文件
     with open("grade.txt", "w") as grade_file:
         grade_file.write(encrypted_integrated_grade_info)
+
 
 # 成绩信息不为空时整合GPA信息
 if grade:
@@ -203,7 +209,62 @@ first_run_text = (
 )
 
 # 整合MD5值
-integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
+integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_grade_info}"
+
+
+if selected_courses:
+    # 初始化空字典用于存储未公布成绩的课程，按学年学期分组
+    ungraded_courses_by_semester = {}
+    # 初始化空字典用于存储异常的课程，按学年学期分组
+    abnormal_courses_by_semester = {}
+
+    # 获取成绩列表中的class_id集合
+    grade_class_ids = {course["class_id"] for course in grade}
+
+    # 初始化输出内容
+    selected_courses_filtering = ""
+
+    # 遍历selected_courses和grade中的每个课程
+    for course in selected_courses + grade:
+        # 获取课程的class_id和学年学期
+        yearsemester_id = course["class_name"].split("(")[1].split(")")[0]
+        year, semester, seq = yearsemester_id.split("-")
+
+        # 构建年学期名称，例如 "a至b学年第c学期"
+        yearsemester_name = f"{year}至{semester}学年第{seq}学期"
+
+        # 判断课程是否未公布成绩或为异常课程
+        if course["class_id"] not in grade_class_ids:  # 未公布成绩
+            ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(
+                f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
+            )
+        elif course["class_id"] not in {course["class_id"] for course in selected_courses}:  # 异常课程
+            abnormal_courses_by_semester.setdefault(yearsemester_name, []).append(
+                f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
+            )
+
+    # 构建输出内容
+    if ungraded_courses_by_semester:  # 存在未公布成绩的课程
+        selected_courses_filtering += "未公布成绩的课程："
+        for i, (semester, courses) in enumerate(ungraded_courses_by_semester.items()):
+            if i > 0:
+                selected_courses_filtering += "\n------"
+            selected_courses_filtering += f"\n{semester}如下："
+            for course in courses:
+                selected_courses_filtering += f"\n{course}"
+
+    if abnormal_courses_by_semester:  # 存在异常的课程
+        if ungraded_courses_by_semester:  # 如果存在未公布成绩的课程，添加分隔线
+            selected_courses_filtering += "\n"
+        selected_courses_filtering += "------\n异常的课程："
+        for i, (semester, courses) in enumerate(abnormal_courses_by_semester.items()):
+            if i > 0:
+                selected_courses_filtering += "\n------"
+            selected_courses_filtering += f"\n{semester}如下："
+            for course in courses:
+                selected_courses_filtering += f"\n{course}"
+else:
+    selected_courses_filtering = "已选课程详细为空"
 
 # 工作流信息
 workflow_info = (
@@ -225,6 +286,7 @@ workflow_info = (
 integrated_send_info = (
     f"{integrated_info}\n"
     f"{integrated_grade_info}\n"
+    f"{selected_courses_filtering}\n"
     f"{workflow_info}"
 )
 
