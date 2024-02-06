@@ -78,6 +78,7 @@ jobs:
           GITHUB_WORKFLOW: ${{ github.workflow }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
+          FORCE_PUSH_MESSAGE: ${{ github.event.inputs.send_message || false }} # 新增的选项功能
         run: |
           export BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')
           python main.py
