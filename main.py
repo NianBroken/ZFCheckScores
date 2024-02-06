@@ -344,7 +344,11 @@ else:
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content != old_grade_content or force_push_message:
-        print("成绩已更新")
+        # 判断是否选中了强制推送信息
+        if force_push_message:
+            print("强制推送")
+        else:
+            print("成绩已更新")
 
         # 推送信息
         response_text = send_message(
