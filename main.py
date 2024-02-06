@@ -10,7 +10,7 @@ from zfn_api import Client
 from pushplus import send_message
 
 # 从环境变量中提取教务系统的URL、用户名、密码和TOKEN等信息
-force_push_message = os.environ.get("github.event.inputs.force_push_message")
+force_push_message = os.environ.get("Force_Push_Message")
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
