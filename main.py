@@ -10,6 +10,7 @@ from zfn_api import Client
 from pushplus import send_message
 
 # 从环境变量中提取教务系统的URL、用户名、密码和TOKEN等信息
+force_push_message = os.environ.get("github.event.inputs.force_push_message")
 url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
@@ -333,9 +334,7 @@ else:
     print("------")
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
-    if grade_content == old_grade_content:
-        print("成绩未更新")
-    else:
+    if grade_content == old_grade_content or force_push_message:
         print("成绩已更新")
 
         # 推送信息
@@ -354,6 +353,8 @@ else:
 
         # 输出响应内容
         print(response_dict)
+    else:
+        print("成绩未更新")
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
