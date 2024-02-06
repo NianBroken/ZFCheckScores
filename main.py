@@ -264,7 +264,7 @@ if selected_courses:
         for i, (semester, courses) in enumerate(ungraded_courses_by_semester.items()):
             if i > 0:
                 selected_courses_filtering += "\n------"
-            selected_courses_filtering += f"\n{semester}如下："
+            selected_courses_filtering += f"\n{semester}："
             for course in courses:
                 selected_courses_filtering += f"\n{course}"
 
@@ -277,7 +277,7 @@ if selected_courses:
         for i, (semester, courses) in enumerate(abnormal_courses_by_semester.items()):
             if i > 0:
                 selected_courses_filtering += "\n------"
-            selected_courses_filtering += f"\n{semester}如下："
+            selected_courses_filtering += f"\n{semester}："
             for course in courses:
                 selected_courses_filtering += f"\n{course}"
 else:
