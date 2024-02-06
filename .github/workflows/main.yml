@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       force_push_message:
-        description: "是否发送信息"
+        description: "是否强制推送信息"
         required: true
         default: "False"
         type: choice
