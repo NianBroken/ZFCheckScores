@@ -308,10 +308,11 @@ first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_i
 
 # 整合成绩已更新时需要使用到的所有信息
 grades_updated_push_integrated_send_info = (
-    f"教务管理系统成绩已更新\n"
+    f"{'强制推送信息成功' if force_push_message else '教务管理系统成绩已更新'}\n"
     f"------\n"
     f"{integrated_send_info}"
 )
+
 
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
@@ -346,7 +347,7 @@ else:
     if grade_content != old_grade_content or force_push_message:
         # 判断是否选中了强制推送信息
         if force_push_message:
-            print("强制推送")
+            print("强制推送信息")
         else:
             print("成绩已更新")
 
