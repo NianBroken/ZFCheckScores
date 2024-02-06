@@ -213,7 +213,6 @@ integrated_grade_info += f"\n" f"当前成绩的MD5值：{encrypted_integrated_g
 
 
 if selected_courses:
-    print("------")
     # 初始化空字典用于存储未公布成绩的课程，按学年学期分组
     ungraded_courses_by_semester = {}
     # 初始化空字典用于存储异常的课程，按学年学期分组
@@ -246,7 +245,7 @@ if selected_courses:
 
     # 构建输出内容
     if ungraded_courses_by_semester:  # 存在未公布成绩的课程
-        selected_courses_filtering += "未公布成绩的课程："
+        selected_courses_filtering += "------\n未公布成绩的课程："
         for i, (semester, courses) in enumerate(ungraded_courses_by_semester.items()):
             if i > 0:
                 selected_courses_filtering += "\n------"
