@@ -1,4 +1,5 @@
 # 必要的库
+import re
 import base64
 import hashlib
 import os
@@ -383,7 +384,7 @@ with open(info_file_path, "r") as info_file:
 # 输出运行日志
 print(run_log)
 
-github_step_summary_run_log = run_log.replace('\n\n', '\n').replace('\n', '\n\n')
+github_step_summary_run_log = re.sub("\n+", "\n\n", run_log)
 github_step_summary_run_log = "# 正方教务管理系统成绩推送\n\n" + github_step_summary_run_log
 
 # 将 run_log 写入到 GitHub Actions 的环境文件中
