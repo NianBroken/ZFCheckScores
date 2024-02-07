@@ -23,7 +23,9 @@ github_workflow = os.environ.get("GITHUB_WORKFLOW")
 github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
 github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
-step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+
+os.environ["GITHUB_STEP_SUMMARY"] = "test_txt"
 
 # 将字符串转换为布尔值
 force_push_message = force_push_message == "True"
@@ -201,9 +203,7 @@ for _ in range(run_count):
 if grade:
     # 整合个人信息
     integrated_info += (
-        f"\n当前GPA：{gpa}\n"
-        f"当前百分制GPA：{percentage_gpa}\n"
-        f"------"
+        f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
     )
 
 # 读取grade.txt和old_grade.txt文件的内容
@@ -372,13 +372,6 @@ else:
         print(response_dict)
     else:
         print("成绩未更新")
-
-
-# 修改环境变量的值
-step_summary += "This is a test message.\n"
-
-# 设置环境变量的值
-os.environ["GITHUB_STEP_SUMMARY"] = step_summary
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
