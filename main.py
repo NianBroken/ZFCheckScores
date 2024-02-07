@@ -24,12 +24,14 @@ github_workflow = os.environ.get("GITHUB_WORKFLOW")
 github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
 github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
+github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
 
 # 将字符串转换为布尔值
 force_push_message = force_push_message == "True"
 
 # 初始化运行日志
 run_log = ""
+
 
 # MD5加密
 def md5_encrypt(string):
@@ -381,16 +383,19 @@ with open(info_file_path, "r") as info_file:
             info_file.write(encrypted_info)
 
 # 输出运行日志
-print(run_log)
+if run_log:
+    print(run_log)
 
-github_step_summary_run_log = "# 正方教务管理系统成绩推送\n" + run_log + "\n" + workflow_info
-github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
+    # 整合JobSummary信息
+    github_step_summary_run_log = (
+        f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}"
+    )
+    # 将任意个数的换行替换为两个换行
+    github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
 
-# 将 run_log 写入到 GitHub Actions 的环境文件中
-github_step_summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-if github_step_summary_path:
-    with open(github_step_summary_path, "w", encoding="utf-8") as file:
-        file.write(github_step_summary_run_log)
+    # 将 github_step_summary_run_log 写入到 GitHub Actions 的环境文件中
+with open(github_step_summary, "w", encoding="utf-8") as file:
+    file.write(github_step_summary_run_log)
 
 # 删除 __pycache__ 缓存目录及其内容
 current_directory = os.getcwd()
