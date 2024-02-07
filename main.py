@@ -383,6 +383,9 @@ with open(info_file_path, "r") as info_file:
 # 输出运行日志
 print(run_log)
 
+run_log = "正方教务管理系统成绩推送" + run_log
+run_log += workflow_info
+
 # 将 run_log 写入到 GitHub Actions 的环境文件中
 github_step_summary_path = os.environ.get('GITHUB_STEP_SUMMARY')
 if github_step_summary_path:
