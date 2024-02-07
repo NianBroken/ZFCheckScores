@@ -213,7 +213,7 @@ with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_gra
 # 第一次运行时的提示文本
 first_run_text = (
     "你的程序运行成功\n"
-    "从现在开始,程序将会每隔 30 分钟自动检测成绩是否有更新\n"
+    "从现在开始,程序将会每隔 30 分钟自动检测一次成绩是否有更新\n"
     "若有更新,将通过微信推送及时通知你\n"
     "------"
 )
