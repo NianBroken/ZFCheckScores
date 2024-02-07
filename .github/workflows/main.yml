@@ -94,7 +94,7 @@ jobs:
           else
             export Force_Push_Message="${{ github.event.inputs.force_push_message }}"
           fi
-          export BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')
+          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           python main.py
           echo "------"
           # 判断环境变量是否为空
