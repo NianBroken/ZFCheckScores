@@ -98,7 +98,6 @@ info_file_path = "info.txt"
 grade_file_path = "grade.txt"
 old_grade_file_path = "old_grade.txt"
 
-
 # 初始化运行次数
 run_count = 2
 
@@ -115,11 +114,6 @@ else:
         if info_file_content == encrypted_info:
             # 非第一次运行程序
             run_count = 1
-
-
-# 获取已选课程信息
-selected_courses_data = student_client.get_selected_courses().get("data", {})
-selected_courses = selected_courses_data.get("courses", [])
 
 # 第一次运行程序则运行两遍,否则运行一遍
 for _ in range(run_count):
@@ -203,7 +197,6 @@ for _ in range(run_count):
     with open(grade_file_path, "w") as grade_file:
         grade_file.write(encrypted_integrated_grade_info)
 
-
 # 成绩信息不为空时整合GPA信息
 if grade:
     # 整合个人信息
@@ -226,6 +219,10 @@ first_run_text = (
 
 # 整合MD5值
 integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
+
+# 获取已选课程信息
+selected_courses_data = student_client.get_selected_courses().get("data", {})
+selected_courses = selected_courses_data.get("courses", [])
 
 # 已选课程信息不为空时,处理未公布成绩的课程和异常课程
 if selected_courses:
@@ -323,7 +320,6 @@ grades_updated_push_integrated_send_info = (
     f"------\n"
     f"{integrated_send_info}"
 )
-
 
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
