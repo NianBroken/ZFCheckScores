@@ -343,7 +343,7 @@ if run_count == 2:
 else:
     # 如果非第一次运行,则输出成绩信息
     if grade:
-        run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
+        run_log += f"新成绩：{encrypted_integrated_grade_info}\n\n"
         run_log += f"旧成绩：{old_grade_content}\n"
     else:
         run_log += "成绩为空\n"
@@ -383,7 +383,7 @@ with open(info_file_path, "r") as info_file:
 # 输出运行日志
 print(run_log)
 
-github_step_summary_run_log = run_log.replace("\n", "\n\n")
+github_step_summary_run_log = run_log.replace('\n', '\n\n')
 github_step_summary_run_log = "# 正方教务管理系统成绩推送\n\n" + github_step_summary_run_log
 
 # 将 run_log 写入到 GitHub Actions 的环境文件中
