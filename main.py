@@ -23,12 +23,12 @@ github_workflow = os.environ.get("GITHUB_WORKFLOW")
 github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
 github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
-github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
-
-os.environ["GITHUB_STEP_SUMMARY"] = "test_txt"
 
 # 将字符串转换为布尔值
 force_push_message = force_push_message == "True"
+
+# 初始化运行日志
+run_log = ""
 
 
 # MD5加密
@@ -322,7 +322,7 @@ grades_updated_push_integrated_send_info = (
 
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
-    print(first_run_text)
+    run_log += f"{first_run_text}\n"
 
     # 推送信息
     first_run_text_response_text = send_message(
@@ -339,20 +339,20 @@ if run_count == 2:
         first_run_text_response_dict.pop("data")
 
     # 输出响应内容
-    print(first_run_text_response_dict)
+    run_log += f"{first_run_text_response_dict}\n"
 else:
     # 如果非第一次运行,则输出成绩信息
     if grade:
-        print(f"新成绩：{encrypted_integrated_grade_info}")
-        print(f"旧成绩：{old_grade_content}")
+        run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
+        run_log += f"旧成绩：{old_grade_content}\n"
     else:
-        print("成绩为空")
-    print("------")
+        run_log += "成绩为空\n"
+    run_log += "------\n"
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content != old_grade_content or force_push_message:
         # 判断是否选中了强制推送信息
-        print("强制推送信息" if force_push_message else "成绩已更新")
+        run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n"
 
         # 推送信息
         response_text = send_message(
@@ -369,9 +369,9 @@ else:
             response_dict.pop("data")
 
         # 输出响应内容
-        print(response_dict)
+        run_log += f"{response_dict}\n"
     else:
-        print("成绩未更新")
+        run_log += "成绩未更新"
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
@@ -379,6 +379,15 @@ with open(info_file_path, "r") as info_file:
     if info_file_content != encrypted_info:
         with open("info.txt", "w") as info_file:
             info_file.write(encrypted_info)
+
+# 输出运行日志
+print(run_log)
+
+# 将 run_log 写入到 GitHub Actions 的环境文件中
+github_step_summary_path = os.environ.get('GITHUB_STEP_SUMMARY')
+if github_step_summary_path:
+    with open(github_step_summary_path, 'w', encoding='utf-8') as file:
+        file.write(run_log)
 
 # 删除 __pycache__ 缓存目录及其内容
 current_directory = os.getcwd()
