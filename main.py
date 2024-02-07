@@ -31,7 +31,6 @@ force_push_message = force_push_message == "True"
 # 初始化运行日志
 run_log = ""
 
-
 # MD5加密
 def md5_encrypt(string):
     return hashlib.md5(string.encode()).hexdigest()
@@ -384,8 +383,8 @@ with open(info_file_path, "r") as info_file:
 # 输出运行日志
 print(run_log)
 
-github_step_summary_run_log = re.sub("\n+", "\n\n", run_log)
-github_step_summary_run_log = "# 正方教务管理系统成绩推送\n\n" + github_step_summary_run_log
+github_step_summary_run_log = "# 正方教务管理系统成绩推送\n" + run_log + workflow_info
+github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
 
 # 将 run_log 写入到 GitHub Actions 的环境文件中
 github_step_summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
