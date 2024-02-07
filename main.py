@@ -344,7 +344,7 @@ if run_count == 2:
 else:
     # 如果非第一次运行,则输出成绩信息
     if grade:
-        run_log += f"新成绩：{encrypted_integrated_grade_info}\n\n"
+        run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
         run_log += f"旧成绩：{old_grade_content}\n"
     else:
         run_log += "成绩为空\n"
