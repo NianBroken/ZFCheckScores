@@ -393,8 +393,8 @@ if run_log:
     github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
 
     # 将 github_step_summary_run_log 写入到 GitHub Actions 的环境文件中
-with open(github_step_summary, "w", encoding="utf-8") as file:
-    file.write(github_step_summary_run_log)
+    with open(github_step_summary, "w", encoding="utf-8") as file:
+        file.write(github_step_summary_run_log)
 
 # 删除 __pycache__ 缓存目录及其内容
 current_directory = os.getcwd()
