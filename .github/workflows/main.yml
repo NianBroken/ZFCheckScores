@@ -50,8 +50,8 @@ jobs:
       # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
       - name: Backup local .txt files
         run: |
-          mkdir backup
-          cp *.txt backup/ || echo "No .txt files to backup"
+          mkdir -p backup
+          cp -r *.txt backup/ || echo "No .txt files to backup"
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -70,7 +70,7 @@ jobs:
       # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
       - name: Restore local .txt files and delete backup
         run: |
-          cp backup/*.txt . || echo "No .txt files to restore"
+          cp -r backup/*.txt . || echo "No .txt files to restore"
           rm -rf backup
 
       # 运行主程序main.py
@@ -88,6 +88,7 @@ jobs:
           GITHUB_WORKFLOW: ${{ github.workflow }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_STEP_SUMMARY: ""
         run: |
           if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
             export FORCE_PUSH_MESSAGE="False"
