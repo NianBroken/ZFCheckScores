@@ -76,7 +76,7 @@ jobs:
       # 运行主程序main.py
       - name: Run main.py
         env:
-          Force_Push_Message: ${{ github.event.inputs.force_push_message }}
+          Force_Push_Message: ${{ github.event.inputs.force_push_message || 'False' }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}

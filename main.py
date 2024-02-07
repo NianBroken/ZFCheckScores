@@ -25,10 +25,7 @@ github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
 
 # 将字符串转换为布尔值
-if force_push_message:
-    force_push_message = eval(force_push_message)
-else:
-    force_push_message = False
+force_push_message = force_push_message == "True"
 
 
 # MD5加密
