@@ -93,8 +93,11 @@ integrated_info = (
 # 加密个人信息
 encrypted_info = md5_encrypt(integrated_info)
 
-# 定义info.txt文件路径
+# 定义文件路径
 info_file_path = "info.txt"
+grade_file_path = "grade.txt"
+old_grade_file_path = "old_grade.txt"
+
 
 # 初始化运行次数
 run_count = 2
@@ -121,16 +124,16 @@ selected_courses = selected_courses_data.get("courses", [])
 # 第一次运行程序则运行两遍,否则运行一遍
 for _ in range(run_count):
     # 如果grade.txt文件不存在,则创建文件
-    if not os.path.exists("grade.txt"):
-        open("grade.txt", "w").close()
+    if not os.path.exists(grade_file_path):
+        open(grade_file_path, "w").close()
 
     # 清空old_grade.txt文件内容
-    with open("old_grade.txt", "w") as old_grade_file:
+    with open(old_grade_file_path, "w") as old_grade_file:
         old_grade_file.truncate()
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内
-    with open("grade.txt", "r") as grade_file, open(
-        "old_grade.txt", "w"
+    with open(grade_file_path, "r") as grade_file, open(
+        old_grade_file_path, "w"
     ) as old_grade_file:
         old_grade_file.write(grade_file.read())
 
@@ -147,7 +150,7 @@ for _ in range(run_count):
             )
 
         # 清空grade.txt文件内容
-        with open("grade.txt", "w") as grade_file:
+        with open(grade_file_path, "w") as grade_file:
             grade_file.truncate()
 
         # 按照提交时间降序排序
@@ -197,7 +200,7 @@ for _ in range(run_count):
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
 
     # 将加密后的成绩信息写入grade.txt文件
-    with open("grade.txt", "w") as grade_file:
+    with open(grade_file_path, "w") as grade_file:
         grade_file.write(encrypted_integrated_grade_info)
 
 
@@ -209,7 +212,7 @@ if grade:
     )
 
 # 读取grade.txt和old_grade.txt文件的内容
-with open("grade.txt", "r") as grade_file, open("old_grade.txt", "r") as old_grade_file:
+with open(grade_file_path, "r") as grade_file, open(old_grade_file_path, "r") as old_grade_file:
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
