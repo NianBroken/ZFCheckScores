@@ -76,7 +76,7 @@ jobs:
       # 运行主程序main.py
       - name: Run main.py
         env:
-          Force_Push_Message: ${{ github.event.inputs.force_push_message || "False" }}
+          Force_Push_Message: ${{ github.event.inputs.force_push_message }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
@@ -89,6 +89,11 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
+            export Force_Push_Message="False"
+          else
+            export Force_Push_Message=${{ github.event.inputs.force_push_message }}
+          fi
           export BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')
           python main.py
           echo "------"
@@ -106,7 +111,7 @@ jobs:
             echo "TOKEN secret is empty!"
           fi
           # 方便通过截图快速定位到用户
-          echo "Force Push Message: ${{ github.event.inputs.force_push_message }}"
+          echo "Force Push Message: $Force_Push_Message"
           echo "Triggered By: ${{ github.event_name }}"
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
