@@ -29,7 +29,6 @@ force_push_message = force_push_message == "True"
 
 # 初始化运行日志
 run_log = ""
-github_step_summary_run_log = ""
 
 
 # MD5加密
@@ -324,7 +323,6 @@ grades_updated_push_integrated_send_info = (
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
     run_log += f"{first_run_text}\n"
-    github_step_summary_run_log += f"{first_run_text}\n\n"
 
     # 推送信息
     first_run_text_response_text = send_message(
@@ -342,25 +340,19 @@ if run_count == 2:
 
     # 输出响应内容
     run_log += f"{first_run_text_response_dict}\n"
-    github_step_summary_run_log += f"{first_run_text_response_dict}\n\n"
 else:
     # 如果非第一次运行,则输出成绩信息
     if grade:
         run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
-        github_step_summary_run_log += f"新成绩：{encrypted_integrated_grade_info}\n\n"
         run_log += f"旧成绩：{old_grade_content}\n"
-        github_step_summary_run_log += f"旧成绩：{old_grade_content}\n\n"
     else:
         run_log += "成绩为空\n"
-        github_step_summary_run_log += "成绩为空\n\n"
     run_log += "------\n"
-    github_step_summary_run_log += "------\n\n"
 
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content != old_grade_content or force_push_message:
         # 判断是否选中了强制推送信息
         run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n"
-        github_step_summary_run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n\n"
 
         # 推送信息
         response_text = send_message(
@@ -378,10 +370,8 @@ else:
 
         # 输出响应内容
         run_log += f"{response_dict}\n"
-        github_step_summary_run_log += f"{response_dict}\n\n"
     else:
         run_log += "成绩未更新"
-        github_step_summary_run_log += "成绩未更新"
 
 # 更新info.txt
 with open(info_file_path, "r") as info_file:
@@ -393,8 +383,7 @@ with open(info_file_path, "r") as info_file:
 # 输出运行日志
 print(run_log)
 
-github_step_summary_run_log = "# 正方教务管理系统成绩推送\n\n" + github_step_summary_run_log
-github_step_summary_run_log += f"\n\n{workflow_info}"
+github_step_summary_run_log = run_log.replace('\n', '\n\n')
 
 # 将 run_log 写入到 GitHub Actions 的环境文件中
 github_step_summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
