@@ -66,6 +66,8 @@ jobs:
         run: |
           git checkout main
           git reset --hard upstream/main
+          git checkout HEAD .github/workflows/main.yml
+          git commit -m "Update from upstream" || true
           git push origin main --force || (for i in {1..10}; do
           echo "------" &&
           echo "你需要手动同步上游分支" &&
