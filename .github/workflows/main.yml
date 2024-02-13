@@ -71,8 +71,8 @@ jobs:
       # 排除上游分支的 .github/workflows/main.yml 文件，以避免修改当前分支的该文件
       - name: Exclude main.yml file from upstream changes
         run: |
-          git reset HEAD .github/workflows/main.yml
-          git checkout -- .github/workflows/main.yml
+          git fetch upstream main
+          git checkout main .github/workflows/main.yml
 
       # 将上游main分支的更改强制推送到当前main分支，除了 .github/workflows/main.yml 文件以外的文件
       - name: Force push changes from upstream to current main branch
