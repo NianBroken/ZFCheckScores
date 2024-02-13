@@ -51,7 +51,7 @@ jobs:
       - name: Set file extensions
         run: |
           # 以空格分隔多个文件后缀
-          echo "FILE_EXTENSIONS=.txt .txt123" >> $GITHUB_ENV
+          echo "FILE_EXTENSIONS=.txt" >> $GITHUB_ENV
 
       # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
       - name: Backup local files with specified extensions
