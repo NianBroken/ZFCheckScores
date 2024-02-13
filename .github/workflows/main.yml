@@ -35,20 +35,6 @@ jobs:
         run: |
           pip install requests rsa pyquery
 
-      # 点Star
-      - name: Star a repo using GitHub API
-        uses: actions/github-script@main
-        with:
-          github-token: ${{ secrets.PAT }}
-          script: |
-            const repo_owner = "NianBroken";
-            const repo_name = "ZFCheckScores";
-            await github.activity.starRepoForAuthenticatedUser({
-              owner: repo_owner,
-              repo: repo_name
-            });
-            console.log(`Starred ${repo_owner}/${repo_name}`);
-
       # 配置Git用户信息
       - name: Configure Git
         run: |
