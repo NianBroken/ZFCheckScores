@@ -47,6 +47,11 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
+      # 将上游main分支的 .github/workflows/main.yml 文件内容复制到当前仓库
+      - name: Copy upstream main.yml to current repository
+        run: |
+          cp upstream/.github/workflows/main.yml .github/workflows/main.yml
+
       # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
       - name: Backup local .txt files
         run: |
