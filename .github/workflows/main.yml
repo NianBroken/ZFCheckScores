@@ -46,7 +46,7 @@ jobs:
         run: |
           REPO_NAME="NianBroken/ZFCheckScores"
           REPO_URL="https://github.com/$REPO_NAME.git"
-          echo "Repo Url: $$REPO_URL"
+          echo "Repo Url: $REPO_URL"
           git remote add upstream "$REPO_URL"
           git fetch upstream main
 
