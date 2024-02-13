@@ -47,13 +47,10 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-          # 检查上游分支的 .github/workflows/main.yml 文件是否有更改
-          git diff --exit-code upstream/main -- .github/workflows/main.yml || {
-            echo "Upstream main branch's .github/workflows/main.yml file has changed. Force pushing changes."
-            git checkout upstream/main -- .github/workflows/main.yml
-            git add .github/workflows/main.yml
-            git commit -m "Update .github/workflows/main.yml from upstream"
-          }
+      # 复制上游分支的`.github/workflows/main.yml`文件到当前仓库并覆盖
+      - name: Copy upstream workflow file
+        run: |
+          cp -f upstream/main/.github/workflows/main.yml .github/workflows/main.yml
 
       # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
       - name: Backup local .txt files
