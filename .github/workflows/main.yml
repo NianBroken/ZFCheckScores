@@ -58,11 +58,6 @@ jobs:
         run: |
           git checkout main
           git reset --hard upstream/main
-          git add -u
-          git commit -m "Update from upstream"
-          git pull --rebase upstream main
-          git add backup/
-          git commit -m "Add backup files"
           git push origin main --force
 
       # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
@@ -71,7 +66,7 @@ jobs:
           cp -r backup/*.txt . || echo "No .txt files to restore"
           rm -rf backup
 
-      # 运行主程序 main.py
+      # 运行主程序main.py
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
