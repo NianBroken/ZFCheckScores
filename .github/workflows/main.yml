@@ -71,7 +71,7 @@ jobs:
           cp -r backup/*.txt . || echo "No .txt files to restore"
           rm -rf backup
 
-      # 运行主程序main.py
+      # 运行主程序 main.py
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
