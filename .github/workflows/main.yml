@@ -44,10 +44,10 @@ jobs:
       # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
       - name: Fetch upstream changes
         run: |
-          git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
+          git remote add upstream NianBroken/ZFCheckScores
           git fetch upstream main
 
-      # 对比当前分支的主要工作流文件与上游分支的主要工作流文件是否一致
+      # 对比当前分支的main.yml文件与上游分支的main.yml文件是否一致
       - name: Compare main.yml files
         run: |
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
