@@ -3,7 +3,7 @@ name: CheckScores
 on:
   schedule:
     - cron: "*/30 * * * *" # 每30分钟执行一次
-  workflow_dispatch:
+  workflow_dispatch: # 可以手动执行
     inputs:
       force_push_message:
         description: "是否强制推送信息"
@@ -46,6 +46,15 @@ jobs:
         run: |
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
+
+      # 对比当前分支的主要工作流文件与上游分支的主要工作流文件是否一致
+      - name: Compare main.yml files
+        run: |
+          if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
+            echo "main.yml file is consistent"
+          else
+            echo "main.yml file is inconsistent"
+          fi
 
       # 定义备份和还原的文件后缀列表
       - name: Set file extensions
@@ -91,6 +100,7 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          git push origin main --force
           if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
             export FORCE_PUSH_MESSAGE="False"
           else
