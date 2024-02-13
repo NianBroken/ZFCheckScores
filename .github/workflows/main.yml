@@ -55,10 +55,10 @@ jobs:
         run: |
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "main.yml file is consistent"
-            echo "MAIN_YML_FILES_INCONSISTENT='False'" >> $GITHUB_ENV
+            echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_ENV
           else
             echo "main.yml file is inconsistent"
-            echo "MAIN_YML_FILES_INCONSISTENT='True'" >> $GITHUB_ENV
+            echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_ENV
           fi
 
       # 定义备份和还原的文件后缀列表
