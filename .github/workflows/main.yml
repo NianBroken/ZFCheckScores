@@ -55,13 +55,9 @@ jobs:
           echo "FILE EXTENSIONS: $FILE_EXTENSIONS"
 
       # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
-      - name: Backup local files with specified extensions
+      - name: test
         run: |
-          mkdir -p backup
           echo "FILE EXTENSIONS: $FILE_EXTENSIONS"
-          for EXT in $FILE_EXTENSIONS; do
-            rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
-          done
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
