@@ -56,10 +56,10 @@ jobs:
       - name: Backup local files with specified extensions
         run: |
           mkdir -p backup
-          for EXT in $FILE_EXTENSIONS; do
+          (for EXT in $FILE_EXTENSIONS; do
             echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
-          done
+          done)
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -78,10 +78,10 @@ jobs:
       # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
       - name: Restore local files with specified extensions and delete backup
         run: |
-          for EXT in $FILE_EXTENSIONS; do
+          (for EXT in $FILE_EXTENSIONS; do
             echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
-          done
+          done)
           rm -rf backup
 
       # 运行主程序main.py
