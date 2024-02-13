@@ -69,12 +69,19 @@ jobs:
             echo "main.yml file is inconsistent"
           else
             echo "main.yml file is consistent"
+            # 移除main.yml文件，以允许它不被修改
+            git restore --staged .github/workflows/main.yml
           fi
 
-      # 排除.github/workflows/main.yml文件，避免对其进行任何修改
-      - name: Exclude main.yml from changes
+      # 将其他更改添加到暂存区
+      - name: Add other changes
         run: |
-          git restore --staged .github/workflows/main.yml
+          git add .
+
+      # 提交更改到Git仓库
+      - name: Commit changes
+        run: |
+          git commit -m "Update from GitHub Actions" || true
 
       # 将更改强制推送到main分支
       - name: Force push changes to main branch
