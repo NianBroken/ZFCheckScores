@@ -61,26 +61,24 @@ jobs:
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
-      # 检查当前分支的.github/workflows/main.yml文件与上游分支的是否一致
-      - name: Check consistency of main.yml file
+      # 检查当前分支的.github/workflows/main.yml文件是否与上游分支的一致
+      - name: Check if main.yml file is consistent
         run: |
-          if ! cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
+          DIFF=$(git diff --name-only upstream/main .github/workflows/main.yml)
+          if [[ -n "$DIFF" ]]; then
             echo "main.yml file is inconsistent"
-            touch exclude_main_file_flag
+          else
+            echo "main.yml file is consistent"
           fi
 
-      # 将上游main分支的更改强制推送到当前main分支（如果存在，则排除.github/workflows/main.yml文件）
-      - name: Force push changes from upstream to current main branch
+      # 排除.github/workflows/main.yml文件，避免对其进行任何修改
+      - name: Exclude main.yml from changes
         run: |
-          git checkout main
-          git reset --hard upstream/main
-          if [ -f exclude_main_file_flag ]; then
-            git reset HEAD .github/workflows/main.yml
-            git checkout -- .github/workflows/main.yml
-            rm exclude_main_file_flag
-          fi
-          git add .
-          git commit -m "Update from GitHub Actions" || true
+          git restore --staged .github/workflows/main.yml
+
+      # 将更改强制推送到main分支
+      - name: Force push changes to main branch
+        run: |
           git push origin main --force
 
       # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
