@@ -51,7 +51,7 @@ jobs:
       - name: Backup local .txt files
         run: |
           mkdir -p backup
-          find . -type f -name "*.txt" -exec cp --parents {} backup/ \; || echo "No .txt files to backup"
+          rsync -av --include="*/" --include="*.txt" --exclude="*" ./ backup/
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -70,7 +70,7 @@ jobs:
       # 从备份目录将.txt文件还原到当前目录及子目录中，然后删除备份目录
       - name: Restore local .txt files and delete backup
         run: |
-          find backup -type f -name "*.txt" -exec cp --parents {} . \; || echo "No .txt files to restore"
+          rsync -av --include="*/" --include="*.txt" --exclude="*" backup/ ./
           rm -rf backup
 
       # 运行主程序main.py
@@ -130,7 +130,7 @@ jobs:
       - name: Add changes
         run: |
           git add .
-
+·
       # 提交更改到Git仓库
       - name: Commit changes
         run: |
