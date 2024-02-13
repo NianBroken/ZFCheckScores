@@ -47,19 +47,11 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-          # 检查是否需要更新 .github/workflows/main.yml 文件
-          if git diff --quiet HEAD:.github/workflows/main.yml upstream/main:.github/workflows/main.yml; then
-            echo "No changes to .github/workflows/main.yml"
-          else
-            echo "Updating .github/workflows/main.yml from upstream"
-            git show upstream/main:.github/workflows/main.yml > .github/workflows/main.tmp.yml
-          fi
-
       # 定义备份和还原的文件后缀列表
       - name: Set file extensions
         run: |
           # 以空格分隔多个文件后缀
-          echo "FILE_EXTENSIONS=.txt" >> $GITHUB_ENV
+          echo "FILE_EXTENSIONS=.txt .yml" >> $GITHUB_ENV
 
       # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
       - name: Backup local files with specified extensions
@@ -72,14 +64,8 @@ jobs:
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
         run: |
-          if [ -f .github/workflows/main.tmp.yml ]; then
-            mv .github/workflows/main.tmp.yml .github/workflows/main.yml
-            git add .github/workflows/main.yml
-          fi
-
           git checkout main
           git reset --hard upstream/main
-          git push origin main --force
 
       # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
       - name: Restore local files with specified extensions and delete backup
