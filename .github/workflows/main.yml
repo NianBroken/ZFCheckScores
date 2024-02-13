@@ -47,11 +47,18 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # 创建一个备份目录，并将当前目录及子目录中的所有.txt文件复制到备份目录，并保持路径，输出文件路径
-      - name: Backup local .txt files
+      # 文件后缀列表
+      - name: Set file extensions
+        run: |
+          FILE_EXTENSIONS=".txt .jpg .png" # 以空格分隔多个文件后缀
+
+      # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
+      - name: Backup local files with specified extensions
         run: |
           mkdir -p backup
-          rsync -av --include="*/" --include="*.txt" --exclude="*" ./ backup/ | awk '{print $NF}'
+          for EXT in $FILE_EXTENSIONS; do
+            rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
+          done
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -67,10 +74,12 @@ jobs:
           echo "3. 点击 Update branch 或 Discard xxx commits";
           done; exit 1)
 
-      # 从备份目录将.txt文件还原到当前目录及子目录中，然后删除备份目录，输出文件路径
-      - name: Restore local .txt files and delete backup
+      # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
+      - name: Restore local files with specified extensions and delete backup
         run: |
-          rsync -av --include="*/" --include="*.txt" --exclude="*" backup/ ./ | awk '{print $NF}'
+          for EXT in $FILE_EXTENSIONS; do
+            rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
+          done
           rm -rf backup
 
       # 运行主程序main.py
