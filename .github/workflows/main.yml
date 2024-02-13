@@ -55,10 +55,10 @@ jobs:
         run: |
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "main.yml file is consistent"
-            export MAIN_YML_FILES_INCONSISTENT="False"
+            echo "MAIN_YML_FILES_INCONSISTENT='False'" >> $GITHUB_ENV
           else
             echo "main.yml file is inconsistent"
-            export MAIN_YML_FILES_INCONSISTENT="True"
+            echo "MAIN_YML_FILES_INCONSISTENT='True'" >> $GITHUB_ENV
           fi
 
       # 定义备份和还原的文件后缀列表
@@ -130,7 +130,7 @@ jobs:
           fi
           # 方便通过截图快速定位到用户
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
-          echo "main.yml Files Inconsistent: ${{ env.MAIN_YML_FILES_INCONSISTENT }}"
+          echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
           echo "Triggered By: ${{ github.event_name }}"
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
