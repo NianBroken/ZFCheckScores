@@ -325,6 +325,7 @@ if main_yml_files_inconsistent:
         f"2. 点击 Sync fork\n"
         f"3. 点击 Update branch 或 Discard xxx commits\n"
         f"------\n"
+        f"{integrated_send_info}"
     )
 
 # 整合首次运行时需要使用到的所有信息
