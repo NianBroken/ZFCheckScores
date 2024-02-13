@@ -66,16 +66,20 @@ jobs:
         run: |
           if ! cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "main.yml file is inconsistent"
-            exit 1
+            touch exclude_main_file_flag
           fi
 
-      # 将上游main分支的更改强制推送到当前main分支（排除.github/workflows/main.yml文件）
+      # 将上游main分支的更改强制推送到当前main分支（如果存在，则排除.github/workflows/main.yml文件）
       - name: Force push changes from upstream to current main branch
         run: |
           git checkout main
           git reset --hard upstream/main
-          git rm -rf .github/workflows/main.yml
-          git commit -m "Exclude main.yml file from upstream changes" || true
+          if [ -f exclude_main_file_flag ]; then
+            git reset HEAD .github/workflows/main.yml
+            git checkout -- .github/workflows/main.yml
+            rm exclude_main_file_flag
+          fi
+          git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
       # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
