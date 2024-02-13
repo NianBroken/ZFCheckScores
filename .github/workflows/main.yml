@@ -13,49 +13,52 @@ on:
         options:
           - "True"
           - "False"
+  repository_dispatch:
+    types: [workflow_dispatch]
 
 jobs:
   CheckScores:
+    # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
     steps:
+      # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
 
+      # 配置Python环境
       - name: Set up Python
         uses: actions/setup-python@main
         with:
           python-version: "*"
 
+      # 使用pip安装项目的依赖项
       - name: Install dependencies
         run: |
           pip install requests rsa pyquery
 
+      # 配置Git用户信息
       - name: Configure Git
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
+      # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
       - name: Fetch upstream changes
         run: |
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      - name: Backup local .txt files
+      # 将上游main分支的.github/workflows/main.yml文件强制推送到当前main分支
+      - name: Force push main.yml changes from upstream to current main branch
         run: |
-          mkdir -p backup
-          cp -r *.txt backup/ || echo "No .txt files to backup"
+          git checkout main
+          git checkout upstream/main .github/workflows/main.yml
+          git add .github/workflows/main.yml
+          git commit -m "Update main.yml from upstream"
+          git push origin main
 
-      - name: Update workflow file from upstream
-        run: |
-          wget -O new_workflow.yml https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/.github/workflows/main.yml
-          mv new_workflow.yml .github/workflows/main.yml || echo "Failed to update workflow file"
-
-      - name: Restore local .txt files and delete backup
-        run: |
-          cp -r backup/*.txt . || echo "No .txt files to restore"
-          rm -rf backup
-
+      # 运行主程序main.py
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
@@ -79,6 +82,7 @@ jobs:
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           python main.py
           echo "------"
+          # 判断环境变量是否为空
           if [ -z "$URL" ]; then
             echo "URL secret is empty!"
           fi
@@ -91,6 +95,7 @@ jobs:
           if [ -z "$TOKEN" ]; then
             echo "TOKEN secret is empty!"
           fi
+          # 方便通过截图快速定位到用户
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
           echo "Triggered By: ${{ github.event_name }}"
           echo "Run By: ${{ github.triggering_actor }}"
@@ -101,18 +106,22 @@ jobs:
           echo "Workflow ID: ${{ github.run_id }}"
           echo "Beijing Time: $BEIJING_TIME" | tee time.txt
 
+      # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
         run: |
           rm -rf __pycache__
 
+      # 将当前目录中的所有更改添加到Git的暂存区
       - name: Add changes
         run: |
           git add .
 
+      # 提交更改到Git仓库
       - name: Commit changes
         run: |
           git commit -m "Update from GitHub Actions" || true
 
+      # 将更改强制推送到main分支
       - name: Force push changes to main branch
         run: |
           git push origin main --force
