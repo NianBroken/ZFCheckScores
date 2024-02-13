@@ -130,7 +130,7 @@ jobs:
       - name: Add changes
         run: |
           git add .
-·
+
       # 提交更改到Git仓库
       - name: Commit changes
         run: |
