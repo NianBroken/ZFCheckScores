@@ -35,6 +35,13 @@ jobs:
         run: |
           pip install requests rsa pyquery
 
+      # 点Star
+      - name: Add star to repository
+              run: |
+                curl -X PUT \
+                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                  https://api.github.com/user/starred/NianBroken/ZFCheckScores
+
       # 配置Git用户信息
       - name: Configure Git
         run: |
