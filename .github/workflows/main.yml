@@ -2,7 +2,7 @@ name: CheckScores
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # 每30分钟执行一次test
+    - cron: "*/30 * * * *" # 每30分钟执行一次
   workflow_dispatch:
     inputs:
       force_push_message:
@@ -50,7 +50,7 @@ jobs:
       # 将上游main分支的 .github/workflows/main.yml 文件内容复制到当前仓库
       - name: Copy upstream main.yml to current repository
         run: |
-          cp upstream/.github/workflows/main.yml .github/workflows/main.yml
+          cp /.github/workflows/main.yml .github/workflows/main.yml
 
       # 创建一个备份目录，并将当前目录中的所有.txt文件复制到备份目录
       - name: Backup local .txt files
