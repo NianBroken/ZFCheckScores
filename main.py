@@ -25,6 +25,9 @@ github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
 github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
 github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
+main_yml_files_inconsistent = os.environ.get("MAIN_YML_FILES_INCONSISTENT")
+
+print(f"test：{main_yml_files_inconsistent}")
 
 # 将字符串转换为布尔值
 force_push_message = force_push_message == "True"
