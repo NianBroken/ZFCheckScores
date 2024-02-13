@@ -57,6 +57,7 @@ jobs:
         run: |
           mkdir -p backup
           for EXT in $FILE_EXTENSIONS; do
+            echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
@@ -78,6 +79,7 @@ jobs:
       - name: Restore local files with specified extensions and delete backup
         run: |
           for EXT in $FILE_EXTENSIONS; do
+            echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
           done
           rm -rf backup
