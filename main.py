@@ -30,7 +30,7 @@ main_yml_files_inconsistent = os.environ.get("MAIN_YML_FILES_INCONSISTENT")
 # 将字符串转换为布尔值
 # 是否强制推送信息
 force_push_message = force_push_message == "True"
-# 当前分支的main.yml文件与上游分支是否不一致
+# 当前分支的main.yml文件与上游分支的main.yml文件是否不一致
 main_yml_files_inconsistent = main_yml_files_inconsistent == "True"
 
 # 初始化运行日志
@@ -317,6 +317,7 @@ integrated_send_info = (
     f"{workflow_info}"
 )
 
+# 当前分支的main.yml文件与上游分支的main.yml文件不一致时需要使用到的所有信息
 if main_yml_files_inconsistent:
     integrated_send_info = (
         f"警告：你需要手动同步上游分支\n"
