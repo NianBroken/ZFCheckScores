@@ -24,7 +24,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@main
 
-      # 配置Python环境
+      # 配置Python环境 "*"表示最新版
       - name: Set up Python
         uses: actions/setup-python@main
         with:

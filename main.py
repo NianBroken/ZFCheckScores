@@ -27,10 +27,11 @@ beijing_time = os.environ.get("BEIJING_TIME")
 github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
 main_yml_files_inconsistent = os.environ.get("MAIN_YML_FILES_INCONSISTENT")
 
-print(f"test：{main_yml_files_inconsistent}")
-
 # 将字符串转换为布尔值
+# 是否强制推送信息
 force_push_message = force_push_message == "True"
+# 当前分支的main.yml文件与上游分支是否不一致
+main_yml_files_inconsistent = main_yml_files_inconsistent == "True"
 
 # 初始化运行日志
 run_log = ""
@@ -208,7 +209,9 @@ if grade:
     )
 
 # 读取grade.txt和old_grade.txt文件的内容
-with open(grade_file_path, "r") as grade_file, open(old_grade_file_path, "r") as old_grade_file:
+with open(grade_file_path, "r") as grade_file, open(
+    old_grade_file_path, "r"
+) as old_grade_file:
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
@@ -313,6 +316,16 @@ integrated_send_info = (
     f"{selected_courses_filtering}\n"
     f"{workflow_info}"
 )
+
+if main_yml_files_inconsistent:
+    integrated_send_info = (
+        f"你需要手动同步上游分支\n"
+        f"同步方法如下：\n"
+        f"1. 打开你的仓库首页：https://github.com/{repository_name}\n"
+        f"2. 点击 Sync fork\n"
+        f"3. 点击 Update branch 或 Discard xxx commits\n"
+        f"------\n"
+    )
 
 # 整合首次运行时需要使用到的所有信息
 first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_info}"
