@@ -61,11 +61,21 @@ jobs:
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
+      # 比较当前分支的.main.yml文件和上游分支的.main.yml文件是否一致
+      - name: Check if main.yml file is consistent
+        run: |
+          if ! cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
+            echo "main.yml file is inconsistent"
+            touch .github/workflows/main.yml # 创建一个空的.main.yml文件
+          fi
+
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
         run: |
           git checkout main
           git reset --hard upstream/main
+          git add .
+          git commit -m "Synchronize with upstream main branch"
           git push origin main --force
 
       # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
