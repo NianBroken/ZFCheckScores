@@ -51,13 +51,17 @@ jobs:
       - name: Set file extensions
         run: |
           # 以空格分隔多个文件后缀
-          FILE_EXTENSIONS=".txt .jpg .png" >> $GITHUB_ENV
-          echo "FILE EXTENSIONS: $FILE_EXTENSIONS"
+          echo "FILE_EXTENSIONS=.txt .jpg .png" >> $GITHUB_ENV
+          echo "FILE_EXTENSIONS: $FILE_EXTENSIONS"
 
       # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
-      - name: test
+      - name: Backup local files with specified extensions
         run: |
-          echo "FILE EXTENSIONS: $FILE_EXTENSIONS"
+          mkdir -p backup
+          echo "FILE_EXTENSIONS: $FILE_EXTENSIONS"
+          for EXT in $FILE_EXTENSIONS; do
+            rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
+          done
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
