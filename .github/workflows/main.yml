@@ -51,7 +51,7 @@ jobs:
       - name: Define file extensions
         run: |
           # 可以根据需要添加其他文件后缀，以空格分隔
-          FILE_EXTENSIONS=".txt .yml"
+          FILE_EXTENSIONS=".txt .txt123"
 
       # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
       - name: Backup local files with specified extensions
