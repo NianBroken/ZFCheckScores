@@ -56,10 +56,12 @@ jobs:
       - name: Backup local files with specified extensions
         run: |
           mkdir -p backup
+          echo "$FILE_EXTENSIONS"
           (for EXT in $FILE_EXTENSIONS; do
             echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
-          done)
+          done;)
+          echo "$EXT"
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -81,7 +83,7 @@ jobs:
           (for EXT in $FILE_EXTENSIONS; do
             echo "$EXT"
             rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
-          done)
+          done;)
           rm -rf backup
 
       # 运行主程序main.py
