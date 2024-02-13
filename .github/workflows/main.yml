@@ -2,7 +2,7 @@ name: CheckScores
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # 每30分钟执行一次123
+    - cron: "*/30 * * * *" # 每30分钟执行一次1234
   workflow_dispatch:
     inputs:
       force_push_message:
