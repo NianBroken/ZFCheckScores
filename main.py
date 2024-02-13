@@ -297,6 +297,7 @@ workflow_info = (
     f"------\n"
     f"工作流信息：\n"
     f"Force Push Message：{force_push_message}\n"
+    f"main.yml Files Inconsistent：{main_yml_files_inconsistent}\n"
     f"Triggered By：{github_event_name}\n"
     f"Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
