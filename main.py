@@ -319,7 +319,7 @@ integrated_send_info = (
 
 if main_yml_files_inconsistent:
     integrated_send_info = (
-        f"你需要手动同步上游分支\n"
+        f"警告：你需要手动同步上游分支\n"
         f"同步方法如下：\n"
         f"1. 打开你的仓库首页：https://github.com/{repository_name}\n"
         f"2. 点击 Sync fork\n"
