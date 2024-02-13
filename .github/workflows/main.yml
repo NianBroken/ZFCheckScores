@@ -79,6 +79,7 @@ jobs:
             git checkout -- .github/workflows/main.yml
             rm exclude_main_file_flag
           fi
+          git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
