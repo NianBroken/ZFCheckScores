@@ -61,6 +61,8 @@ jobs:
           git add -u
           git commit -m "Update from upstream"
           git pull --rebase upstream main
+          git add backup/
+          git commit -m "Add backup files"
           git push origin main --force
 
       # 从备份目录将.txt文件还原到当前目录，然后删除备份目录
