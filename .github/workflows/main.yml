@@ -93,6 +93,7 @@ jobs:
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
+          MAIN_YML_FILES_INCONSISTENT: $MAIN_YML_FILES_INCONSISTENT
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
