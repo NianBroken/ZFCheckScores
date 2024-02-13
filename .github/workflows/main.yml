@@ -2,7 +2,7 @@ name: CheckScores
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # 每30分钟执行一次123
+    - cron: "*/30 * * * *" # 每30分钟执行一次
   workflow_dispatch:
     inputs:
       force_push_message:
@@ -13,8 +13,6 @@ on:
         options:
           - "True"
           - "False"
-  repository_dispatch:
-    types: [workflow_dispatch]
 
 jobs:
   CheckScores:
@@ -49,14 +47,31 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # 将上游main分支的.github/workflows/main.yml文件强制推送到当前main分支
-      - name: Force push main.yml changes from upstream to current main branch
+      # 创建一个备份目录，并将当前目录及子目录中的所有.txt文件复制到备份目录，并保持路径
+      - name: Backup local .txt files
+        run: |
+          mkdir -p backup
+          find . -type f -name "*.txt" -exec cp --parents {} backup/ \; || echo "No .txt files to backup"
+
+      # 将上游main分支的更改强制推送到当前main分支
+      - name: Force push changes from upstream to current main branch
         run: |
           git checkout main
-          git checkout upstream/main .github/workflows/main.yml
-          git add .github/workflows/main.yml
-          git commit -m "Update main.yml from upstream"
-          git push origin main
+          git reset --hard upstream/main
+          git push origin main --force || (for i in {1..10}; do
+          echo "------" &&
+          echo "你需要手动同步上游分支" &&
+          echo "同步方法如下：" &&
+          echo "1. 打开你的仓库首页：https://github.com/${{ github.repository }}" &&
+          echo "2. 点击 Sync fork"&&
+          echo "3. 点击 Update branch 或 Discard xxx commits";
+          done; exit 1)
+
+      # 从备份目录将.txt文件还原到当前目录及子目录中，然后删除备份目录
+      - name: Restore local .txt files and delete backup
+        run: |
+          find backup -type f -name "*.txt" -exec cp --parents {} . \; || echo "No .txt files to restore"
+          rm -rf backup
 
       # 运行主程序main.py
       - name: Run main.py
