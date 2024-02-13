@@ -61,13 +61,16 @@ jobs:
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
+      # 使用git checkout只检出除了.github/workflows/main.yml以外的文件
+      - name: Checkout upstream changes excluding main.yml
+        run: |
+          git checkout upstream/main -- ':!/.github/workflows/main.yml'
+
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
         run: |
           git checkout main
           git reset --hard upstream/main
-          git checkout HEAD .github/workflows/main.yml
-          git commit -m "Update from upstream" || true
           git push origin main --force || (for i in {1..10}; do
           echo "------" &&
           echo "你需要手动同步上游分支" &&
