@@ -47,11 +47,16 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # 创建一个备份目录，并将当前目录及子目录中的所有.txt文件复制到备份目录，并保持路径
-      - name: Backup local .txt files
+      # 定义文件后缀变量
+      - name: Define file extensions
+        run: |
+          FILE_EXTENSIONS=".txt .jpg .png" # 你可以在这里添加更多的文件后缀，以空格分隔
+
+      # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
+      - name: Backup local files
         run: |
           mkdir -p backup
-          rsync -av --include="*/" --include="*.txt" --exclude="*" ./ backup/
+          rsync -av --include="*/" $(echo $FILE_EXTENSIONS | sed 's/\./\\\./g' | sed 's/ / --include="*"/g' | sed 's/^/ --include="*"/') --exclude="*" ./ backup/
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
@@ -67,10 +72,10 @@ jobs:
           echo "3. 点击 Update branch 或 Discard xxx commits";
           done; exit 1)
 
-      # 从备份目录将.txt文件还原到当前目录及子目录中，然后删除备份目录
-      - name: Restore local .txt files and delete backup
+      # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
+      - name: Restore local files and delete backup
         run: |
-          rsync -av --include="*/" --include="*.txt" --exclude="*" backup/ ./
+          rsync -av --include="*/" $(echo $FILE_EXTENSIONS | sed 's/\./\\\./g' | sed 's/ / --include="*"/g' | sed 's/^/ --include="*"/') --exclude="*" backup/ ./
           rm -rf backup
 
       # 运行主程序main.py
