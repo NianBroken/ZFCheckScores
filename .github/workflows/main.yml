@@ -47,7 +47,7 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # 文件后缀列表
+      # 定义文件后缀列表
       - name: Set file extensions
         run: |
           # 以空格分隔多个文件后缀
