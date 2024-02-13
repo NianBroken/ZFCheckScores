@@ -47,10 +47,13 @@ jobs:
           git remote add upstream https://github.com/NianBroken/ZFCheckScores.git
           git fetch upstream main
 
-      # 让Git忽略工作流文件的更改
-      - name: Ignore workflow file changes
-        run: |
-          git update-index --assume-unchanged .github/workflows/main.yml
+          # 检查是否需要更新 .github/workflows/main.yml 文件
+          if git diff --quiet HEAD:.github/workflows/main.yml upstream/main:.github/workflows/main.yml; then
+            echo "No changes to .github/workflows/main.yml"
+          else
+            echo "Updating .github/workflows/main.yml from upstream"
+            git show upstream/main:.github/workflows/main.yml > .github/workflows/main.tmp.yml
+          fi
 
       # 定义备份和还原的文件后缀列表
       - name: Set file extensions
@@ -69,6 +72,11 @@ jobs:
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
         run: |
+          if [ -f .github/workflows/main.tmp.yml ]; then
+            mv .github/workflows/main.tmp.yml .github/workflows/main.yml
+            git add .github/workflows/main.yml
+          fi
+
           git checkout main
           git reset --hard upstream/main
           git push origin main --force
