@@ -4,7 +4,7 @@ run-name: ${{ github.workflow }} ${{ github.sha }}
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # 每30分钟执行一次
+    - cron: "*/30 * * * *" # 每30分钟自动执行一次
   workflow_dispatch: # 可以手动执行
     inputs:
       force_push_message:
