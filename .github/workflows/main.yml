@@ -1,6 +1,6 @@
 name: CheckScores
 
-run-name: ${{ github.actor }} 这是测试
+run-name: ${{ github.sha }} ${{ github.workflow }}
 
 on:
   schedule:
