@@ -1,6 +1,6 @@
 name: CheckScores
 
-run-name: ${{ github.sha }} ${{ github.workflow }}
+run-name: ${{ github.workflow }} ${{ github.sha }}
 
 on:
   schedule:
