@@ -96,7 +96,10 @@ jobs:
 
   CheckScores:
     name: CheckScores
+
+    # SyncFork执行完成后运行
     needs: SyncFork
+
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
@@ -163,13 +166,13 @@ jobs:
           # 方便通过截图快速定位到用户
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
           echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
-          echo "Triggered By: ${{ github.event_name }}"
-          echo "Run By: ${{ github.triggering_actor }}"
-          echo "Repository Name: ${{ github.repository }}"
-          echo "Commit SHA: ${{ github.sha }}"
-          echo "Workflow Name: ${{ github.workflow }}"
-          echo "Workflow Number: ${{ github.run_number }}"
-          echo "Workflow ID: ${{ github.run_id }}"
+          echo "Triggered By: $GITHUB_EVENT_NAME"
+          echo "Run By: $GITHUB_TRIGGERING_ACTOR"
+          echo "Repository Name: $REPOSITORY_NAME"
+          echo "Commit SHA: $GITHUB_SHA"
+          echo "Workflow Name: $GITHUB_WORKFLOW"
+          echo "Workflow Number: $GITHUB_RUN_NUMBER"
+          echo "Workflow ID: $GITHUB_RUN_ID"
           echo "Beijing Time: $BEIJING_TIME" # | tee time.txt 去掉注释后可将时间写入文件
 
       # 删除__pycache__文件夹
