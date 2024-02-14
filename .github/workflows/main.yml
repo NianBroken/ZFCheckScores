@@ -88,6 +88,9 @@ jobs:
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
+    outputs:
+      MAIN_YML_FILES_INCONSISTENT: ${{ steps.Compare.outputs.MAIN_YML_FILES_INCONSISTENT }}
+
   CheckScores:
     name: CheckScores
     needs: SyncFork
