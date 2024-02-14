@@ -1,0 +1,25 @@
+name: Date Workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    name: Get Current Date
+    runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.set-date.outputs.date }}  # 定义作业1的输出变量
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Date Variable
+        id: set-date
+        run: echo "::set-output name=date::2020"
+
+  job2:
+    name: Output Date from Job 1
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - name: Print Date from Job 1
+        run: echo "The date from Job 1 is ${{ needs.job1.outputs.date }}"

@@ -19,8 +19,13 @@ on:
 jobs:
   SyncFork:
     name: SyncFork
+
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
+
+    # 定义作业SyncFork的输出变量
+    outputs:
+      MAIN_YML_FILES_INCONSISTENT: ${{ steps.compare_main_yml_files.outputs.MAIN_YML_FILES_INCONSISTENT }}
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
@@ -44,13 +49,14 @@ jobs:
 
       # 对比当前分支的main.yml文件与上游分支的main.yml文件是否一致
       - name: Compare main.yml files
+        id: compare_main_yml_files
         run: |
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "main.yml file is consistent"
-            echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_ENV
+            echo "::set-output name=MAIN_YML_FILES_INCONSISTENT::False"
           else
             echo "main.yml file is inconsistent"
-            echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_ENV
+            echo "::set-output name=MAIN_YML_FILES_INCONSISTENT::True"
           fi
 
       # 定义备份和还原的文件后缀列表
@@ -87,9 +93,6 @@ jobs:
           git add .
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
-
-    outputs:
-      MAIN_YML_FILES_INCONSISTENT: ${{ steps.Compare.outputs.MAIN_YML_FILES_INCONSISTENT }}
 
   CheckScores:
     name: CheckScores
@@ -166,7 +169,7 @@ jobs:
           echo "Workflow Name: ${{ github.workflow }}"
           echo "Workflow Number: ${{ github.run_number }}"
           echo "Workflow ID: ${{ github.run_id }}"
-          echo "Beijing Time: $BEIJING_TIME" | tee time.txt
+          echo "Beijing Time: $BEIJING_TIME" | # tee time.txt 去掉注释后可将时间写入文件
 
       # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
