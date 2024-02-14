@@ -88,14 +88,14 @@ jobs:
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
-    env:
-      MAIN_YML_FILES_INCONSISTENT: ${{ env.MAIN_YML_FILES_INCONSISTENT }}
-
   CheckScores:
     name: CheckScores
     needs: SyncFork
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
+
+    env:
+      MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
