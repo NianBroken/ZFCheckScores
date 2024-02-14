@@ -33,8 +33,6 @@ force_push_message = force_push_message == "True"
 # 当前分支的main.yml文件与上游分支的main.yml文件是否不一致
 main_yml_files_inconsistent = main_yml_files_inconsistent == "True"
 
-print(f"test:{main_yml_files_inconsistent}")
-
 # 初始化运行日志
 run_log = ""
 
