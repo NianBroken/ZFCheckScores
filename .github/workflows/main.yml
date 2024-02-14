@@ -26,15 +26,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@main
 
-      # 配置Python环境
-      - name: Set up Python
-        uses: actions/setup-python@main
-
-      # 使用pip安装项目的依赖项
-      - name: Install dependencies
-        run: |
-          pip install requests rsa pyquery
-
       # 配置Git用户信息
       - name: Configure Git
         run: |
@@ -49,17 +40,6 @@ jobs:
           echo "Repo Url: $REPO_URL"
           git remote add upstream "$REPO_URL"
           git fetch upstream main
-
-      # 对比当前分支的main.yml文件与上游分支的main.yml文件是否一致
-      - name: Compare main.yml files
-        run: |
-          if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
-            echo "main.yml file is consistent"
-            echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_ENV
-          else
-            echo "main.yml file is inconsistent"
-            echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_ENV
-          fi
 
       # 定义备份和还原的文件后缀列表
       - name: Set file extensions
@@ -93,7 +73,7 @@ jobs:
       - name: Force push changes to main branch
         run: |
           git add .
-          git commit -m "Update branch" || true
+          git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
   CheckScores:
@@ -119,6 +99,17 @@ jobs:
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
+
+      # 对比当前分支的main.yml文件与上游分支的main.yml文件是否一致
+      - name: Compare main.yml files
+        run: |
+          if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
+            echo "main.yml file is consistent"
+            echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_ENV
+          else
+            echo "main.yml file is inconsistent"
+            echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_ENV
+          fi
 
       # 运行主程序main.py
       - name: Run main.py
