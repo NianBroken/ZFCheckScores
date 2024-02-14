@@ -96,89 +96,89 @@ jobs:
           git commit -m "Update branch" || true
           git push origin main --force
 
-CheckScores:
-  # 在最新版的Ubuntu系统上运行
-  runs-on: ubuntu-latest
+  CheckScores:
+    # 在最新版的Ubuntu系统上运行
+    runs-on: ubuntu-latest
 
-  steps:
-    # 使用GitHub Actions提供的动作来检出代码库
-    - name: Checkout Repository
-      uses: actions/checkout@main
+    steps:
+      # 使用GitHub Actions提供的动作来检出代码库
+      - name: Checkout Repository
+        uses: actions/checkout@main
 
-    # 配置Python环境
-    - name: Set up Python
-      uses: actions/setup-python@main
+      # 配置Python环境
+      - name: Set up Python
+        uses: actions/setup-python@main
 
-    # 使用pip安装项目的依赖项
-    - name: Install dependencies
-      run: |
-        pip install requests rsa pyquery
+      # 使用pip安装项目的依赖项
+      - name: Install dependencies
+        run: |
+          pip install requests rsa pyquery
 
-    # 配置Git用户信息
-    - name: Configure Git
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
+      # 配置Git用户信息
+      - name: Configure Git
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
 
-    # 运行主程序main.py
-    - name: Run main.py
-      env:
-        FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
-        URL: ${{ secrets.URL }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        TOKEN: ${{ secrets.TOKEN }}
-        GITHUB_EVENT_NAME: ${{ github.event_name }}
-        GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
-        REPOSITORY_NAME: ${{ github.repository }}
-        GITHUB_SHA: ${{ github.sha }}
-        GITHUB_WORKFLOW: ${{ github.workflow }}
-        GITHUB_RUN_NUMBER: ${{ github.run_number }}
-        GITHUB_RUN_ID: ${{ github.run_id }}
-      run: |
-        if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
-          export FORCE_PUSH_MESSAGE="False"
-        else
-          export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
-        fi
-        export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
-        python main.py
-        echo "------"
+      # 运行主程序main.py
+      - name: Run main.py
+        env:
+          FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
+          URL: ${{ secrets.URL }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          REPOSITORY_NAME: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
+            export FORCE_PUSH_MESSAGE="False"
+          else
+            export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
+          fi
+          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          python main.py
+          echo "------"
 
-        # 判断环境变量是否为空
-        if [ -z "$URL" ]; then
-          echo "URL secret is empty!"
-        fi
-        if [ -z "$USERNAME" ]; then
-          echo "USERNAME secret is empty!"
-        fi
-        if [ -z "$PASSWORD" ]; then
-          echo "PASSWORD secret is empty!"
-        fi
-        if [ -z "$TOKEN" ]; then
-          echo "TOKEN secret is empty!"
-        fi
+          # 判断环境变量是否为空
+          if [ -z "$URL" ]; then
+            echo "URL secret is empty!"
+          fi
+          if [ -z "$USERNAME" ]; then
+            echo "USERNAME secret is empty!"
+          fi
+          if [ -z "$PASSWORD" ]; then
+            echo "PASSWORD secret is empty!"
+          fi
+          if [ -z "$TOKEN" ]; then
+            echo "TOKEN secret is empty!"
+          fi
 
-        # 方便通过截图快速定位到用户
-        echo "Force Push Message: $FORCE_PUSH_MESSAGE"
-        echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
-        echo "Triggered By: ${{ github.event_name }}"
-        echo "Run By: ${{ github.triggering_actor }}"
-        echo "Repository Name: ${{ github.repository }}"
-        echo "Commit SHA: ${{ github.sha }}"
-        echo "Workflow Name: ${{ github.workflow }}"
-        echo "Workflow Number: ${{ github.run_number }}"
-        echo "Workflow ID: ${{ github.run_id }}"
-        echo "Beijing Time: $BEIJING_TIME" | tee time.txt
+          # 方便通过截图快速定位到用户
+          echo "Force Push Message: $FORCE_PUSH_MESSAGE"
+          echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
+          echo "Triggered By: ${{ github.event_name }}"
+          echo "Run By: ${{ github.triggering_actor }}"
+          echo "Repository Name: ${{ github.repository }}"
+          echo "Commit SHA: ${{ github.sha }}"
+          echo "Workflow Name: ${{ github.workflow }}"
+          echo "Workflow Number: ${{ github.run_number }}"
+          echo "Workflow ID: ${{ github.run_id }}"
+          echo "Beijing Time: $BEIJING_TIME" | tee time.txt
 
-    # 删除__pycache__文件夹
-    - name: Delete __pycache__ folder
-      run: |
-        rm -rf __pycache__
+      # 删除__pycache__文件夹
+      - name: Delete __pycache__ folder
+        run: |
+          rm -rf __pycache__
 
-    # 将更改强制推送到main分支
-    - name: Force push changes to main branch
-      run: |
-        git add .
-        git commit -m "Update from GitHub Actions" || true
-        git push origin main --force
+      # 将更改强制推送到main分支
+      - name: Force push changes to main branch
+        run: |
+          git add .
+          git commit -m "Update from GitHub Actions" || true
+          git push origin main --force
