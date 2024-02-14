@@ -94,9 +94,6 @@ jobs:
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
-    env:
-      MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
-
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
@@ -158,7 +155,7 @@ jobs:
 
           # 方便通过截图快速定位到用户
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
-          echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
+          echo "main.yml Files Inconsistent: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}"
           echo "Triggered By: ${{ github.event_name }}"
           echo "Run By: ${{ github.triggering_actor }}"
           echo "Repository Name: ${{ github.repository }}"
