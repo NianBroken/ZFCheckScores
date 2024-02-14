@@ -1,5 +1,7 @@
 name: CheckScores
 
+run-name: ${{ github.actor }} 这是测试
+
 on:
   schedule:
     - cron: "*/30 * * * *" # 每30分钟执行一次
