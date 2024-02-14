@@ -88,6 +88,9 @@ jobs:
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
+      env:
+            MAIN_YML_FILES_INCONSISTENT: ${{ env.MAIN_YML_FILES_INCONSISTENT }}
+
   CheckScores:
     name: CheckScores
     needs: SyncFork
@@ -118,7 +121,6 @@ jobs:
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
-          MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
