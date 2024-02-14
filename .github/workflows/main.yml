@@ -73,10 +73,11 @@ jobs:
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
+      # 列出备份文件夹的文件夹结构
       - name: List Backup Folder Structure
         run: |
           echo "Backup Folder Structure:"
-          tree backup/
+          tree -a backup/
 
       # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
