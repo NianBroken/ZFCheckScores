@@ -88,8 +88,8 @@ jobs:
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
-      env:
-            MAIN_YML_FILES_INCONSISTENT: ${{ env.MAIN_YML_FILES_INCONSISTENT }}
+    env:
+      MAIN_YML_FILES_INCONSISTENT: ${{ env.MAIN_YML_FILES_INCONSISTENT }}
 
   CheckScores:
     name: CheckScores
