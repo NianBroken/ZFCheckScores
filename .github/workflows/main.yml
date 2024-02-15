@@ -4,12 +4,14 @@ name: CheckScores
 # 工作流运行的名称
 run-name: ${{ github.workflow }} ${{ github.sha }}
 
+# 指定此工作流的触发器
 on:
   schedule:
     - cron: "*/30 * * * *" # 每30分钟自动执行一次
   workflow_dispatch: # 可以手动执行
     inputs:
       force_push_message:
+        # 如果为True，则当次运行时无论成绩是否已更新，都会进行推送
         description: "Whether or not to force a push message?"
         required: true
         default: "False"
@@ -26,25 +28,24 @@ jobs:
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
-    # 定义作业SyncFork的输出变量
+    # 定义SyncFork的变量
     outputs:
       MAIN_YML_FILES_INCONSISTENT: ${{ steps.compare_main_yml_files.outputs.MAIN_YML_FILES_INCONSISTENT }}
 
     steps:
+      # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
-        run: |
-          # 使用GitHub Actions提供的动作来检出代码库
-          uses: actions/checkout@main
+        uses: actions/checkout@main
 
-      # 配置Git用户信息
       - name: Configure Git
         run: |
+          # 配置Git用户信息
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
       - name: Fetch upstream changes
         run: |
+          # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
           REPO_NAME="NianBroken/ZFCheckScores"
           REPO_URL="https://github.com/$REPO_NAME.git"
           echo "Repo Url: $REPO_URL"
@@ -69,43 +70,43 @@ jobs:
             "your code will have an uncontrollable fatal bug!"
           fi
 
-      # 定义备份和还原的文件后缀列表
       - name: Set file extensions
         run: |
-          # 以空格分隔多个文件后缀
+          # 定义备份和还原的文件后缀列表
           echo "FILE_EXTENSIONS=.txt .yml" >> $GITHUB_ENV
+          # 以空格分隔多个文件后缀
 
-      # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
       - name: Backup local files with specified extensions
         run: |
+          # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
           mkdir -p backup
           for EXT in $FILE_EXTENSIONS; do
             rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
-      # 列出备份文件夹的文件夹结构
       - name: List Backup Folder Structure
         run: |
+          # 列出备份文件夹的文件夹结构
           echo "Backup Folder Structure:"
           tree -a backup/
 
-      # 将上游main分支的更改强制推送到当前main分支
       - name: Force push changes from upstream to current main branch
         run: |
+          # 将上游main分支的更改强制推送到当前main分支
           git checkout main
           git reset --hard upstream/main
 
-      # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
       - name: Restore local files with specified extensions and delete backup
         run: |
+          # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
           for EXT in $FILE_EXTENSIONS; do
             rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
           done
           rm -rf backup
 
-      # 将更改强制推送到main分支
       - name: Force push changes to main branch
         run: |
+          # 将更改强制推送到main分支
           git add .
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
@@ -131,18 +132,17 @@ jobs:
         with:
           python-version: '*'
 
-      # 使用pip安装项目的依赖项
       - name: Install dependencies
         run: |
+          # 使用pip安装项目的依赖项
           pip install requests rsa pyquery
 
-      # 配置Git用户信息
       - name: Configure Git
         run: |
+          # 配置Git用户信息
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      # 运行主程序main.py
       - name: Run main.py
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
@@ -159,6 +159,7 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          # 运行主程序main.py
           if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
             export FORCE_PUSH_MESSAGE="False"
           else
@@ -194,14 +195,14 @@ jobs:
           echo "Workflow ID: $GITHUB_RUN_ID"
           echo "Beijing Time: $BEIJING_TIME"
 
-      # 删除__pycache__文件夹
       - name: Delete __pycache__ folder
         run: |
+          # 删除__pycache__文件夹
           rm -rf __pycache__
 
-      # 将更改强制推送到main分支
       - name: Force push changes to main branch
         run: |
+          # 将更改强制推送到main分支
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
