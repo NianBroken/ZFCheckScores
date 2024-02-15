@@ -57,11 +57,12 @@ jobs:
           else
             echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_OUTPUT
             echo "main.yml file is inconsistent"
-            echo "::error title=main.yml file is inconsistent!::\
-            The content of the 'main.yml' file in the current branch does not match \
-            the content of the 'main.yml' file in the upstream branch! You need to \
-            synchronize the upstream branch manually! If you don't synchronize, there \
-            is a chance that your code will have an uncontrollable fatal bug!"
+            echo "::error title=main.yml file is inconsistent!" \
+            "::The content of the 'main.yml' file in the current branch" \
+            "does not match the content of the 'main.yml' file in the" \
+            "upstream branch! You need to synchronize the upstream branch" \
+            "manually! If you don't synchronize, there is a chance that" \
+            "your code will have an uncontrollable fatal bug!"
           fi
 
       # 定义备份和还原的文件后缀列表
