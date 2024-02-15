@@ -143,7 +143,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Run main.py
+      - name: Run main program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
           MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
@@ -159,7 +159,8 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          # 运行主程序main.py
+          # 运行主程序
+          # 判断是否需要强制推送信息
           if [ -z "${{ github.event.inputs.force_push_message }}" ]; then
             export FORCE_PUSH_MESSAGE="False"
           else
