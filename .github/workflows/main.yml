@@ -52,16 +52,16 @@ jobs:
         id: compare_main_yml_files
         run: |
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
-            echo "main.yml file is consistent"
             echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_OUTPUT
+            echo "main.yml file is consistent"
           else
-            echo "main.yml file is inconsistent"
             echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_OUTPUT
-            echo "::error title=main.yml file is inconsistent!::"\
-            "The contents of your current branch's 'main.yml' file "\
-            "do not match the contents of your upstream branch's "\
-            "'main.yml' file! You need to synchronize the upstream "\
-            "branch manually!"
+            echo "main.yml file is inconsistent"
+            echo "::error title=main.yml file is inconsistent!::\
+            The content of the 'main.yml' file in the current branch does not match \
+            the content of the 'main.yml' file in the upstream branch! You need to \
+            synchronize the upstream branch manually! If you don't synchronize, there \
+            is a chance that your code will have an uncontrollable fatal bug!"
           fi
 
       # 定义备份和还原的文件后缀列表
