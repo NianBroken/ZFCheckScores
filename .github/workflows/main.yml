@@ -174,25 +174,25 @@ jobs:
           if [ -z "$URL" ]; then
             echo "URL Secret is empty!"
             echo "::error title=URL Secret is empty!" \
-            "::Your 'URL Secret' is not filled with any" \
+            "::Your 'URL' Secret is not filled with any" \
             "information, so your program will not work!"
           fi
           if [ -z "$USERNAME" ]; then
             echo "USERNAME Secret is empty!"
             echo "::error title=USERNAME Secret is empty!" \
-            "::Your 'USERNAME Secret' is not filled with any" \
+            "::Your 'USERNAME' Secret is not filled with any" \
             "information, so your program will not work!"
           fi
           if [ -z "$PASSWORD" ]; then
             echo "PASSWORD Secret is empty!"
             echo "::error title=PASSWORD Secret is empty!" \
-            "::Your 'PASSWORD Secret' is not filled with any" \
+            "::Your 'PASSWORD' Secret is not filled with any" \
             "information, so your program will not work!"
           fi
           if [ -z "$TOKEN" ]; then
             echo "TOKEN Secret is empty!"
             echo "::error title=TOKEN Secret is empty!" \
-            "::Your 'TOKEN Secret' is not filled with any" \
+            "::Your 'TOKEN' Secret is not filled with any" \
             "information, so your program will not work!"
           fi
 
