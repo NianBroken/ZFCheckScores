@@ -1,5 +1,7 @@
+# 工作流的名称
 name: CheckScores
 
+# 工作流运行的名称
 run-name: ${{ github.workflow }} ${{ github.sha }}
 
 on:
@@ -8,7 +10,7 @@ on:
   workflow_dispatch: # 可以手动执行
     inputs:
       force_push_message:
-        description: "是否强制推送信息"
+        description: "Whether or not to force a push message?"
         required: true
         default: "False"
         type: choice
@@ -17,6 +19,7 @@ on:
           - "False"
 
 jobs:
+  # 同步上游分支
   SyncFork:
     name: SyncFork
 
@@ -106,6 +109,7 @@ jobs:
           git commit -m "Update branch" || echo "This branch is not behind the upstream"
           git push origin main --force
 
+  # 检查成绩
   CheckScores:
     name: CheckScores
 
