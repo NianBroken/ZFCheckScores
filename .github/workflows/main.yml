@@ -172,16 +172,28 @@ jobs:
 
           # 判断环境变量是否为空
           if [ -z "$URL" ]; then
-            echo "URL secret is empty!"
+            echo "URL Secret is empty!"
+            echo "::error title=URL Secret is empty!" \
+            "::Your 'URL Secret' is not filled with any" \
+            "information, so your program will not work!"
           fi
           if [ -z "$USERNAME" ]; then
-            echo "USERNAME secret is empty!"
+            echo "USERNAME Secret is empty!"
+            echo "::error title=USERNAME Secret is empty!" \
+            "::Your 'USERNAME Secret' is not filled with any" \
+            "information, so your program will not work!"
           fi
           if [ -z "$PASSWORD" ]; then
-            echo "PASSWORD secret is empty!"
+            echo "PASSWORD Secret is empty!"
+            echo "::error title=PASSWORD Secret is empty!" \
+            "::Your 'PASSWORD Secret' is not filled with any" \
+            "information, so your program will not work!"
           fi
           if [ -z "$TOKEN" ]; then
-            echo "TOKEN secret is empty!"
+            echo "TOKEN Secret is empty!"
+            echo "::error title=TOKEN Secret is empty!" \
+            "::Your 'TOKEN Secret' is not filled with any" \
+            "information, so your program will not work!"
           fi
 
           # 方便通过截图快速定位到用户
