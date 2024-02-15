@@ -21,12 +21,26 @@ on:
           - "False"
 
 jobs:
+  #公共步骤
+  CommonSteps:
+    name: CommonSteps
+
+    # 在最新版的Ubuntu系统上运行
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure Git
+        run: |
+          # 配置Git用户信息
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
   # 同步上游分支
   SyncFork:
     name: SyncFork
 
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
+    # CommonSteps执行完成后运行
+    needs: CommonSteps
 
     # 定义SyncFork的变量
     outputs:
@@ -36,12 +50,6 @@ jobs:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
-
-      - name: Configure Git
-        run: |
-          # 配置Git用户信息
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
 
       - name: Fetch upstream changes
         run: |
@@ -118,9 +126,6 @@ jobs:
     # SyncFork执行完成后运行
     needs: SyncFork
 
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
@@ -130,7 +135,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@main
         with:
-          python-version: '*'
+          python-version: "*"
 
       - name: Install dependencies
         run: |
