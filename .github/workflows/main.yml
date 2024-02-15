@@ -51,9 +51,9 @@ jobs:
           git fetch upstream main
 
       - name: Compare main.yml files
-      # 比对当前分支的main.yml文件与上游分支的main.yml文件是否一致
         id: compare_main_yml_files
         run: |
+        # 比对当前分支的main.yml文件与上游分支的main.yml文件是否一致
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_OUTPUT
             echo "main.yml file is consistent"
