@@ -108,7 +108,7 @@ jobs:
         run: |
           # 将更改强制推送到main分支
           git add .
-          git commit -m "Update branch" || echo "This branch is not behind the upstream"
+          git commit -m "Update branch" || true
           git push origin main --force
 
   # 检查成绩
