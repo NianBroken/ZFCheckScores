@@ -1,4 +1,4 @@
-# 必要的库
+# 必要的依赖库
 import re
 import base64
 import hashlib
@@ -32,6 +32,14 @@ main_yml_files_inconsistent = os.environ.get("MAIN_YML_FILES_INCONSISTENT")
 force_push_message = force_push_message == "True"
 # 当前分支的main.yml文件与上游分支的main.yml文件是否不一致
 main_yml_files_inconsistent = main_yml_files_inconsistent == "True"
+
+# 定义文件路径
+info_file_path = "info.txt"
+grade_file_path = "grade.txt"
+old_grade_file_path = "old_grade.txt"
+
+# 初始化运行次数
+run_count = 2
 
 # 初始化运行日志
 run_log = ""
@@ -97,13 +105,6 @@ integrated_info = (
 # 加密个人信息
 encrypted_info = md5_encrypt(integrated_info)
 
-# 定义文件路径
-info_file_path = "info.txt"
-grade_file_path = "grade.txt"
-old_grade_file_path = "old_grade.txt"
-
-# 初始化运行次数
-run_count = 2
 
 # 判断info.txt文件是否存在
 if not os.path.exists(info_file_path):
@@ -215,14 +216,6 @@ with open(grade_file_path, "r") as grade_file, open(
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
-# 第一次运行时的提示文本
-first_run_text = (
-    "你的程序运行成功\n"
-    "从现在开始,程序将会每隔 30 分钟自动检测一次成绩是否有更新\n"
-    "若有更新,将通过微信推送及时通知你\n"
-    "------"
-)
-
 # 整合MD5值
 integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 
@@ -316,6 +309,14 @@ integrated_send_info = (
     f"{integrated_grade_info}\n"
     f"{selected_courses_filtering}\n"
     f"{workflow_info}"
+)
+
+# 第一次运行时的提示文本
+first_run_text = (
+    "你的程序运行成功\n"
+    "从现在开始,程序将会每隔 30 分钟自动检测一次成绩是否有更新\n"
+    "若有更新,将通过微信推送及时通知你\n"
+    "------"
 )
 
 # 当前分支的main.yml文件与上游分支的main.yml文件不一致时需要使用到的所有信息
