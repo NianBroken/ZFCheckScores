@@ -118,9 +118,6 @@ jobs:
     # SyncFork执行完成后运行
     needs: SyncFork
 
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
@@ -221,16 +218,13 @@ jobs:
     # SyncFork执行完成后运行
     needs: CheckScores
 
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
 
-      # 成备份main分支到ThirtyMinutesAgo分支
       - name: Backup Main to ThirtyMinutesAgo
         run: |
+          # 备份main分支到OldMain分支
           git checkout -b OldMain|| git checkout OldMain
           git push -f origin ThirtyMinutesAgo
