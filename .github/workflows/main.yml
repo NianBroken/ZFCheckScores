@@ -238,8 +238,8 @@ jobs:
       # 创建 ThirtyMinutesAgo 分支并推送到远程
       - name: Create ThirtyMinutesAgo Branch
         run: |
-          git checkout -b ThirtyMinutesAgo
-          git push -u origin ThirtyMinutesAgo
+          git checkout -b ThirtyMinutesAgo || git checkout ThirtyMinutesAgo
+          git push -f origin ThirtyMinutesAgo
 
       # 强制将 main 分支内容复制到 ThirtyMinutesAgo 分支并推送到远程
       - name: Force Push Main to ThirtyMinutesAgo
