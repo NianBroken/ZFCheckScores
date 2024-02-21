@@ -1,4 +1,4 @@
-# 必要的库
+# 必要的依赖库
 import re
 import base64
 import hashlib
