@@ -130,7 +130,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@main
         with:
-          python-version: '*'
+          python-version: "*"
 
       - name: Install dependencies
         run: |
@@ -219,3 +219,32 @@ jobs:
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
+
+  # 备份main分支
+  BackupMain:
+    name: BackupMain
+
+    # SyncFork执行完成后运行
+    needs: CheckScores
+
+    # 在最新版的Ubuntu系统上运行
+    runs-on: ubuntu-latest
+
+    steps:
+      # 使用GitHub Actions提供的动作来检出代码库
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # 创建 ThirtyMinutesAgo 分支并推送到远程
+      - name: Create ThirtyMinutesAgo Branch
+        run: |
+          git checkout -b ThirtyMinutesAgo
+          git push -u origin ThirtyMinutesAgo
+
+      # 强制将 main 分支内容复制到 ThirtyMinutesAgo 分支并推送到远程
+      - name: Force Push Main to ThirtyMinutesAgo
+        run: |
+          git fetch origin
+          git checkout main
+          git reset --hard origin/main
+          git push -f origin main:ThirtyMinutesAgo
