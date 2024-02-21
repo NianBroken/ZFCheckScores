@@ -233,4 +233,4 @@ jobs:
         run: |
           # 备份main分支到OldMain分支
           git checkout -b OldMain|| git checkout OldMain
-          git push -f origin ThirtyMinutesAgo
+          git push -f origin OldMain
