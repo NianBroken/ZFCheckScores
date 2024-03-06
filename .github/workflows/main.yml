@@ -121,6 +121,9 @@ jobs:
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
+    outputs:
+      BEIJING_TIME: ${{ steps.get_current_time.outputs.BEIJING_TIME }}
+
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
@@ -138,6 +141,7 @@ jobs:
           pip install requests rsa pyquery
 
       - name: Run main program
+        id: run_main_program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
           MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
@@ -161,6 +165,7 @@ jobs:
             export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
           fi
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
           python main.py
           echo "------"
 
@@ -232,5 +237,6 @@ jobs:
       - name: Backup Main to ThirtyMinutesAgo
         run: |
           # 备份main分支到OldMain分支
+          echo "${{ needs.CheckScores.outputs.BEIJING_TIME }}"
           git checkout -b OldMain|| git checkout OldMain
           git push -f origin OldMain
