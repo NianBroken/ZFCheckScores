@@ -31,7 +31,6 @@ jobs:
     # 定义SyncFork的变量
     outputs:
       MAIN_YML_FILES_INCONSISTENT: ${{ steps.compare_main_yml_files.outputs.MAIN_YML_FILES_INCONSISTENT }}
-      BEIJING_TIME: ${{ steps.run_main_program.outputs.BEIJING_TIME }}
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
@@ -139,7 +138,6 @@ jobs:
           pip install requests rsa pyquery
 
       - name: Run main program
-        id: run_main_program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
           MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
@@ -162,7 +160,7 @@ jobs:
           else
             export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
           fi
-          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')" >> $GITHUB_OUTPUT
+          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           python main.py
           echo "------"
 
@@ -232,10 +230,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Backup Main to ThirtyMinutesAgo
-        env:
-          BEIJING_TIME: ${{ needs.CheckScores.outputs.BEIJING_TIME }}
         run: |
           # 备份main分支到OldMain分支
-          echo "Beijing Time: $BEIJING_TIME"
           git checkout -b OldMain|| git checkout OldMain
           git push -f origin OldMain
