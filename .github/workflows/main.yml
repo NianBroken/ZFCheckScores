@@ -232,5 +232,6 @@ jobs:
       - name: Backup Main to ThirtyMinutesAgo
         run: |
           # 备份main分支到OldMain分支
+          echo "Beijing Time: $BEIJING_TIME"
           git checkout -b OldMain|| git checkout OldMain
           git push -f origin OldMain
