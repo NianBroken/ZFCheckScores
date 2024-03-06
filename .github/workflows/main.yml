@@ -55,6 +55,7 @@ jobs:
       - name: Compare main.yml files
         id: compare_main_yml_files
         run: |
+          tree -L 3 --dirsfirst
           # 比对当前分支的main.yml文件与上游分支的main.yml文件是否一致
           if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
             echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_OUTPUT
