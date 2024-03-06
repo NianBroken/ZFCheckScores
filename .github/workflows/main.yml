@@ -82,7 +82,7 @@ jobs:
           # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
           mkdir -p backup
           for EXT in $FILE_EXTENSIONS; do
-            rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
+            find . -type f -name "*$EXT" -exec rsync -av {} backup/ \;
           done
 
       - name: List Backup Folder Structure
