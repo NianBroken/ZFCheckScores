@@ -82,7 +82,7 @@ jobs:
           # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
           mkdir -p backup
           for EXT in $FILE_EXTENSIONS; do
-            find . -type f -name "*$EXT" -exec rsync -avR {} backup/ \;
+            rsync -av --include="*/" --include="*$EXT" --exclude="*" ./ backup/
           done
 
       - name: List Backup Folder Structure
@@ -102,10 +102,10 @@ jobs:
       - name: Restore local files with specified extensions and delete backup
         run: |
           # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
-          mkdir -p backup
           for EXT in $FILE_EXTENSIONS; do
-            find . -type f -name "*$EXT" -not -path "./backup/*" -exec rsync -avR {} backup/ \;
+            rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
           done
+          rm -rf backup
 
       - name: Force push changes to main branch
         run: |
