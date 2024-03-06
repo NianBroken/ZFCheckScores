@@ -31,6 +31,7 @@ jobs:
     # 定义SyncFork的变量
     outputs:
       MAIN_YML_FILES_INCONSISTENT: ${{ steps.compare_main_yml_files.outputs.MAIN_YML_FILES_INCONSISTENT }}
+      BEIJING_TIME: ${{ steps.run_main_program.outputs.BEIJING_TIME }}
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
@@ -138,9 +139,11 @@ jobs:
           pip install requests rsa pyquery
 
       - name: Run main program
+        id: run_main_program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
           MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
+          BEIJING_TIME: ${{ needs.CheckScores.outputs.BEIJING_TIME }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
@@ -160,7 +163,7 @@ jobs:
           else
             export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
           fi
-          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          echo "BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')" >> $GITHUB_OUTPUT
           python main.py
           echo "------"
 
@@ -229,12 +232,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@main
 
-      - name: Get current time
-        run: |
-          # 获取当前时间
-          echo "BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')" >> $GITHUB_ENV
-
       - name: Backup Main to ThirtyMinutesAgo
+        env:
+          BEIJING_TIME: ${{ needs.CheckScores.outputs.BEIJING_TIME }}
         run: |
           # 备份main分支到OldMain分支
           echo "BEIJING_TIME: $BEIJING_TIME"
