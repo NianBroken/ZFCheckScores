@@ -229,8 +229,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@main
 
+      - name: Get current time
+        run: |
+          # 获取当前时间
+          echo "BEIJING_TIME=$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')" >> $GITHUB_ENV
+
       - name: Backup Main to ThirtyMinutesAgo
         run: |
           # 备份main分支到OldMain分支
+          echo "BEIJING_TIME: $BEIJING_TIME"
           git checkout -b OldMain|| git checkout OldMain
           git push -f origin OldMain
