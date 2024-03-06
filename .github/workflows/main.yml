@@ -86,9 +86,10 @@ jobs:
 
       - name: List Backup Folder Structure
         run: |
-          # 列出备份文件夹的文件夹结构
+          # 列出文件夹的文件夹结构
           echo "Backup Folder Structure:"
           tree -a backup/
+          tree -a /
 
       - name: Force push changes from upstream to current main branch
         run: |
