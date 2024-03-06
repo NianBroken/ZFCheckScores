@@ -89,7 +89,7 @@ jobs:
           # 列出文件夹的文件夹结构
           echo "Backup Folder Structure:"
           tree -a backup/
-          tree /
+          tree -L 3 --dirsfirst
 
       - name: Force push changes from upstream to current main branch
         run: |
