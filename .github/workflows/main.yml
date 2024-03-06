@@ -122,7 +122,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      BEIJING_TIME: ${{ steps.get_current_time.outputs.BEIJING_TIME }}
+      BEIJING_TIME: ${{ steps.run_main_program.outputs.BEIJING_TIME }}
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
