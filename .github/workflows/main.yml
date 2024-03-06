@@ -162,7 +162,7 @@ jobs:
           else
             export FORCE_PUSH_MESSAGE="${{ github.event.inputs.force_push_message }}"
           fi
-          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')" >> $GITHUB_OUTPUT
           python main.py
           echo "------"
 
