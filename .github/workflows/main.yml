@@ -71,41 +71,10 @@ jobs:
             "your code will have an uncontrollable fatal bug!"
           fi
 
-      - name: Set file extensions
+      - name: Backup files
         run: |
-          # 定义备份和还原的文件后缀列表
-          echo "FILE_EXTENSIONS=.txt .yml" >> $GITHUB_ENV
-          # 以空格分隔多个文件后缀
-
-      - name: Backup local files with specified extensions
-        run: |
-          # 创建一个备份目录，并将当前目录及子目录中的所有指定后缀文件复制到备份目录，并保持路径
-          mkdir -p backup
-          for EXT in $FILE_EXTENSIONS; do
-            find . -type f -name "*$EXT" -exec rsync -av {} backup/ \;
-          done
-
-      - name: List Backup Folder Structure
-        run: |
-          # 列出文件夹的文件夹结构
-          echo "Backup Folder Structure:"
-          tree -a backup/
-          echo "分隔符------分隔符"
-          tree -L 3 --dirsfirst
-
-      - name: Force push changes from upstream to current main branch
-        run: |
-          # 将上游main分支的更改强制推送到当前main分支
-          git checkout main
-          git reset --hard upstream/main
-
-      - name: Restore local files with specified extensions and delete backup
-        run: |
-          # 从备份目录将指定后缀文件还原到当前目录及子目录中，然后删除备份目录
-          for EXT in $FILE_EXTENSIONS; do
-            rsync -av --include="*/" --include="*$EXT" --exclude="*" backup/ ./
-          done
-          rm -rf backup
+          mkdir -p Backup
+          find . -type f \( -name "*.txt" -o -name "*.yml" \) -exec cp --parents {} Backup/ \;
 
       - name: Force push changes to main branch
         run: |
