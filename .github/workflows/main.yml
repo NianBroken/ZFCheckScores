@@ -73,8 +73,9 @@ jobs:
 
       - name: Backup files
         run: |
+          rm -rf Backup
           mkdir -p Backup
-          find . -type f \( -name "*.txt" -o -name "*.yml" \) -exec cp --parents {} Backup/ \;
+          rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ Backup/
 
       - name: Force push changes to main branch
         run: |
