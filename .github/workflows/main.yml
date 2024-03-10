@@ -77,6 +77,10 @@ jobs:
           mkdir -p Backup
           rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ Backup/
 
+      - name: Restore files
+        run: |
+          rsync -av --exclude="*/" --include="*/" --include="*.txt" --include="*.yml" --exclude="*" Backup/ ./
+
       - name: Force push changes to main branch
         run: |
           # 将更改强制推送到main分支
