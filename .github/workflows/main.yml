@@ -110,8 +110,7 @@ jobs:
       - name: Backup files
         run: |
           mkdir -p Backup
-          find . -type f -name "*.txt" -exec cp --parents {} Backup/ \;
-          find . -type f -name "*.yml" -exec cp --parents {} Backup/ \;
+          rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ ./Backup/
 
       - name: Restore files
         run: |
