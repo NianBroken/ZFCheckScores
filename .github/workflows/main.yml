@@ -71,16 +71,6 @@ jobs:
             "your code will have an uncontrollable fatal bug!"
           fi
 
-      - name: Backup files
-        run: |
-          mkdir -p Backup
-          find . -type f -name "*.txt" -exec cp --parents {} ./Backup \;
-          find . -type f -name "*.yml" -exec cp --parents {} ./Backup \;
-
-      - name: Restore files
-        run: |
-          cp -r Backup/* .
-
       - name: Force push changes to main branch
         run: |
           # 将更改强制推送到main分支
@@ -116,6 +106,16 @@ jobs:
         run: |
           # 使用pip安装项目的依赖项
           pip install requests rsa pyquery
+
+      - name: Backup files
+        run: |
+          mkdir -p Backup
+          find . -type f -name "*.txt" -exec cp --parents {} ./Backup \;
+          find . -type f -name "*.yml" -exec cp --parents {} ./Backup \;
+
+      - name: Restore files
+        run: |
+          cp -r Backup/* .
 
       - name: Run main program
         id: run_main_program
