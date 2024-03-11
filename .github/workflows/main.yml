@@ -73,13 +73,19 @@ jobs:
 
       - name: Backup files
         run: |
-          rm -rf Backup
           mkdir -p Backup
           rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ Backup/
+
+      - name: Force push changes from upstream to current main branch
+        run: |
+          # 将上游main分支的更改强制推送到当前main分支
+          git checkout main
+          git reset --hard upstream/main
 
       - name: Restore files
         run: |
           rsync -av --exclude="*/" --include="*/" --include="*.txt" --include="*.yml" --exclude="*" Backup/ ./
+          rm -rf backup
 
       - name: Force push changes to main branch
         run: |
