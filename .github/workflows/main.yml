@@ -107,6 +107,10 @@ jobs:
           # 使用pip安装项目的依赖项
           pip install requests rsa pyquery
 
+      - name: Backup TXT and YAML files
+        run: |
+          rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ ./Backup/
+
       - name: Run main program
         id: run_main_program
         env:
