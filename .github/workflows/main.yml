@@ -107,11 +107,6 @@ jobs:
           # 使用pip安装项目的依赖项
           pip install requests rsa pyquery
 
-      - name: Backup files
-        run: |
-          mkdir -p Backup
-          find . -type f -name "*.txt" -exec cp --parents {} ./Backup \;
-
       - name: Run main program
         id: run_main_program
         env:
