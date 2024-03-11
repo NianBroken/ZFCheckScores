@@ -110,7 +110,7 @@ jobs:
       - name: Backup files
         run: |
           mkdir -p Backup
-          rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ ./Backup/
+          find . -type f -name "*.txt" -exec cp --parents {} ./Backup \;
 
       - name: Run main program
         id: run_main_program
