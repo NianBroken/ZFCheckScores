@@ -102,10 +102,6 @@ jobs:
       BEIJING_TIME: ${{ steps.run_main_program.outputs.BEIJING_TIME }}
 
     steps:
-      # 使用GitHub Actions提供的动作来检出代码库
-      - name: Checkout Repository
-        uses: actions/checkout@main
-
       # 配置Python环境
       - name: Set up Python
         uses: actions/setup-python@main
