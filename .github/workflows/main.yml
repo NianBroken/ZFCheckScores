@@ -190,25 +190,3 @@ jobs:
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
-
-  # 备份main分支
-  BackupMain:
-    name: BackupMain
-
-    # SyncFork执行完成后运行
-    needs: CheckScores
-
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-
-    steps:
-      # 使用GitHub Actions提供的动作来检出代码库
-      - name: Checkout Repository
-        uses: actions/checkout@main
-
-      - name: Backup Main to ThirtyMinutesAgo
-        run: |
-          # 备份main分支到OldMain分支
-          echo "${{ needs.CheckScores.outputs.BEIJING_TIME }}"
-          git checkout -b OldMain|| git checkout OldMain
-          git push -f origin OldMain
