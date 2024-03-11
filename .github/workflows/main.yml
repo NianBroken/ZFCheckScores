@@ -84,7 +84,7 @@ jobs:
 
       - name: Restore files
         run: |
-          rsync -av --exclude="*/" --include="*/" --include="*.txt" --include="*.yml" --exclude="*" Backup/ ./
+          rsync -av Backup/ ./
           rm -rf backup
 
       - name: Force push changes to main branch
