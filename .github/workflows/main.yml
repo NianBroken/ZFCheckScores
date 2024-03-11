@@ -112,10 +112,6 @@ jobs:
           mkdir -p Backup
           rsync -av --include="*/" --include="*.txt" --include="*.yml" --exclude="*" ./ ./Backup/
 
-      - name: Restore files
-        run: |
-          cp -r Backup/* .
-
       - name: Run main program
         id: run_main_program
         env:
