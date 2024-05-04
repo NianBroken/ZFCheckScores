@@ -21,69 +21,9 @@ on:
           - "False"
 
 jobs:
-  # 同步上游分支
-  SyncFork:
-    name: SyncFork
-
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-
-    # 定义SyncFork的变量
-    outputs:
-      MAIN_YML_FILES_INCONSISTENT: ${{ steps.compare_main_yml_files.outputs.MAIN_YML_FILES_INCONSISTENT }}
-
-    steps:
-      # 使用GitHub Actions提供的动作来检出代码库
-      - name: Checkout Repository
-        uses: actions/checkout@main
-
-      - name: Configure Git
-        run: |
-          # 配置Git用户信息
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
-      - name: Fetch upstream changes
-        run: |
-          # 添加上游仓库作为远程仓库，并获取上游仓库的main分支的最新更改
-          REPO_NAME="NianBroken/ZFCheckScores"
-          REPO_URL="https://github.com/$REPO_NAME.git"
-          echo "Repo Url: $REPO_URL"
-          git remote add upstream "$REPO_URL"
-          git fetch upstream main
-
-      - name: Compare main.yml files
-        id: compare_main_yml_files
-        run: |
-          tree -L 3 --dirsfirst
-          # 比对当前分支的main.yml文件与上游分支的main.yml文件是否一致
-          if cmp -s .github/workflows/main.yml <(git show upstream/main:.github/workflows/main.yml); then
-            echo "MAIN_YML_FILES_INCONSISTENT=False" >> $GITHUB_OUTPUT
-            echo "main.yml file is consistent"
-          else
-            echo "MAIN_YML_FILES_INCONSISTENT=True" >> $GITHUB_OUTPUT
-            echo "main.yml file is inconsistent"
-            echo "::error title=main.yml file is inconsistent!" \
-            "::The content of the 'main.yml' file in the current branch" \
-            "does not match the content of the 'main.yml' file in the" \
-            "upstream branch! You need to synchronize the upstream branch" \
-            "manually! If you don't synchronize, there is a chance that" \
-            "your code will have an uncontrollable fatal bug!"
-          fi
-
-      - name: Force push changes to main branch
-        run: |
-          # 将更改强制推送到main分支
-          git add .
-          git commit -m "Update branch" || true
-          git push origin main --force
-
   # 检查成绩
   CheckScores:
     name: CheckScores
-
-    # SyncFork执行完成后运行
-    needs: SyncFork
 
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
@@ -95,6 +35,12 @@ jobs:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
+
+      - name: Configure Git
+        run: |
+          # 配置Git用户信息
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
 
       # 配置Python环境
       - name: Set up Python
@@ -111,7 +57,6 @@ jobs:
         id: run_main_program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
-          MAIN_YML_FILES_INCONSISTENT: ${{ needs.SyncFork.outputs.MAIN_YML_FILES_INCONSISTENT }}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
@@ -164,7 +109,6 @@ jobs:
 
           # 方便通过截图快速定位到用户
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
-          echo "main.yml Files Inconsistent: $MAIN_YML_FILES_INCONSISTENT"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Run By: $GITHUB_TRIGGERING_ACTOR"
           echo "Repository Name: $REPOSITORY_NAME"

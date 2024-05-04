@@ -25,13 +25,10 @@ github_run_number = os.environ.get("GITHUB_RUN_NUMBER")
 github_run_id = os.environ.get("GITHUB_RUN_ID")
 beijing_time = os.environ.get("BEIJING_TIME")
 github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
-main_yml_files_inconsistent = os.environ.get("MAIN_YML_FILES_INCONSISTENT")
 
 # 将字符串转换为布尔值
 # 是否强制推送信息
 force_push_message = force_push_message == "True"
-# 当前分支的main.yml文件与上游分支的main.yml文件是否不一致
-main_yml_files_inconsistent = main_yml_files_inconsistent == "True"
 
 # 定义文件路径
 info_file_path = "info.txt"
@@ -290,7 +287,6 @@ workflow_info = (
     f"------\n"
     f"工作流信息：\n"
     f"Force Push Message：{force_push_message}\n"
-    f"main.yml Files Inconsistent：{main_yml_files_inconsistent}\n"
     f"Triggered By：{github_event_name}\n"
     f"Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
@@ -319,17 +315,6 @@ first_run_text = (
     "------"
 )
 
-# 当前分支的main.yml文件与上游分支的main.yml文件不一致时需要使用到的所有信息
-if main_yml_files_inconsistent:
-    integrated_send_info = (
-        f"警告：你需要手动同步上游分支\n"
-        f"同步方法如下：\n"
-        f"1. 打开你的仓库首页：https://github.com/{repository_name}\n"
-        f"2. 点击 Sync fork\n"
-        f"3. 点击 Update branch 或 Discard xxx commits\n"
-        f"------\n"
-        f"{integrated_send_info}"
-    )
 
 # 整合首次运行时需要使用到的所有信息
 first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_info}"
