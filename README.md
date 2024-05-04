@@ -36,6 +36,12 @@
    6. 显示未公布成绩的课程，即已选课但尚未出成绩的课程。
    7. 显示异常的课程，即已出成绩但用户未选课的课程。
 
+## 未来的计划
+
+1. 重写[详细使用方法](https://github.com/NianBroken/ZFCheckScores/blob/main/DetailedUsage.md "详细使用方法")。
+2. 增加显示学分，如 当前学分：54 / 280。
+3. 代码重构。
+
 ## 使用方法
 
 ### 1. [Fork](https://github.com/NianBroken/ZFCheckScores/fork "Fork") 本仓库
