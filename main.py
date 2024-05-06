@@ -4,7 +4,7 @@ import hashlib
 import os
 import shutil
 from user_login import login
-from get_info import get_info
+from get_user_info import get_user_info
 from get_grade import get_grade
 from get_selected_courses import get_selected_courses
 from pushplus import send_message
@@ -55,10 +55,10 @@ current_time = "------\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]
 student_client = login(url, username, password)
 
 # 获取个人信息
-info = get_info(student_client, output_type="info")
+info = get_user_info(student_client, output_type="info")
 
 # 获取完整个人信息
-integrated_info = get_info(student_client, output_type="integrated_info")
+integrated_info = get_user_info(student_client, output_type="integrated_info")
 
 # 加密个人信息
 encrypted_info = md5_encrypt(info)

@@ -1,7 +1,7 @@
 from get_grade import get_grade
 
 
-def get_info(student_client, output_type="none"):
+def get_user_info(student_client, output_type="none"):
     # 获取个人信息
     info = student_client.get_info()["data"]
 
