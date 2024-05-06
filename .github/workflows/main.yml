@@ -57,6 +57,7 @@ jobs:
         id: run_main_program
         env:
           FORCE_PUSH_MESSAGE: ${{ github.event.inputs.force_push_message }}
+          GITHUB_ACTIONS: ${{github.actions}}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
