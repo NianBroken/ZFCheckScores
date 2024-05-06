@@ -8,6 +8,7 @@ from get_info import get_info
 from get_grade import get_grade
 from get_selected_courses import get_selected_courses
 from pushplus import send_message
+from datetime import datetime
 
 
 # MD5加密
@@ -46,6 +47,9 @@ run_count = 2
 
 # 初始化运行日志
 run_log = ""
+
+# 当前时间
+current_time = "------\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]
 
 # 登录
 student_client = login(url, username, password)
@@ -98,6 +102,7 @@ for _ in range(run_count):
         with open(grade_file_path, "w") as grade_file:
             grade_file.truncate()
 
+        # 获取整合后的成绩信息
         integrated_grade_info = get_grade(
             student_client, output_type="integrated_grade_info"
         )
@@ -155,7 +160,7 @@ integrated_send_info = (
     f"{integrated_info}\n"
     f"{integrated_grade_info}\n"
     f"{selected_courses_filtering}\n"
-    f"{workflow_info}"
+    f"{workflow_info if github_actions else current_time}"
 )
 
 # 整合首次运行时需要使用到的所有信息

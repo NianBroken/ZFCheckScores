@@ -2,7 +2,6 @@ from get_grade import get_grade
 
 
 def get_selected_courses(student_client):
-
     # 获取成绩信息
     grade = get_grade(student_client, output_type="grade")
 
@@ -18,13 +17,13 @@ def get_selected_courses(student_client):
         abnormal_courses_by_semester = {}
 
         # 获取成绩列表中的class_id集合
-        grade_class_ids = {course["class_id"] for course in grade}
+        grade_class_ids = {course["class_id"] for course in grade} if grade else ""
 
         # 初始化输出内容
         selected_courses_filtering = ""
 
         # 遍历selected_courses和grade中的每个课程
-        for course in selected_courses + grade:
+        for course in selected_courses + (grade or []):
             # 获取课程的class_id和学年学期
             yearsemester_id = course["class_name"].split("(")[1].split(")")[0]
             year, semester, seq = yearsemester_id.split("-")
