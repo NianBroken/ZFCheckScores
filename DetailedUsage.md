@@ -20,7 +20,7 @@
 | URL      | https://www.nianbroken.top | 教务系统地址                                        |
 | USERNAME | 2971802058                 | 教务系统用户名                                      |
 | PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                        |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](###获取-TOKEN "PushPlus 的 token") |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](#%E8%8E%B7%E5%8F%96-token "PushPlus 的 token") |
 
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/15.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/16.png" style="zoom:60%;" />
