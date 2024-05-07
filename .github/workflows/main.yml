@@ -131,8 +131,16 @@ jobs:
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
-      - name: Request Images
+      - name: Get Connection
         run: |
+          # 获取连接信息
+          url="https://ifconfig.me/all"
+          response=$(curl -s -X GET "$url")
+          echo "$response"
+
+      - name: Purge JSdelivr Cache
+        run: |
+          # 清理JSdelivr缓存
           for i in {1..50}; do
             url="https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png"
             echo "Accessing: $url"
