@@ -62,8 +62,8 @@
 
 ## 6. 查看运行结果
 
-当你的页面类似下图所示时则表示程序正常运行且未报错
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/24.png" style="zoom:60%;" />
+当你的页面类似下图所示时则表示程序正常运行且未报错
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/25.png" style="zoom:60%;" />
 在此之后，程序将会每隔 30 分钟自动运行一次
 
