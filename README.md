@@ -1,6 +1,6 @@
 # 正方教务管理系统成绩推送
 
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/21.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/6.png" style="zoom:60%;" />
 
 ## 简介
 
@@ -18,7 +18,7 @@
 
 如果你的教务系统页面与下图所示的页面**完全一致**或**几乎一致**，则代表你可以使用本项目。
 
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/26.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/8.png" style="zoom:60%;" />
 
 ## 目前支持的功能
 
@@ -42,7 +42,7 @@
 
 `Fork` → `Create fork`
 
-### 2. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/settings/actions "开启")工作流读写权限
+### 2. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/settings/actions "开启") 工作流读写权限
 
 `Settings` → `Actions` → `General` → `Workflow permissions` →`Read and write permissions` →`Save`
 
@@ -63,7 +63,7 @@
 
 `Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow`
 
-### 5. [运行](https://github.com/kekeaiaixueer/ZFCheckScores/actions/workflows/main.yml "运行")程序
+### 5. [运行](https://github.com/kekeaiaixueer/ZFCheckScores/actions/workflows/main.yml "运行") 程序
 
 `Actions` → `CheckScores` → `Run workflow`
 
