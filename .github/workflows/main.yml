@@ -53,6 +53,13 @@ jobs:
           # 使用pip安装项目的依赖项
           pip install requests rsa pyquery
 
+      - name: Get Connection
+        run: |
+          # 获取连接信息
+          url="https://ifconfig.me/all"
+          response=$(curl -s -X GET "$url")
+          echo "$response"
+
       - name: Run main program
         id: run_main_program
         env:
@@ -130,13 +137,6 @@ jobs:
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
-
-      - name: Get Connection
-        run: |
-          # 获取连接信息
-          url="https://ifconfig.me/all"
-          response=$(curl -s -X GET "$url")
-          echo "$response"
 
       - name: Purge JSdelivr Cache
         run: |
