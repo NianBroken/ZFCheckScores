@@ -56,11 +56,11 @@
 
 ### 获取 TOKEN
 
-1. <li><a href="https://www.pushplus.plus/login.html">登录 PushPlus </a></li>
+<li>1. <a href="https://www.pushplus.plus/login.html">登录 PushPlus </a></li>
 
 <img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" width="60%" />
 
-2. <li><a href="https://www.pushplus.plus/api/open/user/token">获取 Token</a></li>
+<li>2. <a href="https://www.pushplus.plus/api/open/user/token">获取 Token</a></li>
 
 打开页面后，你会得到一个类似下列所示的 Json 代码块，`data`中的值就是 TOKEN
 
@@ -77,7 +77,7 @@
 
 <img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/19.png" width="60%"/>
 
-3. [相关文档](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token)
+<li>3. <a href="https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token">相关文档</a></li>
 
 ## 4. 开启 Actions
 
