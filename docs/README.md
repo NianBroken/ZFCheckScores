@@ -60,7 +60,7 @@
 
 <img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" width="60%" />
 
-2. [获取 Token](https://www.pushplus.plus/api/open/user/token)
+2. <li><a href="https://www.pushplus.plus/api/open/user/token">获取 Token</a></li>
 
 打开页面后，你会得到一个类似下列所示的 Json 代码块，`data`中的值就是 TOKEN
 
