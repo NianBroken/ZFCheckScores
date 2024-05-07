@@ -48,7 +48,7 @@
 
 ### 3. [添加](https://github.com/kekeaiaixueer/ZFCheckScores/settings/secrets/actions "添加") Secrets
 
-`Settings` → `Secrets and variables` → `Actions` → `Secrets` → `Repository secrets` → `New repository secret`
+`Settings` → `Secrets and variables` → `Actions` → `Secrets` → `Repository secrets` → `New repository secret` → `Add secret`
 
 > Name = Name，Secret = 例子
 
@@ -57,7 +57,7 @@
 | URL      | https://www.nianbroken.top | 教务系统地址                                                                                                         |
 | USERNAME | 2971802058                 | 教务系统用户名                                                                                                       |
 | PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                                                                                         |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [Pushplus 的 token](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token "PushPlus 的 token") |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token "PushPlus 的 token") |
 
 ### 4. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/actions "开启") Actions
 
