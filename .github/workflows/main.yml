@@ -130,3 +130,11 @@ jobs:
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
+
+      - name: Purge JSdelivr Cache
+        run: |
+          for i in {1..50}; do
+            url="https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png"
+            response=$(curl -X PURGE $url -w "%{http_code}")
+            echo "Purging $url - Response: $response"
+          done
