@@ -1,6 +1,6 @@
 # 正方教务管理系统成绩推送
 
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/6.jpg" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/7.jpg" style="zoom:60%;" />
 
 ## 简介
 
