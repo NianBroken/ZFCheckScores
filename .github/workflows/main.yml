@@ -134,6 +134,9 @@ jobs:
       - name: Request Images
         run: |
           for i in {1..50}; do
-            response=$(curl -s -X GET https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png)
+            url="https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png"
+            echo "Accessing: $url"
+            response=$(curl -s -X GET "$url")
             echo "$response"
+            echo "------"
           done
