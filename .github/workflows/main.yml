@@ -131,9 +131,10 @@ jobs:
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
-      - name: Send Requests
+      - name: Send GET requests
         run: |
-          for i in {1..50}; do
-            response=$(curl -X GET -s -o /dev/null -w "%{http_code}" https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png)
-            echo "Response for img/$i.png: $response"
+          for i in {1..50}
+          do
+            response=$(curl -X GET "https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png")
+            echo "$response"
           done
