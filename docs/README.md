@@ -56,7 +56,7 @@
 
 ### 获取 TOKEN
 
-1. [登录 PushPlus ](https://www.pushplus.plus/login.html)
+1. <li><a href="https://www.pushplus.plus/login.html">登录 PushPlus </a></li>
 
 <img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" width="60%" />
 
