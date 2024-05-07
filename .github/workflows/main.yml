@@ -131,9 +131,9 @@ jobs:
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
-      - name: Purge JSdelivr Cache
+      - name: Send Requests
         run: |
           for i in {1..50}; do
-            response=$(curl -X POST -H "Content-Type: application/json" -d '{}' "https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png")
-            echo $response
+            response=$(curl -X GET -s -o /dev/null -w "%{http_code}" https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png)
+            echo "Response for img/$i.png: $response"
           done
