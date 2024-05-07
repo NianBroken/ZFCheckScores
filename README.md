@@ -42,11 +42,11 @@
 
 `Fork` → `Create fork`
 
-### 2. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/settings/actions "开启") 工作流读写权限
+### 2. 开启 工作流读写权限
 
 `Settings` → `Actions` → `General` → `Workflow permissions` →`Read and write permissions` →`Save`
 
-### 3. [添加](https://github.com/kekeaiaixueer/ZFCheckScores/settings/secrets/actions "添加") Secrets
+### 3. 添加 Secrets
 
 `Settings` → `Secrets and variables` → `Actions` → `Secrets` → `Repository secrets` → `New repository secret` → `Add secret`
 
@@ -59,11 +59,11 @@
 | PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                                                                                         |
 | TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token "PushPlus 的 token") |
 
-### 4. [开启](https://github.com/kekeaiaixueer/ZFCheckScores/actions "开启") Actions
+### 4. 开启 Actions
 
 `Actions` → `I understand my workflows, go ahead and enable them` → `CheckScores` → `Enable workflow`
 
-### 5. [运行](https://github.com/kekeaiaixueer/ZFCheckScores/actions/workflows/main.yml "运行") 程序
+### 5. 运行 程序
 
 `Actions` → `CheckScores` → `Run workflow`
 
