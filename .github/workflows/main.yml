@@ -131,10 +131,9 @@ jobs:
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
-      - name: Send GET requests
+      - name: Request Images
         run: |
-          for i in {1..50}
-          do
-            response=$(curl -X GET "https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png")
+          for i in {1..50}; do
+            response=$(curl -s -X GET https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png)
             echo "$response"
           done
