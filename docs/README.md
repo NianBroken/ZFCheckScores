@@ -62,7 +62,7 @@
 
 <p>2. <a href="https://www.pushplus.plus/api/open/user/token">获取 Token</a></p>
 
-打开页面后，你会得到一个类似下列所示的 Json 代码块，`data`中的值就是 TOKEN
+打开“获取 Token”的页面后，你会得到一个与下列所示几乎一致的 Json 代码块，`data`中的值就是 TOKEN
 
 ```json
 {
