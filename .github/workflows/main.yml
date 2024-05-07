@@ -131,8 +131,8 @@ jobs:
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
 
-      - name: Purge JSdelivr Cache
+      - name: Purge images
         run: |
           for i in {1..50}; do
-            curl -I https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png
+            curl -X PURGE "https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png"
           done
