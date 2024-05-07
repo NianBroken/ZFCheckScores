@@ -137,14 +137,3 @@ jobs:
           git add .
           git commit -m "Update from GitHub Actions" || true
           git push origin main --force
-
-      - name: Purge JSdelivr Cache
-        run: |
-          # 清理JSdelivr缓存
-          for i in {1..50}; do
-            url="https://purge.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/$i.png"
-            echo "Accessing: $url"
-            response=$(curl -s -X GET "$url")
-            echo "$response"
-            echo "------"
-          done

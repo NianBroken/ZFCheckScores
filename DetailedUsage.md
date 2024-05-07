@@ -2,35 +2,35 @@
 
 ## 1. Fork 本仓库
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/10.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/11.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/10.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/11.png" style="zoom:60%;" />
 
 ## 2. 开启工作流读写权限
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/12.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/13.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/14.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/12.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/13.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/14.png" style="zoom:60%;" />
 
 ## 3. 添加 Secrets
 
 > Name = Name，Secret = 例子
 
-| Name     | 例子                       | 说明                                                |
-| -------- | -------------------------- | --------------------------------------------------- |
-| URL      | https://www.nianbroken.top | 教务系统地址                                        |
-| USERNAME | 2971802058                 | 教务系统用户名                                      |
-| PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                        |
+| Name     | 例子                       | 说明                                                 |
+| -------- | -------------------------- | ---------------------------------------------------- |
+| URL      | https://www.nianbroken.top | 教务系统地址                                         |
+| USERNAME | 2971802058                 | 教务系统用户名                                       |
+| PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                         |
 | TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](#获取-token "PushPlus 的 token") |
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/15.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/16.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/17.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/15.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/16.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/17.png" style="zoom:60%;" />
 
 ### 获取 TOKEN
 
 1. [登录 Pushplus ](https://www.pushplus.plus/login.html)
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/18.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" style="zoom:60%;" />
 
 2. [获取 Token](https://www.pushplus.plus/api/open/user/token)
 
@@ -48,26 +48,26 @@
 [相关文档](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token)
 
 当你的 Secrets 添加完成后，你的页面应该是类似下图所示
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/19.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/19.png" style="zoom:60%;" />
 
 ## 4. 开启 Actions
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/20.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/21.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/20.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/21.png" style="zoom:60%;" />
 
 ## 5. 运行程序
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/22.png" style="zoom:60%;" />
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/23.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/22.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/23.png" style="zoom:60%;" />
 
 ## 6. 查看运行结果
 
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/24.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/24.png" style="zoom:60%;" />
 当你的页面类似下图所示时则表示程序正常运行且未报错
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/25.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/25.png" style="zoom:60%;" />
 在此之后，程序将会每隔 30 分钟自动运行一次
 
 ## 7. 成绩更新通知
 
 当检测到成绩更新时，你的页面应该是类似下图所示
-<img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/26.png" style="zoom:60%;" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/26.png" style="zoom:60%;" />
