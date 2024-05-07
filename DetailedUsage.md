@@ -20,7 +20,7 @@
 | URL      | https://www.nianbroken.top | 教务系统地址                                        |
 | USERNAME | 2971802058                 | 教务系统用户名                                      |
 | PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                        |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](#%E8%8E%B7%E5%8F%96-token "PushPlus 的 token") |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](#获取-token "PushPlus 的 token") |
 
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/15.png" style="zoom:60%;" />
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/16.png" style="zoom:60%;" />
@@ -28,11 +28,11 @@
 
 ### 获取 TOKEN
 
-[登录 Pushplus ](https://www.pushplus.plus/login.html)
+1. [登录 Pushplus ](https://www.pushplus.plus/login.html)
 
 <img src="https://cdn.jsdelivr.net/gh/NianBroken/ZFCheckScores/img/18.png" style="zoom:60%;" />
 
-[获取 Token](https://www.pushplus.plus/api/open/user/token)
+2. [获取 Token](https://www.pushplus.plus/api/open/user/token)
 
 打开页面后，你会得到一个类似下列所示的 Json 代码块，`data`中的值就是 TOKEN
 
