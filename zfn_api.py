@@ -927,7 +927,7 @@ class Client:
         try:
             url = urljoin(
                 self.base_url,
-                "/xsxxxggl/xsxxwh_cxXsxkxx.html?gnmkdm=N100801",
+                "xsxxxggl/xsxxwh_cxXsxkxx.html?gnmkdm=N100801",
             )
             temp_term = term
             term = term**2 * 3
