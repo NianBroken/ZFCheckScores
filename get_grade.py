@@ -12,7 +12,14 @@ def get_grade(student_client, output_type="none"):
             )
 
         # 按照提交时间降序排序
-        sorted_grade = sorted(grade, key=lambda x: x["submission_time"], reverse=True)
+        # 对于没有提交时间参数的成绩，则将提交时间设置为1970-01-01 00:00:00，否则将无法排序
+        sorted_grade = sorted(
+            grade,
+            key=lambda x: (
+                x["submission_time"] if x["submission_time"] else "1970-01-01 00:00:00"
+            ),
+            reverse=True,
+        )
 
         # 学分总和
         total_credit = sum(float(course["credit"]) for course in grade)
