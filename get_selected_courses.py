@@ -1,3 +1,4 @@
+import traceback
 from get_grade import get_grade
 
 
@@ -9,6 +10,17 @@ def get_selected_courses(student_client):
         # 获取已选课程信息
         selected_courses_data = student_client.get_selected_courses().get("data", {})
         selected_courses = selected_courses_data.get("courses", [])
+
+        # 按照学年学期降序排序
+        # 对于没有学年学期参数的课程，则将学年学期设置为1970至1971学年第1学期，否则将无法排序
+        selected_courses = sorted(
+            selected_courses,
+            key=lambda x: (
+                (x["course_year"] if x["course_year"] else "1970-1971"),
+                (x["course_semester"] if x["course_semester"] else "1"),
+            ),
+            reverse=True,
+        )
 
         # 已选课程信息不为空时,处理未公布成绩的课程和异常课程
         if selected_courses:
@@ -25,9 +37,13 @@ def get_selected_courses(student_client):
 
             # 遍历selected_courses和grade中的每个课程
             for course in selected_courses + (grade or []):
-                # 获取课程的class_id和学年学期
-                yearsemester_id = course["class_name"].split("(")[1].split(")")[0]
-                year, semester, seq = yearsemester_id.split("-")
+                # 获取课程的学年和学期
+                try:
+                    year, semester, seq = course["course_year"].split("-") + [
+                        course["course_semester"]
+                    ]
+                except Exception:
+                    pass
 
                 # 构建年学期名称,例如 "a至b学年第c学期"
                 yearsemester_name = f"{year}至{semester}学年第{seq}学期"
@@ -79,8 +95,8 @@ def get_selected_courses(student_client):
                         selected_courses_filtering += f"\n{course}"
         else:
             selected_courses_filtering = "------\n已选课程信息为空"
-    except Exception as e:
-        print(e)
-        return "------\n无法获取未公布成绩的课程或异常的课程"
+        return selected_courses_filtering
 
-    return selected_courses_filtering
+    except Exception:
+        print(traceback.format_exc())
+        return "------\n获取未公布成绩的课程或异常的课程时出错"

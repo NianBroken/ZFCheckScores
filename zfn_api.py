@@ -966,6 +966,8 @@ class Client:
                         "class_name": i.get("jxbmc"),
                         "title": i.get("kcmc"),
                         "teacher": i.get("jsxm"),
+                        "course_year": i.get("xnmc"),
+                        "course_semester": i.get("xqmmc")
                     }
                     for i in selected["items"]
                 ],

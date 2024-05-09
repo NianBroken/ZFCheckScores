@@ -55,22 +55,13 @@ current_time = "------\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]
 current_file_name = os.path.realpath(__file__)
 
 # 登录
-try:
-    student_client = login(url, username, password)
-except Exception as e:
-    print(current_file_name, "登录失败:", e)
+student_client = login(url, username, password)
 
 # 获取个人信息
-try:
-    info = get_user_info(student_client, output_type="info")
-except Exception as e:
-    print(current_file_name, "获取个人信息失败:", e)
+info = get_user_info(student_client, output_type="info")
 
 # 获取完整个人信息
-try:
-    integrated_info = get_user_info(student_client, output_type="integrated_info")
-except Exception as e:
-    print(current_file_name, "获取完整个人信息失败:", e)
+integrated_info = get_user_info(student_client, output_type="integrated_info")
 
 # 加密个人信息
 encrypted_info = md5_encrypt(info)
@@ -106,10 +97,7 @@ for _ in range(run_count):
         old_grade_file.write(grade_file.read())
 
     # 获取成绩信息
-    try:
-        grade = get_grade(student_client, output_type="grade")
-    except Exception as e:
-        print(current_file_name, "获取成绩信息失败:", e)
+    grade = get_grade(student_client, output_type="grade")
 
     # 成绩不为空时
     if grade:
@@ -118,12 +106,11 @@ for _ in range(run_count):
             grade_file.truncate()
 
         # 获取整合后的成绩信息
-        try:
-            integrated_grade_info = get_grade(
-                student_client, output_type="integrated_grade_info"
-            )
-        except Exception as e:
-            print(current_file_name, "获取整合后的成绩信息失败:", e)
+        integrated_grade_info = get_grade(
+            student_client, output_type="integrated_grade_info"
+        )
+        if integrated_grade_info == "获取成绩时出错":
+            integrated_grade_info += "\n------"
     else:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩为空\n------"
@@ -146,10 +133,7 @@ with open(grade_file_path, "r") as grade_file, open(
 integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 
 # 获取未公布成绩的课程和异常的课程
-try:
-    selected_courses_filtering = get_selected_courses(student_client)
-except Exception as e:
-    print(current_file_name, "获取未公布成绩的课程和异常的课程失败:", e)
+selected_courses_filtering = get_selected_courses(student_client)
 
 # 工作流信息
 workflow_info = (
