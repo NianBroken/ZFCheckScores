@@ -59,7 +59,7 @@ class GitHubActionsManager:
                         ).replace(tzinfo=timezone.utc)
                         # 计算当前时间与运行记录创建时间的差值
                         time_difference = self.current_time - run_time
-                        if time_difference > timedelta(hours=24):  # 如果差值超过24小时
+                        if time_difference > timedelta(hours=168):  # 如果差值超过168小时
                             executor.submit(
                                 self.delete_run, run["id"]
                             )  # 提交删除运行记录的任务
@@ -77,4 +77,4 @@ if __name__ == "__main__":
     token = f"{github_token}"  # GitHub个人访问令牌
 
     manager = GitHubActionsManager(repo_url, token)  # 创建GitHubActionsManager实例
-    manager.delete_old_runs()  # 删除24小时前的运行记录
+    manager.delete_old_runs()  # 删除168小时前的运行记录
