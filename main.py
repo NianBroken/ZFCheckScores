@@ -35,7 +35,8 @@ github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
 
 # 将字符串转换为布尔值
 # 是否强制推送信息
-force_push_message = force_push_message == "True"
+# 若是非GitHub Actions环境,则默认强制推送信息
+force_push_message = force_push_message == "True" if github_actions else True
 
 # 定义文件路径
 info_file_path = "info.txt"
