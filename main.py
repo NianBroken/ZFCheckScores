@@ -231,10 +231,11 @@ if run_log:
     github_step_summary_run_log = (
         f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}"
     )
-    # 将任意个数的换行替换为两个换行
-    github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
 
     if github_actions:
+        # 将任意个数的换行替换为两个换行
+        github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
+
         # 将 github_step_summary_run_log 写入到 GitHub Actions 的环境文件中
         with open(github_step_summary, "w", encoding="utf-8") as file:
             file.write(github_step_summary_run_log)
