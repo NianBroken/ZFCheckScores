@@ -11,13 +11,12 @@ on:
   workflow_dispatch: # 可以手动执行
 
 jobs:
-  # 删除运行记录
-  DeleteOldRuns_1:
+  # 检查成绩
+  DeleteOldRuns:
     name: DeleteOldRuns
 
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
-    timeout-minutes: 360
 
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
@@ -83,30 +82,3 @@ jobs:
         run: |
           # 删除__pycache__文件夹
           rm -rf __pycache__
-
-  # 删除运行记录
-  DeleteOldRuns_2:
-    name: DeleteOldRuns
-    needs: DeleteOldRuns_1
-
-    # 在最新版的Ubuntu系统上运行
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
-
-    steps:
-      - name: Run main program
-        id: run_main_program
-        env:
-          GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
-          REPOSITORY_NAME: ${{ github.repository }}
-
-        run: |
-          # 运行主程序
-          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
-          echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
-          if [ -n "$GITHUB_TOKEN" ]; then
-            python delete_old_runs.py
-            echo "------"
-          else
-            exit 1
-          fi
