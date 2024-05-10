@@ -1,0 +1,82 @@
+# 工作流的名称
+name: DeleteOldRuns
+
+# 工作流运行的名称
+run-name: DeleteOldRuns
+
+# 指定此工作流的触发器
+on:
+  schedule:
+    - cron: '0 16 * * *' # 每天0点触发工作流(基于北京时间)
+  workflow_dispatch: # 可以手动执行
+
+jobs:
+  # 检查成绩
+  DeleteOldRuns:
+    name: DeleteOldRuns
+
+    # 在最新版的Ubuntu系统上运行
+    runs-on: ubuntu-latest
+
+    steps:
+      # 使用GitHub Actions提供的动作来检出代码库
+      - name: Checkout Repository
+        uses: actions/checkout@main
+
+      # 配置Python环境
+      - name: Set up Python
+        uses: actions/setup-python@main
+        with:
+          python-version: "*"
+
+      - name: Install dependencies
+        run: |
+          # 使用pip安装项目的依赖项
+          pip install requests
+
+      - name: Get Connection
+        run: |
+          # 获取连接信息
+          url="https://ifconfig.me/all"
+          response=$(curl -s -X GET "$url")
+          echo "$response"
+
+      - name: Run main program
+        id: run_main_program
+        env:
+          GITHUB_ACTIONS: ${{github.actions}}
+          URL: ${{ secrets.URL }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          REPOSITORY_NAME: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          # 运行主程序
+          if [ -n "$GHTOKEN" ]; then
+            python delete_old_runs.py
+            export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+            echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
+            echo "------"
+          fi
+
+          # 方便通过截图快速定位到用户
+          echo "Triggered By: $GITHUB_EVENT_NAME"
+          echo "Run By: $GITHUB_TRIGGERING_ACTOR"
+          echo "Repository Name: $REPOSITORY_NAME"
+          echo "Commit SHA: $GITHUB_SHA"
+          echo "Workflow Name: $GITHUB_WORKFLOW"
+          echo "Workflow Number: $GITHUB_RUN_NUMBER"
+          echo "Workflow ID: $GITHUB_RUN_ID"
+          echo "Beijing Time: $BEIJING_TIME"
+
+      - name: Delete __pycache__ folder
+        run: |
+          # 删除__pycache__文件夹
+          rm -rf __pycache__

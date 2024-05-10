@@ -28,9 +28,6 @@ jobs:
     # 在最新版的Ubuntu系统上运行
     runs-on: ubuntu-latest
 
-    outputs:
-      BEIJING_TIME: ${{ steps.run_main_program.outputs.BEIJING_TIME }}
-
     steps:
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
