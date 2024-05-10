@@ -36,7 +36,7 @@ class GitHubActionsManager:
                 f"Failed to delete run with ID {run_id}. Status code: {response.status_code}"
             )  # 打印错误信息
 
-    def delete_old_runs(self, max_workers=10):
+    def delete_old_runs(self, max_workers=64):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
         while next_page:  # 循环直到没有下一页
             print(beijing_time)  # 打印时间
