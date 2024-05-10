@@ -39,7 +39,7 @@ class GitHubActionsManager:
     def delete_old_runs(self, max_workers=2):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
         while next_page:  # 循环直到没有下一页
-            print(beijing_time)  # 打印时间
+            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3])  # 打印时间
             # 发送GET请求获取一页工作流运行记录
             response = requests.get(
                 next_page, headers={"Authorization": f"token {self.token}"}
@@ -73,7 +73,6 @@ class GitHubActionsManager:
 if __name__ == "__main__":
     repository_name = os.environ.get("REPOSITORY_NAME")
     github_token = os.environ.get("GITHUB_TOKEN")
-    beijing_time = os.environ.get("BEIJING_TIME")
     repo_url = f"https://api.github.com/repos/{repository_name}"  # GitHub仓库URL
     token = f"{github_token}"  # GitHub个人访问令牌
 
