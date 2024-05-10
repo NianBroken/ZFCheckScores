@@ -59,10 +59,10 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
           # 运行主程序
-          if [ -n "$GHTOKEN" ]; then
+          export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
+          echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
+          if [ -n "$GITHUB_TOKEN" ]; then
             python delete_old_runs.py
-            export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
-            echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
             echo "------"
           fi
 
