@@ -52,13 +52,20 @@ def get_grade(student_client, output_type="none"):
 
             # 遍历前8条成绩信息
             for _, course in enumerate(sorted_grade[:8]):
+
+                # 如果成绩非数字，如及格、良好、中等、优秀等，则显示百分制成绩
+                if str(course["grade"]).isdigit():
+                    score_grades = course["grade"]
+                else:
+                    score_grades = f"{course['grade']} ({course['percentage_grades']})"
+
                 # 整合成绩信息
                 integrated_grade_info += (
                     f"\n"
                     f"教学班ID：{course['class_id']}\n"
                     f"课程名称：{course['title']}\n"
                     f"任课教师：{course['teacher']}\n"
-                    f"成绩：{course['grade']}\n"
+                    f"成绩：{score_grades}\n"
                     f"提交时间：{course['submission_time']}\n"
                     f"提交人姓名：{course['name_of_submitter']}\n"
                     f"------"
