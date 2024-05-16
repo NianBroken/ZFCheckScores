@@ -39,9 +39,7 @@ def get_selected_courses(student_client):
             for course in selected_courses + (grade or []):
                 # 获取课程的学年和学期
                 try:
-                    year, semester, seq = course["course_year"].split("-") + [
-                        course["course_semester"]
-                    ]
+                    year, semester, seq = course["course_year"].split("-") + [course["course_semester"]]
                 except Exception:
                     pass
 
@@ -51,28 +49,16 @@ def get_selected_courses(student_client):
                 # 判断课程是否未公布成绩或为异常课程
                 if course["class_id"] not in grade_class_ids:
                     # 未公布成绩
-                    ungraded_courses_by_semester.setdefault(
-                        yearsemester_name, []
-                    ).append(
-                        f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
-                    )
-                elif course["class_id"] not in {
-                    course["class_id"] for course in selected_courses
-                }:
+                    ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}")
+                elif course["class_id"] not in {course["class_id"] for course in selected_courses}:
                     # 异常课程
-                    abnormal_courses_by_semester.setdefault(
-                        yearsemester_name, []
-                    ).append(
-                        f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}"
-                    )
+                    abnormal_courses_by_semester.setdefault(yearsemester_name, []).append(f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}")
 
             # 构建输出内容
             if ungraded_courses_by_semester:
                 # 存在未公布成绩的课程
                 selected_courses_filtering += "------\n未公布成绩的课程："
-                for i, (semester, courses) in enumerate(
-                    ungraded_courses_by_semester.items()
-                ):
+                for i, (semester, courses) in enumerate(ungraded_courses_by_semester.items()):
                     if i > 0:
                         selected_courses_filtering += "\n------"
                     selected_courses_filtering += f"\n{semester}："
@@ -85,9 +71,7 @@ def get_selected_courses(student_client):
                     # 如果存在课程,添加分隔线
                     selected_courses_filtering += "\n"
                 selected_courses_filtering += "------\n异常的课程："
-                for i, (semester, courses) in enumerate(
-                    abnormal_courses_by_semester.items()
-                ):
+                for i, (semester, courses) in enumerate(abnormal_courses_by_semester.items()):
                     if i > 0:
                         selected_courses_filtering += "\n------"
                     selected_courses_filtering += f"\n{semester}："

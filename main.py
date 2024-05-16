@@ -92,9 +92,7 @@ for _ in range(run_count):
         old_grade_file.truncate()
 
     # 将grade.txt文件中的内容写入old_grade.txt文件内
-    with open(grade_file_path, "r") as grade_file, open(
-        old_grade_file_path, "w"
-    ) as old_grade_file:
+    with open(grade_file_path, "r") as grade_file, open(old_grade_file_path, "w") as old_grade_file:
         old_grade_file.write(grade_file.read())
 
     # 获取成绩信息
@@ -107,9 +105,7 @@ for _ in range(run_count):
             grade_file.truncate()
 
         # 获取整合后的成绩信息
-        integrated_grade_info = get_grade(
-            student_client, output_type="integrated_grade_info"
-        )
+        integrated_grade_info = get_grade(student_client, output_type="integrated_grade_info")
         if integrated_grade_info == "获取成绩时出错":
             integrated_grade_info += "\n------"
     else:
@@ -124,9 +120,7 @@ for _ in range(run_count):
         grade_file.write(encrypted_integrated_grade_info)
 
 # 读取grade.txt和old_grade.txt文件的内容
-with open(grade_file_path, "r") as grade_file, open(
-    old_grade_file_path, "r"
-) as old_grade_file:
+with open(grade_file_path, "r") as grade_file, open(old_grade_file_path, "r") as old_grade_file:
     grade_content = grade_file.read()
     old_grade_content = old_grade_file.read()
 
@@ -137,47 +131,21 @@ integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
 selected_courses_filtering = get_selected_courses(student_client)
 
 # 工作流信息
-workflow_info = (
-    f"------\n"
-    f"工作流信息：\n"
-    f"Force Push Message：{force_push_message}\n"
-    f"Triggered By：{github_event_name}\n"
-    f"Run By：{github_triggering_actor}\n"
-    f"Repository Name：{repository_name}\n"
-    f"Commit SHA：{github_sha}\n"
-    f"Workflow Name：{github_workflow}\n"
-    f"Workflow Number：{github_run_number}\n"
-    f"Workflow ID：{github_run_id}\n"
-    f"Beijing Time：{beijing_time}"
-)
+workflow_info = f"------\n" f"工作流信息：\n" f"Force Push Message：{force_push_message}\n" f"Triggered By：{github_event_name}\n" f"Run By：{github_triggering_actor}\n" f"Repository Name：{repository_name}\n" f"Commit SHA：{github_sha}\n" f"Workflow Name：{github_workflow}\n" f"Workflow Number：{github_run_number}\n" f"Workflow ID：{github_run_id}\n" f"Beijing Time：{beijing_time}"
 
 # 第一次运行时的提示文本
-first_run_text = (
-    "你的程序运行成功\n"
-    "从现在开始,程序将会每隔 30 分钟自动检测一次成绩是否有更新\n"
-    "若有更新,将通过微信推送及时通知你\n"
-    "------"
-)
+first_run_text = "你的程序运行成功\n" "从现在开始,程序将会每隔 30 分钟自动检测一次成绩是否有更新\n" "若有更新,将通过微信推送及时通知你\n" "------"
 
 # 整合所有信息
 # 注意此处integrated_send_info保存的是未加密的信息,仅用于信息推送
 # 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
-integrated_send_info = (
-    f"{integrated_info}\n"
-    f"{integrated_grade_info}\n"
-    f"{selected_courses_filtering}\n"
-    f"{workflow_info if github_actions else current_time}"
-)
+integrated_send_info = f"{integrated_info}\n" f"{integrated_grade_info}\n" f"{selected_courses_filtering}\n" f"{workflow_info if github_actions else current_time}"
 
 # 整合首次运行时需要使用到的所有信息
 first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_info}"
 
 # 整合成绩已更新时需要使用到的所有信息
-grades_updated_push_integrated_send_info = (
-    f"{'强制推送信息成功' if force_push_message else '教务管理系统成绩已更新'}\n"
-    f"------\n"
-    f"{integrated_send_info}"
-)
+grades_updated_push_integrated_send_info = f"{'强制推送信息成功' if force_push_message else '教务管理系统成绩已更新'}\n" f"------\n" f"{integrated_send_info}"
 
 # 如果是第一次运行,则提示程序运行成功
 if run_count == 2:
@@ -229,9 +197,7 @@ if run_log:
     print(run_log)
 
     # 整合JobSummary信息
-    github_step_summary_run_log = (
-        f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}"
-    )
+    github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}"
 
     if github_actions:
         # 将任意个数的换行替换为两个换行

@@ -18,55 +18,39 @@ class GitHubActionsManager:
         if response.status_code == 200:  # 如果请求成功
             return response.json()["workflow_runs"]  # 返回运行记录列表
         else:  # 如果请求失败
-            print(
-                f"Failed to fetch runs from {url}. Status code: {response.status_code}"
-            )  # 打印错误信息
+            print(f"Failed to fetch runs from {url}. Status code: {response.status_code}")  # 打印错误信息
             return []  # 返回空列表
 
     def delete_run(self, run_id):
         delete_url = f"{self.runs_url}/{run_id}"  # 构建删除运行记录的URL
         # 发送DELETE请求删除指定ID的运行记录
-        response = requests.delete(
-            delete_url, headers={"Authorization": f"token {self.token}"}
-        )
+        response = requests.delete(delete_url, headers={"Authorization": f"token {self.token}"})
         if response.status_code == 204:  # 如果删除成功
             print(f"Deleted run with ID {run_id}")  # 打印删除成功的消息
         else:  # 如果删除失败
-            print(
-                f"Failed to delete run with ID {run_id}. Status code: {response.status_code}"
-            )  # 打印错误信息
+            print(f"Failed to delete run with ID {run_id}. Status code: {response.status_code}")  # 打印错误信息
 
     def delete_old_runs(self, max_workers=2):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
         while next_page:  # 循环直到没有下一页
             print(datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3])  # 打印时间
             # 发送GET请求获取一页工作流运行记录
-            response = requests.get(
-                next_page, headers={"Authorization": f"token {self.token}"}
-            )
+            response = requests.get(next_page, headers={"Authorization": f"token {self.token}"})
             if response.status_code == 200:  # 如果请求成功
                 data = response.json()  # 将响应数据转换为JSON格式
                 runs = data["workflow_runs"]  # 获取运行记录列表
                 next_page = response.links.get("next", {}).get("url")  # 获取下一页的URL
 
-                with ThreadPoolExecutor(
-                    max_workers=max_workers
-                ) as executor:  # 创建线程池
+                with ThreadPoolExecutor(max_workers=max_workers) as executor:  # 创建线程池
                     for run in runs:  # 遍历每条运行记录
                         # 将运行记录的创建时间转换为UTC时间
-                        run_time = datetime.strptime(
-                            run["created_at"], "%Y-%m-%dT%H:%M:%SZ"
-                        ).replace(tzinfo=timezone.utc)
+                        run_time = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                         # 计算当前时间与运行记录创建时间的差值
                         time_difference = self.current_time - run_time
                         if time_difference > timedelta(hours=168):  # 如果差值超过168小时
-                            executor.submit(
-                                self.delete_run, run["id"]
-                            )  # 提交删除运行记录的任务
+                            executor.submit(self.delete_run, run["id"])  # 提交删除运行记录的任务
             else:  # 如果请求失败
-                print(
-                    f"Failed to fetch runs. Status code: {response.status_code}"
-                )  # 打印错误信息
+                print(f"Failed to fetch runs. Status code: {response.status_code}")  # 打印错误信息
                 break  # 退出循环
 
 

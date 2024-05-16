@@ -47,12 +47,8 @@ class Client:
         self.kaptcha_url = urljoin(self.base_url, "kaptcha")
         self.headers = requests.utils.default_headers()
         self.headers["Referer"] = self.login_url
-        self.headers["User-Agent"] = (
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-        )
-        self.headers["Accept"] = (
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
-        )
+        self.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
+        self.headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
         self.sess = requests.Session()
         self.sess.keep_alive = False
         self.cookies = cookies
@@ -62,9 +58,7 @@ class Client:
         need_verify = False
         try:
             # 登录页
-            req_csrf = self.sess.get(
-                self.login_url, headers=self.headers, timeout=self.timeout
-            )
+            req_csrf = self.sess.get(self.login_url, headers=self.headers, timeout=self.timeout)
             if req_csrf.status_code != 200:
                 return {"code": 2333, "msg": "教务系统挂了"}
             # 获取csrf_token
@@ -72,9 +66,7 @@ class Client:
             csrf_token = doc("#csrftoken").attr("value")
             pre_cookies = self.sess.cookies.get_dict()
             # 获取publicKey并加密密码
-            req_pubkey = self.sess.get(
-                self.key_url, headers=self.headers, timeout=self.timeout
-            ).json()
+            req_pubkey = self.sess.get(self.key_url, headers=self.headers, timeout=self.timeout).json()
             modulus = req_pubkey["modulus"]
             exponent = req_pubkey["exponent"]
             if str(doc("input#yzm")) == "":
@@ -107,9 +99,7 @@ class Client:
                 }
             # 需要验证码，返回相关页面验证信息给用户，TODO: 增加更多验证方式
             need_verify = True
-            req_kaptcha = self.sess.get(
-                self.kaptcha_url, headers=self.headers, timeout=self.timeout
-            )
+            req_kaptcha = self.sess.get(self.kaptcha_url, headers=self.headers, timeout=self.timeout)
             kaptcha_pic = base64.b64encode(req_kaptcha.content).decode()
             return {
                 "code": 1001,
@@ -143,9 +133,7 @@ class Client:
             msg = "获取验证码时未记录的错误" if need_verify else "登录时未记录的错误"
             return {"code": 999, "msg": f"{msg}：{str(e)}"}
 
-    def login_with_kaptcha(
-        self, sid, csrf_token, cookies, password, modulus, exponent, kaptcha, **kwargs
-    ):
+    def login_with_kaptcha(self, sid, csrf_token, cookies, password, modulus, exponent, kaptcha, **kwargs):
         """需要验证码的登陆"""
         try:
             encrypt_password = self.encrypt_password(password, modulus, exponent)
@@ -263,9 +251,7 @@ class Client:
         """获取个人信息"""
         url = urljoin(self.base_url, "xsxxxggl/xsgrxxwh_cxXsgrxx.html?gnmkdm=N100801")
         try:
-            req_info = self.sess.get(
-                url, headers=self.headers, cookies=self.cookies, timeout=self.timeout
-            )
+            req_info = self.sess.get(url, headers=self.headers, cookies=self.cookies, timeout=self.timeout)
             if req_info.status_code != 200:
                 return {"code": 2333, "msg": "教务系统挂了"}
             doc = pq(req_info.text)
@@ -301,32 +287,12 @@ class Client:
                 # "status": "无" if pending_result.get("学籍状态：") == '' else pending_result["学籍状态："],
                 # "entry_date": "无" if pending_result.get("入学日期：") == '' else pending_result["入学日期："],
                 # "graduation_school": "无" if pending_result.get("毕业中学：") == '' else pending_result["毕业中学："],
-                "domicile": (
-                    "无"
-                    if pending_result.get("籍贯：") == ""
-                    else pending_result["籍贯："]
-                ),
-                "phone_number": (
-                    "无"
-                    if pending_result.get("手机号码：") == ""
-                    else pending_result["手机号码："]
-                ),
+                "domicile": ("无" if pending_result.get("籍贯：") == "" else pending_result["籍贯："]),
+                "phone_number": ("无" if pending_result.get("手机号码：") == "" else pending_result["手机号码："]),
                 "parents_number": "无",
-                "email": (
-                    "无"
-                    if pending_result.get("电子邮箱：") == ""
-                    else pending_result["电子邮箱："]
-                ),
-                "political_status": (
-                    "无"
-                    if pending_result.get("政治面貌：") == ""
-                    else pending_result["政治面貌："]
-                ),
-                "national": (
-                    "无"
-                    if pending_result.get("民族：") == ""
-                    else pending_result["民族："]
-                ),
+                "email": ("无" if pending_result.get("电子邮箱：") == "" else pending_result["电子邮箱："]),
+                "political_status": ("无" if pending_result.get("政治面貌：") == "" else pending_result["政治面貌："]),
+                "national": ("无" if pending_result.get("民族：") == "" else pending_result["民族："]),
                 # "education": "无" if pending_result.get("培养层次：") == '' else pending_result["培养层次："],
                 # "postal_code": "无" if pending_result.get("邮政编码：") == '' else pending_result["邮政编码："],
                 # "grade": int(pending_result["学号："][0:4]),
@@ -335,21 +301,9 @@ class Client:
                 # 如果在个人信息页面获取到了学院班级
                 result.update(
                     {
-                        "college_name": (
-                            "无"
-                            if pending_result.get("学院名称：") == ""
-                            else pending_result["学院名称："]
-                        ),
-                        "major_name": (
-                            "无"
-                            if pending_result.get("专业名称：") == ""
-                            else pending_result["专业名称："]
-                        ),
-                        "class_name": (
-                            "无"
-                            if pending_result.get("班级名称：") == ""
-                            else pending_result["班级名称："]
-                        ),
+                        "college_name": ("无" if pending_result.get("学院名称：") == "" else pending_result["学院名称："]),
+                        "major_name": ("无" if pending_result.get("专业名称：") == "" else pending_result["专业名称："]),
+                        "class_name": ("无" if pending_result.get("班级名称：") == "" else pending_result["班级名称："]),
                     }
                 )
             else:
@@ -370,32 +324,15 @@ class Client:
                     # 通过学生证补办申请入口，来补全部分信息
                     for ul_item in _doc.find("div.col-sm-6").items():
                         content = pq(ul_item).find("div.form-group")
-                        key = (
-                            pq(content).find("label.col-sm-4.control-label").text()
-                            + "："
-                        )  # 为了保持格式一致，这里加个冒号
-                        value = (
-                            pq(content).find("div.col-sm-8 label.control-label").text()
-                        )
+                        key = pq(content).find("label.col-sm-4.control-label").text() + "："  # 为了保持格式一致，这里加个冒号
+                        value = pq(content).find("div.col-sm-8 label.control-label").text()
                         # 到这一步，解析到的数据基本就是一个键值对形式的html数据了，比如"[学号：]:123456"
                         pending_result[key] = value
                     result.update(
                         {
-                            "college_name": (
-                                "无"
-                                if pending_result.get("学院：") is None
-                                else pending_result["学院："]
-                            ),
-                            "major_name": (
-                                "无"
-                                if pending_result.get("专业：") is None
-                                else pending_result["专业："]
-                            ),
-                            "class_name": (
-                                "无"
-                                if pending_result.get("班级：") is None
-                                else pending_result["班级："]
-                            ),
+                            "college_name": ("无" if pending_result.get("学院：") is None else pending_result["学院："]),
+                            "major_name": ("无" if pending_result.get("专业：") is None else pending_result["专业："]),
+                            "class_name": ("无" if pending_result.get("班级：") is None else pending_result["班级："]),
                         }
                     )
             return {"code": 1000, "msg": "获取个人信息成功", "data": result}
@@ -422,11 +359,7 @@ class Client:
         """
         url = urljoin(
             self.base_url,
-            (
-                "cjcx/cjcx_cxDgXscj.html?doType=query&gnmkdm=N305005"
-                if use_personal_info
-                else "cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"
-            ),
+            ("cjcx/cjcx_cxDgXscj.html?doType=query&gnmkdm=N305005" if use_personal_info else "cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"),
         )
         temp_term = term
         term = term**2 * 3
@@ -576,9 +509,7 @@ class Client:
             self.base_url,
             "xsxy/xsxyqk_cxXsxyqkIndex.html?gnmkdm=N105515&layout=default",
         )
-        url_info = urljoin(
-            self.base_url, "xsxy/xsxyqk_cxJxzxjhxfyqKcxx.html?gnmkdm=N105515"
-        )
+        url_info = urljoin(self.base_url, "xsxy/xsxyqk_cxJxzxjhxfyqKcxx.html?gnmkdm=N105515")
         try:
             req_main = self.sess.get(
                 url_main,
@@ -595,9 +526,7 @@ class Client:
             if str(doc_main("div.alert-danger")) != "":
                 return {"code": 998, "msg": doc_main("div.alert-danger").text()}
             sid = doc_main("form#form input#xh_id").attr("value")
-            display_statistics = (
-                doc_main("div#alertBox").text().replace(" ", "").replace("\n", "")
-            )
+            display_statistics = doc_main("div#alertBox").text().replace(" ", "").replace("\n", "")
             sid = doc_main("input#xh_id").attr("value")
             statistics = self.get_academia_statistics(display_statistics)
             type_statistics = self.get_academia_type_statistics(req_main.text)
@@ -623,9 +552,7 @@ class Client:
                                 "course_id": i.get("KCH"),
                                 "title": i.get("KCMC"),
                                 "situation": self.parse_int(i.get("XDZT")),
-                                "display_term": self.get_display_term(
-                                    sid, i.get("JYXDXNM"), i.get("JYXDXQMC")
-                                ),
+                                "display_term": self.get_display_term(sid, i.get("JYXDXNM"), i.get("JYXDXQMC")),
                                 "credit": self.align_floats(i.get("XF")),
                                 "category": self.get_course_category(type, i),
                                 "nature": i.get("KCXZMC"),
@@ -765,12 +692,7 @@ class Client:
                 timeout=self.timeout,
             )
             # 生成PDF文件URL
-            pdf = (
-                req_file.text.replace("#成功", "")
-                .replace('"', "")
-                .replace("/", "\\")
-                .replace("\\\\", "/")
-            )
+            pdf = req_file.text.replace("#成功", "").replace('"', "").replace("/", "\\").replace("\\\\", "/")
             # 下载PDF文件
             req_pdf = self.sess.get(
                 urljoin(self.base_url, pdf),
@@ -901,10 +823,7 @@ class Client:
             if doc("h5").text() == "用户登录" or "错误" in doc("title").text():
                 return {"code": 1006, "msg": "未登录或已过期，请重新登录"}
             notifications = req_notification.json()
-            result = [
-                {**self.split_notifications(i), "create_time": i.get("cjsj")}
-                for i in notifications.get("items")
-            ]
+            result = [{**self.split_notifications(i), "create_time": i.get("cjsj")} for i in notifications.get("items")]
             return {"code": 1000, "msg": "获取消息成功", "data": result}
         except exceptions.Timeout:
             return {"code": 1003, "msg": "获取消息超时"}
@@ -960,17 +879,7 @@ class Client:
                 "year": year,
                 "term": temp_term,
                 "count": len(selected),
-                "courses": [
-                    {
-                        "class_id": i.get("jxb_id"),
-                        "class_name": i.get("jxbmc"),
-                        "title": i.get("kcmc"),
-                        "teacher": i.get("jsxm"),
-                        "course_year": i.get("xnmc"),
-                        "course_semester": i.get("xqmmc")
-                    }
-                    for i in selected["items"]
-                ],
+                "courses": [{"class_id": i.get("jxb_id"), "class_name": i.get("jxbmc"), "title": i.get("kcmc"), "teacher": i.get("jsxm"), "course_year": i.get("xnmc"), "course_semester": i.get("xqmmc")} for i in selected["items"]],
             }
             return {"code": 1000, "msg": "获取已选课程成功", "data": result}
         except exceptions.Timeout:
@@ -1035,9 +944,7 @@ class Client:
                 value = head_data_content.attr("value")
                 head_data[str(name)] = str(value)
 
-            url_display = urljoin(
-                self.base_url, "xsxk/zzxkyzb_cxZzxkYzbDisplay.html?gnmkdm=N253512"
-            )
+            url_display = urljoin(self.base_url, "xsxk/zzxkyzb_cxZzxkYzbDisplay.html?gnmkdm=N253512")
             display_req_data = {
                 "xkkz_id": head_data[f"bkk{block}_xkkz_id"],
                 "xszxzt": "1",
@@ -1059,12 +966,8 @@ class Client:
             head_data.update(display_data)
 
             # 获取课程列表
-            url_kch = urljoin(
-                self.base_url, "xsxk/zzxkyzb_cxZzxkYzbPartDisplay.html?gnmkdm=N253512"
-            )
-            url_bkk = urljoin(
-                self.base_url, "xsxk/zzxkyzb_cxJxbWithKchZzxkYzb.html?gnmkdm=N253512"
-            )
+            url_kch = urljoin(self.base_url, "xsxk/zzxkyzb_cxZzxkYzbPartDisplay.html?gnmkdm=N253512")
+            url_bkk = urljoin(self.base_url, "xsxk/zzxkyzb_cxJxbWithKchZzxkYzb.html?gnmkdm=N253512")
             term = term**2 * 3
             kch_data = {
                 "bklx_id": head_data["bklx_id"],
@@ -1173,9 +1076,7 @@ class Client:
     ):
         """选课"""
         try:
-            url_select = urljoin(
-                self.base_url, "xsxk/zzxkyzb_xkBcZyZzxkYzb.html?gnmkdm=N253512"
-            )
+            url_select = urljoin(self.base_url, "xsxk/zzxkyzb_xkBcZyZzxkYzb.html?gnmkdm=N253512")
             term = term**2 * 3
             select_data = {
                 "jxb_ids": do_id,
@@ -1228,9 +1129,7 @@ class Client:
     def cancel_course(self, do_id: str, course_id: str, year: int, term: int):
         """取消选课"""
         try:
-            url_cancel = urljoin(
-                self.base_url, "xsxk/zzxkyzb_tuikBcZzxkYzb.html?gnmkdm=N253512"
-            )
+            url_cancel = urljoin(self.base_url, "xsxk/zzxkyzb_tuikBcZzxkYzb.html?gnmkdm=N253512")
             term = term**2 * 3
             cancel_data = {
                 "jxb_ids": do_id,
@@ -1422,14 +1321,7 @@ class Client:
             content,
         )
         finder_list = list({}.fromkeys(finder).keys())
-        academia_list = [
-            list(i)
-            for i in finder_list
-            if i[0] != ""  # 类型名称不为空
-            and len(i[0]) <= 20  # 避免正则到首部过长类型名称
-            and "span" not in i[-1]  # 避免正则到尾部过长类型名称
-            and i[0] not in cls.ignore_type  # 忽略的类型名称
-        ]
+        academia_list = [list(i) for i in finder_list if i[0] != "" and len(i[0]) <= 20 and "span" not in i[-1] and i[0] not in cls.ignore_type]  # 类型名称不为空  # 避免正则到首部过长类型名称  # 避免正则到尾部过长类型名称  # 忽略的类型名称
         result = {
             i[0]: {
                 "id": i[-1],
@@ -1473,47 +1365,22 @@ class Client:
             for index in range(len(schedule["courses"])):
                 if (schedule["courses"]).index(items) == count:  # 如果对比到自己就忽略
                     continue
-                elif (
-                    items["course_id"]
-                    == schedule["courses"][index]["course_id"]  # 同周同天同课程
-                    and items["weekday"] == schedule["courses"][index]["weekday"]
-                    and items["weeks"] == schedule["courses"][index]["weeks"]
-                ):
+                elif items["course_id"] == schedule["courses"][index]["course_id"] and items["weekday"] == schedule["courses"][index]["weekday"] and items["weeks"] == schedule["courses"][index]["weeks"]:  # 同周同天同课程
                     repetIndex.append(index)  # 满足条件记录索引
             count += 1  # 记录当前对比课程的索引
-        if (
-            len(repetIndex) % 2 != 0
-        ):  # 暂时考虑一天两个时段上同一门课，不满足条件不进行修改
+        if len(repetIndex) % 2 != 0:  # 暂时考虑一天两个时段上同一门课，不满足条件不进行修改
             return schedule
         for r in range(0, len(repetIndex), 2):  # 索引数组两两成对，故步进2循环
             fir = repetIndex[r]
             sec = repetIndex[r + 1]
             if len(re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])) == 4:
-                schedule["courses"][fir]["sessions"] = (
-                    re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[0]
-                    + "-"
-                    + re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[1]
-                    + "节"
-                )
-                schedule["courses"][fir]["list_sessions"] = cls.list_sessions(
-                    schedule["courses"][fir]["sessions"]
-                )
-                schedule["courses"][fir]["time"] = cls.display_course_time(
-                    schedule["courses"][fir]["sessions"]
-                )
+                schedule["courses"][fir]["sessions"] = re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[0] + "-" + re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[1] + "节"
+                schedule["courses"][fir]["list_sessions"] = cls.list_sessions(schedule["courses"][fir]["sessions"])
+                schedule["courses"][fir]["time"] = cls.display_course_time(schedule["courses"][fir]["sessions"])
 
-                schedule["courses"][sec]["sessions"] = (
-                    re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[2]
-                    + "-"
-                    + re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[3]
-                    + "节"
-                )
-                schedule["courses"][sec]["list_sessions"] = cls.list_sessions(
-                    schedule["courses"][sec]["sessions"]
-                )
-                schedule["courses"][sec]["time"] = cls.display_course_time(
-                    schedule["courses"][sec]["sessions"]
-                )
+                schedule["courses"][sec]["sessions"] = re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[2] + "-" + re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[3] + "节"
+                schedule["courses"][sec]["list_sessions"] = cls.list_sessions(schedule["courses"][sec]["sessions"])
+                schedule["courses"][sec]["time"] = cls.display_course_time(schedule["courses"][sec]["sessions"])
         return schedule
 
     @classmethod
