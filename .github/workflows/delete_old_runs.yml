@@ -65,7 +65,7 @@ jobs:
             python delete_old_runs.py
             echo "------"
           else
-            exit 1
+            exit 0
           fi
 
           # 方便通过截图快速定位到用户
