@@ -62,7 +62,7 @@ jobs:
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
           if [ -n "$GITHUB_TOKEN" ]; then
-            python delete_old_runs.py
+            python scripts/delete_old_runs.py
             echo "------"
           else
             exit 0
