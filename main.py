@@ -3,11 +3,11 @@ import re
 import hashlib
 import os
 import shutil
-from user_login import login
-from get_user_info import get_user_info
-from get_grade import get_grade
-from get_selected_courses import get_selected_courses
-from pushplus import send_message
+from .scripts.user_login import login
+from .scripts.get_user_info import get_user_info
+from .scripts.get_grade import get_grade
+from .scripts.get_selected_courses import get_selected_courses
+from .scripts.pushplus import send_message
 from datetime import datetime
 
 
@@ -39,9 +39,10 @@ github_step_summary = os.environ.get("GITHUB_STEP_SUMMARY")
 force_push_message = force_push_message == "True" if github_actions else True
 
 # 定义文件路径
-info_file_path = "info.txt"
-grade_file_path = "grade.txt"
-old_grade_file_path = "old_grade.txt"
+folder_path = "data"
+info_file_path = os.path.join(folder_path, "info.txt")
+grade_file_path = os.path.join(folder_path, "grade.txt")
+old_grade_file_path = os.path.join(folder_path, "old_grade.txt")
 
 # 初始化运行次数
 run_count = 2
@@ -66,6 +67,10 @@ integrated_info = get_user_info(student_client, output_type="integrated_info")
 
 # 加密个人信息
 encrypted_info = md5_encrypt(info)
+
+# 检查文件夹是否存在，如果不存在则创建
+if not os.path.exists(folder_path):
+    os.makedirs(folder_path)
 
 # 判断info.txt文件是否存在
 if not os.path.exists(info_file_path):
@@ -209,7 +214,8 @@ if run_log:
 
 # 删除 __pycache__ 缓存目录及其内容
 current_directory = os.getcwd()
-cache_folder = os.path.join(current_directory, "__pycache__")
+scripts_folder = os.path.join(current_directory, "scripts")
+cache_folder = os.path.join(scripts_folder, "__pycache__")
 # 检查目录是否存在
 if os.path.exists(cache_folder):
     # 删除目录及其内容

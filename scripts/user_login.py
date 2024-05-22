@@ -2,7 +2,7 @@ import base64
 import os
 import sys
 from pprint import pprint
-from zfn_api import Client
+from .zfn_api import Client
 
 
 def login(url, username, password):

@@ -1,4 +1,4 @@
-from get_grade import get_grade
+from .get_grade import get_grade
 import traceback
 
 

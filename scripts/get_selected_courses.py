@@ -1,5 +1,5 @@
 import traceback
-from get_grade import get_grade
+from .get_grade import get_grade
 
 
 def get_selected_courses(student_client):
