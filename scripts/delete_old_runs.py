@@ -33,7 +33,6 @@ class GitHubActionsManager:
     def delete_old_runs(self, max_workers=2):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
         while next_page:  # 循环直到没有下一页
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3])  # 打印时间
             # 发送GET请求获取一页工作流运行记录
             response = requests.get(next_page, headers={"Authorization": f"token {self.token}"})
             if response.status_code == 200:  # 如果请求成功
