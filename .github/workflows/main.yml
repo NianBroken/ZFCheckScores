@@ -127,6 +127,7 @@ jobs:
         run: |
           # 删除__pycache__文件夹
           rm -rf __pycache__
+          rm -rf scripts/__pycache__
 
       - name: Force push changes to main branch
         run: |
