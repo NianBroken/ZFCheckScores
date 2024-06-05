@@ -430,7 +430,7 @@ class Client:
                         "name_of_submitter": i.get("tjrxm"),
                         "xfjd": i.get("xfjd"),
                         "percentage_grades": i.get("bfzcj"),
-                        "course_year": i.get("xnmc"),
+                        "course_year": i.get("xnmmc"),
                         "course_semester": i.get("xqmmc"),
                     }
                     for i in grade_items
