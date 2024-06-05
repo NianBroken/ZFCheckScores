@@ -47,8 +47,12 @@ class Client:
         self.kaptcha_url = urljoin(self.base_url, "kaptcha")
         self.headers = requests.utils.default_headers()
         self.headers["Referer"] = self.login_url
-        self.headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
-        self.headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+        self.headers["User-Agent"] = (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"
+        )
+        self.headers["Accept"] = (
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3"
+        )
         self.sess = requests.Session()
         self.sess.keep_alive = False
         self.cookies = cookies
@@ -301,9 +305,15 @@ class Client:
                 # 如果在个人信息页面获取到了学院班级
                 result.update(
                     {
-                        "college_name": ("无" if pending_result.get("学院名称：") == "" else pending_result["学院名称："]),
-                        "major_name": ("无" if pending_result.get("专业名称：") == "" else pending_result["专业名称："]),
-                        "class_name": ("无" if pending_result.get("班级名称：") == "" else pending_result["班级名称："]),
+                        "college_name": (
+                            "无" if pending_result.get("学院名称：") == "" else pending_result["学院名称："]
+                        ),
+                        "major_name": (
+                            "无" if pending_result.get("专业名称：") == "" else pending_result["专业名称："]
+                        ),
+                        "class_name": (
+                            "无" if pending_result.get("班级名称：") == "" else pending_result["班级名称："]
+                        ),
                     }
                 )
             else:
@@ -324,13 +334,17 @@ class Client:
                     # 通过学生证补办申请入口，来补全部分信息
                     for ul_item in _doc.find("div.col-sm-6").items():
                         content = pq(ul_item).find("div.form-group")
-                        key = pq(content).find("label.col-sm-4.control-label").text() + "："  # 为了保持格式一致，这里加个冒号
+                        key = (
+                            pq(content).find("label.col-sm-4.control-label").text() + "："
+                        )  # 为了保持格式一致，这里加个冒号
                         value = pq(content).find("div.col-sm-8 label.control-label").text()
                         # 到这一步，解析到的数据基本就是一个键值对形式的html数据了，比如"[学号：]:123456"
                         pending_result[key] = value
                     result.update(
                         {
-                            "college_name": ("无" if pending_result.get("学院：") is None else pending_result["学院："]),
+                            "college_name": (
+                                "无" if pending_result.get("学院：") is None else pending_result["学院："]
+                            ),
                             "major_name": ("无" if pending_result.get("专业：") is None else pending_result["专业："]),
                             "class_name": ("无" if pending_result.get("班级：") is None else pending_result["班级："]),
                         }
@@ -359,7 +373,11 @@ class Client:
         """
         url = urljoin(
             self.base_url,
-            ("cjcx/cjcx_cxDgXscj.html?doType=query&gnmkdm=N305005" if use_personal_info else "cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"),
+            (
+                "cjcx/cjcx_cxDgXscj.html?doType=query&gnmkdm=N305005"
+                if use_personal_info
+                else "cjcx/cjcx_cxXsgrcj.html?doType=query&gnmkdm=N305005"
+            ),
         )
         temp_term = term
         term = term**2 * 3
@@ -412,6 +430,8 @@ class Client:
                         "name_of_submitter": i.get("tjrxm"),
                         "xfjd": i.get("xfjd"),
                         "percentage_grades": i.get("bfzcj"),
+                        "course_year": i.get("xnmc"),
+                        "course_semester": i.get("xqmmc"),
                     }
                     for i in grade_items
                 ],
@@ -879,7 +899,17 @@ class Client:
                 "year": year,
                 "term": temp_term,
                 "count": len(selected),
-                "courses": [{"class_id": i.get("jxb_id"), "class_name": i.get("jxbmc"), "title": i.get("kcmc"), "teacher": i.get("jsxm"), "course_year": i.get("xnmc"), "course_semester": i.get("xqmmc")} for i in selected["items"]],
+                "courses": [
+                    {
+                        "class_id": i.get("jxb_id"),
+                        "class_name": i.get("jxbmc"),
+                        "title": i.get("kcmc"),
+                        "teacher": i.get("jsxm"),
+                        "course_year": i.get("xnmc"),
+                        "course_semester": i.get("xqmmc"),
+                    }
+                    for i in selected["items"]
+                ],
             }
             return {"code": 1000, "msg": "获取已选课程成功", "data": result}
         except exceptions.Timeout:
@@ -1321,7 +1351,11 @@ class Client:
             content,
         )
         finder_list = list({}.fromkeys(finder).keys())
-        academia_list = [list(i) for i in finder_list if i[0] != "" and len(i[0]) <= 20 and "span" not in i[-1] and i[0] not in cls.ignore_type]  # 类型名称不为空  # 避免正则到首部过长类型名称  # 避免正则到尾部过长类型名称  # 忽略的类型名称
+        academia_list = [
+            list(i)
+            for i in finder_list
+            if i[0] != "" and len(i[0]) <= 20 and "span" not in i[-1] and i[0] not in cls.ignore_type
+        ]  # 类型名称不为空  # 避免正则到首部过长类型名称  # 避免正则到尾部过长类型名称  # 忽略的类型名称
         result = {
             i[0]: {
                 "id": i[-1],
@@ -1365,7 +1399,11 @@ class Client:
             for index in range(len(schedule["courses"])):
                 if (schedule["courses"]).index(items) == count:  # 如果对比到自己就忽略
                     continue
-                elif items["course_id"] == schedule["courses"][index]["course_id"] and items["weekday"] == schedule["courses"][index]["weekday"] and items["weeks"] == schedule["courses"][index]["weeks"]:  # 同周同天同课程
+                elif (
+                    items["course_id"] == schedule["courses"][index]["course_id"]
+                    and items["weekday"] == schedule["courses"][index]["weekday"]
+                    and items["weeks"] == schedule["courses"][index]["weeks"]
+                ):  # 同周同天同课程
                     repetIndex.append(index)  # 满足条件记录索引
             count += 1  # 记录当前对比课程的索引
         if len(repetIndex) % 2 != 0:  # 暂时考虑一天两个时段上同一门课，不满足条件不进行修改
@@ -1374,11 +1412,21 @@ class Client:
             fir = repetIndex[r]
             sec = repetIndex[r + 1]
             if len(re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])) == 4:
-                schedule["courses"][fir]["sessions"] = re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[0] + "-" + re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[1] + "节"
+                schedule["courses"][fir]["sessions"] = (
+                    re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[0]
+                    + "-"
+                    + re.findall(r"(\d+)", schedule["courses"][fir]["sessions"])[1]
+                    + "节"
+                )
                 schedule["courses"][fir]["list_sessions"] = cls.list_sessions(schedule["courses"][fir]["sessions"])
                 schedule["courses"][fir]["time"] = cls.display_course_time(schedule["courses"][fir]["sessions"])
 
-                schedule["courses"][sec]["sessions"] = re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[2] + "-" + re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[3] + "节"
+                schedule["courses"][sec]["sessions"] = (
+                    re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[2]
+                    + "-"
+                    + re.findall(r"(\d+)", schedule["courses"][sec]["sessions"])[3]
+                    + "节"
+                )
                 schedule["courses"][sec]["list_sessions"] = cls.list_sessions(schedule["courses"][sec]["sessions"])
                 schedule["courses"][sec]["time"] = cls.display_course_time(schedule["courses"][sec]["sessions"])
         return schedule
