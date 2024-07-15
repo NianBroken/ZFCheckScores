@@ -17,7 +17,7 @@ class GitHubActionsManager:
         if response.status_code == 200:  # 如果请求成功
             return response.json()["workflow_runs"]  # 返回运行记录列表
         else:  # 如果请求失败
-            print(f"Failed to fetch runs from {url}. Status code: {response.status_code}")  # 打印错误信息
+            self.log(f"Failed to fetch runs from {url}. Status code: {response.status_code}")  # 打印错误信息
             return []  # 返回空列表
 
     def delete_run(self, run_id):
@@ -25,9 +25,9 @@ class GitHubActionsManager:
         # 发送DELETE请求删除指定ID的运行记录
         response = requests.delete(delete_url, headers={"Authorization": f"token {self.token}"})
         if response.status_code == 204:  # 如果删除成功
-            print(f"Deleted run with ID {run_id}")  # 打印删除成功的消息
+            self.log(f"Deleted run with ID {run_id}")  # 打印删除成功的消息
         else:  # 如果删除失败
-            print(f"Failed to delete run with ID {run_id}. Status code: {response.status_code}")  # 打印错误信息
+            self.log(f"Failed to delete run with ID {run_id}. Status code: {response.status_code}")  # 打印错误信息
 
     def delete_old_runs(self):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
@@ -47,8 +47,12 @@ class GitHubActionsManager:
                     if time_difference > timedelta(hours=168):  # 如果差值超过168小时
                         self.delete_run(run["id"])  # 删除运行记录
             else:  # 如果请求失败
-                print(f"Failed to fetch runs. Status code: {response.status_code}")  # 打印错误信息
+                self.log(f"Failed to fetch runs. Status code: {response.status_code}")  # 打印错误信息
                 break  # 退出循环
+
+    def log(self, message):
+        current_time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]  # 获取当前时间，精确到三位毫秒
+        print(f"{current_time_str} {message}")  # 打印日志消息
 
 
 if __name__ == "__main__":
