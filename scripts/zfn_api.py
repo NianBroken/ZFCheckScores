@@ -89,7 +89,26 @@ class Client:
                 tips = doc("p#tips")
                 if str(tips) != "":
                     if "用户名或密码" in tips.text():
-                        return {"code": 1002, "msg": "用户名或密码不正确"}
+                        # 使用原始密码再次尝试登录
+                        login_data["mm"] = password
+                        req_login = self.sess.post(
+                            self.login_url,
+                            headers=self.headers,
+                            data=login_data,
+                            timeout=self.timeout,
+                        )
+                        doc = pq(req_login.text)
+                        tips = doc("p#tips")
+                        if str(tips) != "":
+                            if "用户名或密码" in tips.text():
+                                return {"code": 1002, "msg": "用户名或密码不正确"}
+                            return {"code": 998, "msg": tips.text()}
+                        self.cookies = self.sess.cookies.get_dict()
+                        return {
+                            "code": 1000,
+                            "msg": "登录成功",
+                            "data": {"cookies": self.cookies},
+                        }
                     return {"code": 998, "msg": tips.text()}
                 self.cookies = self.sess.cookies.get_dict()
                 return {
