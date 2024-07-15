@@ -44,7 +44,7 @@ class GitHubActionsManager:
                     run_time = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                     # 计算当前时间与运行记录创建时间的差值
                     time_difference = self.current_time - run_time
-                    if time_difference > timedelta(hours=168):  # 如果差值超过168小时
+                    if time_difference > timedelta(hours=100):  # 如果差值超过168小时
                         self.delete_run(run["id"])  # 删除运行记录
             else:  # 如果请求失败
                 self.log(f"Failed to fetch runs. Status code: {response.status_code}")  # 打印错误信息
