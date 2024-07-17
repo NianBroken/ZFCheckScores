@@ -9,7 +9,12 @@ on:
   schedule:
     - cron: "0 */12 * * *" # 每 12 小时执行一次
   workflow_dispatch: # 可以手动执行
-
+    inputs:
+      hour_count:
+        description: "You want to delete records from how many hours ago?"
+        required: true
+        default: "168"
+        type: string
 jobs:
   # 检查成绩
   DeleteOldRuns:
