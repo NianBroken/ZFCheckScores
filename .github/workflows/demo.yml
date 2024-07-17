@@ -1,4 +1,4 @@
-name: Workflow with Inputs
+name: Workflow Dispatch Example
 
 on:
   workflow_dispatch:
@@ -6,44 +6,26 @@ on:
       string_input:
         description: 'A string input'
         required: true
-        default: 'default string'
+        default: 'Hello'
         type: string
       boolean_input:
         description: 'A boolean input'
         required: false
-        default: false
+        default: true
         type: boolean
       number_input:
         description: 'A number input'
-        required: true
+        required: false
         default: 42
         type: number
+      object_input:
+        description: 'An object input'
+        required: false
+        type: object
       array_input:
         description: 'An array input'
         required: false
-        default: ['item1', 'item2']
         type: array
-      object_input:
-        description: 'An object input'
-        required: true
-        default: '{"key": "value"}'
-        type: object
-      enum_input:
-        description: 'An enum input'
-        required: true
-        default: 'option1'
-        type: string
-        enum:
-          - option1
-          - option2
-      file_input:
-        description: 'A file input'
-        required: true
-        type: path
-      env_var_input:
-        description: 'An environment variable input'
-        required: true
-        type: env
 
 jobs:
   build:
@@ -54,8 +36,5 @@ jobs:
           echo "String Input: ${{ github.event.inputs.string_input }}"
           echo "Boolean Input: ${{ github.event.inputs.boolean_input }}"
           echo "Number Input: ${{ github.event.inputs.number_input }}"
-          echo "Array Input: ${{ github.event.inputs.array_input }}"
-          echo "Object Input: ${{ github.event.inputs.object_input }}"
-          echo "Enum Input: ${{ github.event.inputs.enum_input }}"
-          echo "File Input: ${{ github.event.inputs.file_input }}"
-          echo "Env Var Input: ${{ github.event.inputs.env_var_input }}"
+          echo "Object Input: ${{ toJson(github.event.inputs.object_input) }}"
+          echo "Array Input: ${{ toJson(github.event.inputs.array_input) }}"
