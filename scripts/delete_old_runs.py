@@ -58,7 +58,7 @@ class GitHubActionsManager:
 if __name__ == "__main__":
     repository_name = os.environ.get("REPOSITORY_NAME")
     github_token = os.environ.get("GITHUB_TOKEN")
-    hour_count = os.environ.get("HOUR_COUNT")
+    hour_count = int(os.environ.get("HOUR_COUNT"))
     repo_url = f"https://api.github.com/repos/{repository_name}"  # GitHub仓库URL
     token = f"{github_token}"  # GitHub个人访问令牌
 
