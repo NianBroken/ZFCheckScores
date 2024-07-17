@@ -49,6 +49,7 @@ jobs:
       - name: Run main program
         id: run_main_program
         env:
+          HOUR_COUNT: ${{ github.event.inputs.hour_count }}
           GITHUB_ACTIONS: ${{github.actions}}
           URL: ${{ secrets.URL }}
           USERNAME: ${{ secrets.USERNAME }}
@@ -66,6 +67,26 @@ jobs:
           # 运行主程序
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
+
+
+          # 如果 hour_count 为空，则设置为 168
+          if [[ -z "${{ github.event.inputs.hour_count }}" ]]; then
+            # 设置步骤输出的 hour_count 为 168
+            export HOUR_COUNT="168"
+          # 如果 hour_count 不是正整数，则设置为 168
+          elif ! [[ "${{ github.event.inputs.hour_count }}" =~ ^[0-9]+$ ]]; then
+            # 设置步骤输出的 hour_count 为 168
+            export HOUR_COUNT="168"
+          # 如果 hour_count 是负数，则设置为 168
+          elif [[ "${{ github.event.inputs.hour_count }}" -lt 0 ]]; then
+            # 设置步骤输出的 hour_count 为 168
+            export HOUR_COUNT="168"
+          # 否则，使用输入的 hour_count
+          else
+            # 设置步骤输出的 hour_count 为输入的值
+            export HOUR_COUNT="${{ github.event.inputs.hour_count }}"
+          fi
+
           if [ -n "$GITHUB_TOKEN" ]; then
             python scripts/delete_old_runs.py
             echo "------"
@@ -74,6 +95,7 @@ jobs:
           fi
 
           # 方便通过截图快速定位到用户
+          echo "Hour Count: $HOUR_COUNT"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Run By: $GITHUB_TRIGGERING_ACTOR"
           echo "Repository Name: $REPOSITORY_NAME"
