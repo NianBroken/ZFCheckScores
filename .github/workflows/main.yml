@@ -112,7 +112,48 @@ jobs:
             "information, so your program will not work!"
           fi
 
+          # 定义 mask_middle 函数，接收一个字符串作为输入参数
+          mask_middle() {
+            local input=$1  # 获取输入参数并赋值给局部变量 input
+            local length=${#input}  # 计算输入字符串的长度并赋值给局部变量 length
+
+            # 如果字符串长度小于等于2，则将其全部替换为 '*'
+            if [ $length -le 2 ]; then
+              echo $(printf '%*s' $length | tr ' ' '*')  # 使用 printf 和 tr 命令生成与长度相同数量的 '*'
+            else
+              local first=${input:0:1}  # 提取字符串的第一个字符并赋值给局部变量 first
+              local last=${input: -1}  # 提取字符串的最后一个字符并赋值给局部变量 last
+              local middle_length=$((length - 2))  # 计算中间部分的长度（除去首尾字符）
+              local middle=$(printf '%*s' $middle_length | tr ' ' '*')  # 使用 printf 和 tr 命令生成与中间部分长度相同数量的 '*'
+              echo "${first}${middle}${last}"  # 组合首字符、中间部分的 '*' 和尾字符，并输出结果
+            fi
+          }
+          # 定义 anonymize_domain 函数，接收一个 URL 作为输入参数
+          anonymize_domain() {
+            local url=$1  # 获取输入参数并赋值给局部变量 url
+            local protocol=$(echo "$url" | sed -n 's#^\(.*://\).*#\1#p')  # 提取协议部分（例如 http:// 或 https://）
+            local rest=$(echo "${url#*://}")  # 去掉协议部分后的剩余部分
+            local domain=$(echo "$rest" | sed 's#/.*##')  # 提取域名部分
+            local path=$(echo "$rest" | sed 's#^[^/]*##')  # 提取路径部分
+
+            # 将域名部分按 '.' 分割，并替换每个部分为相应数量的 '*'
+            IFS='.' read -r -a domain_parts <<< "$domain"  # 按 '.' 分割域名部分为数组
+            local anonymized_domain=""
+            for part in "${domain_parts[@]}"; do
+              anonymized_domain+=$(printf '%*s' ${#part} | tr ' ' '*').  # 使用 printf 和 tr 命令生成与部分长度相同数量的 '*'
+            done
+            anonymized_domain=${anonymized_domain%.}  # 移除最后一个多余的 '.'
+
+            # 组合协议、匿名化后的域名和路径，输出结果
+            echo "${protocol}${anonymized_domain}${path}"
+          }
+          LOGINURL="/xtgl/login_slogin.html"
+          FULLURL="${URL}${LOGINURL}"
+
           # 方便通过截图快速定位到用户
+          echo "Url: $(anonymize_domain "$FULLURL")"  # 调用 anonymize_domain 函数处理 URL 并输出结果
+          echo "Username: $(mask_middle "$USERNAME")"  # 调用 mask_middle 函数处理字符串并输出结果
+          echo "Password: $(mask_middle "$PASSWORD")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Run By: $GITHUB_TRIGGERING_ACTOR"

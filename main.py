@@ -210,7 +210,7 @@ else:
             grades_updated_push_integrated_send_info,
         )
         # 输出响应内容
-        run_log += f"{response_text}\n"
+        run_log += f"{response_text}"
     else:
         run_log += "成绩未更新"
 
