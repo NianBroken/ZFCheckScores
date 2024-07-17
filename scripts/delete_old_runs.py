@@ -31,13 +31,16 @@ class GitHubActionsManager:
 
     def delete_old_runs(self):
         next_page = self.runs_url  # 初始化下一页的URL为第一页
+        page_number = 1  # 初始化页数计数器
         while next_page:  # 循环直到没有下一页
+            self.log(f"Fetching page {page_number}")  # 输出当前的页数
             # 发送GET请求获取一页工作流运行记录
             response = requests.get(next_page, headers={"Authorization": f"token {self.token}"})
             if response.status_code == 200:  # 如果请求成功
                 data = response.json()  # 将响应数据转换为JSON格式
                 runs = data["workflow_runs"]  # 获取运行记录列表
                 next_page = response.links.get("next", {}).get("url")  # 获取下一页的URL
+                page_number += 1  # 增加页数计数器
 
                 for run in runs:  # 遍历每条运行记录
                     # 将运行记录的创建时间转换为UTC时间
