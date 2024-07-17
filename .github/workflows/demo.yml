@@ -1,40 +1,17 @@
-name: Workflow Dispatch Example
+name: Example Workflow
 
 on:
   workflow_dispatch:
     inputs:
-      string_input:
-        description: 'A string input'
+      integer_input:
+        description: 'Enter an integer value'
         required: true
-        default: 'Hello'
-        type: string
-      boolean_input:
-        description: 'A boolean input'
-        required: false
-        default: true
-        type: boolean
-      number_input:
-        description: 'A number input'
-        required: false
-        default: 42
-        type: number
-      object_input:
-        description: 'An object input'
-        required: false
-        type: object
-      array_input:
-        description: 'An array input'
-        required: false
-        type: array
+        default: 10
+        type: integer
 
 jobs:
-  build:
+  example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print Inputs
-        run: |
-          echo "String Input: ${{ github.event.inputs.string_input }}"
-          echo "Boolean Input: ${{ github.event.inputs.boolean_input }}"
-          echo "Number Input: ${{ github.event.inputs.number_input }}"
-          echo "Object Input: ${{ toJson(github.event.inputs.object_input) }}"
-          echo "Array Input: ${{ toJson(github.event.inputs.array_input) }}"
+      - name: Print integer input
+        run: echo "Integer input is ${{ github.event.inputs.integer_input }}"
