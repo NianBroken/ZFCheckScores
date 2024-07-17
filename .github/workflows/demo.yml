@@ -1,82 +1,61 @@
-name: Workflow Dispatch Example
+name: Workflow with Inputs
 
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'The environment to deploy to'
+      string_input:
+        description: 'A string input'
         required: true
-        default: 'production'
+        default: 'default string'
         type: string
-      branch:
-        description: 'The branch to deploy'
-        required: true
-        type: string
-      tag:
-        description: 'The tag to deploy'
-        required: true
-        type: string
-      force_deploy:
-        description: 'Force deployment'
+      boolean_input:
+        description: 'A boolean input'
         required: false
+        default: false
         type: boolean
-      notify:
-        description: 'Notify users'
-        required: false
-        type: boolean
-      slack_channel:
-        description: 'Slack channel to notify'
-        required: false
-        type: string
-      parallel_jobs:
-        description: 'Number of parallel jobs'
-        required: false
+      number_input:
+        description: 'A number input'
+        required: true
+        default: 42
         type: number
-      timeout:
-        description: 'Timeout duration in minutes'
+      array_input:
+        description: 'An array input'
         required: false
-        type: integer
-      config_file:
-        description: 'Path to custom configuration file'
-        required: false
-        type: path
-      matrix:
-        description: 'Matrix configuration'
-        required: false
+        default: ['item1', 'item2']
         type: array
-      image:
-        description: 'Docker image to use for the job'
-        required: false
+      object_input:
+        description: 'An object input'
+        required: true
+        default: '{"key": "value"}'
         type: object
+      enum_input:
+        description: 'An enum input'
+        required: true
+        default: 'option1'
+        type: string
+        enum:
+          - option1
+          - option2
+      file_input:
+        description: 'A file input'
+        required: true
+        type: path
+      env_var_input:
+        description: 'An environment variable input'
+        required: true
+        type: env
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-
-      - name: Deploy to ${{ github.event.inputs.environment }}
+      - name: Print Inputs
         run: |
-          echo "Deploying branch: ${{ github.event.inputs.branch }}"
-          echo "Deploying tag: ${{ github.event.inputs.tag }}"
-          if [ "${{ github.event.inputs.force_deploy }}" = "true" ]; then
-            echo "Forcing deployment"
-          fi
-          if [ "${{ github.event.inputs.notify }}" = "true" ]; then
-            echo "Notifying users"
-          fi
-          if [ "${{ github.event.inputs.slack_channel }}" ]; then
-            echo "Notifying Slack channel: ${{ github.event.inputs.slack_channel }}"
-          fi
-          echo "Number of parallel jobs: ${{ github.event.inputs.parallel_jobs }}"
-          echo "Timeout duration: ${{ github.event.inputs.timeout }} minutes"
-          if [ "${{ github.event.inputs.config_file }}" ]; then
-            echo "Using custom config file: ${{ github.event.inputs.config_file }}"
-          fi
-          if [ "${{ github.event.inputs.matrix }}" ]; then
-            echo "Matrix configuration: ${{ github.event.inputs.matrix }}"
-          fi
-          if [ "${{ github.event.inputs.image }}" ]; then
-            echo "Docker image to use: ${{ github.event.inputs.image }}"
-          fi
+          echo "String Input: ${{ github.event.inputs.string_input }}"
+          echo "Boolean Input: ${{ github.event.inputs.boolean_input }}"
+          echo "Number Input: ${{ github.event.inputs.number_input }}"
+          echo "Array Input: ${{ github.event.inputs.array_input }}"
+          echo "Object Input: ${{ github.event.inputs.object_input }}"
+          echo "Enum Input: ${{ github.event.inputs.enum_input }}"
+          echo "File Input: ${{ github.event.inputs.file_input }}"
+          echo "Env Var Input: ${{ github.event.inputs.env_var_input }}"
