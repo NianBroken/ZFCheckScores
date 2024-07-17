@@ -35,12 +35,12 @@
 
 > Name = Name，Secret = 例子
 
-| Name     | 例子                       | 说明                                                 |
-| -------- | -------------------------- | ---------------------------------------------------- |
-| URL      | https://www.nianbroken.top | 教务系统地址                                         |
-| USERNAME | 2971802058                 | 教务系统用户名                                       |
-| PASSWORD | Y3xhaCkb5PZ4               | 教务系统密码                                         |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8       | [PushPlus 的 token](#获取-token "PushPlus 的 token") |
+| Name     | 例子                        | 说明                                                 |
+| -------- | --------------------------- | ---------------------------------------------------- |
+| URL      | https://www.nianbroken.top/ | 教务系统地址                                         |
+| USERNAME | 2971802058                  | 教务系统用户名                                       |
+| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                         |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [PushPlus 的 token](#获取-token "PushPlus 的 token") |
 
 <table>
 	<tr>
@@ -68,10 +68,10 @@
 
 ```json
 {
- "code": 200,
- "msg": "请求成功",
- "data": "cd735c356aa14d16b1452aa932ac89cc",
- "count": null
+	"code": 200,
+	"msg": "请求成功",
+	"data": "cd735c356aa14d16b1452aa932ac89cc",
+	"count": null
 }
 ```
 

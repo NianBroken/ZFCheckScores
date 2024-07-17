@@ -1,0 +1,82 @@
+name: Workflow Dispatch Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The environment to deploy to'
+        required: true
+        default: 'production'
+        type: string
+      branch:
+        description: 'The branch to deploy'
+        required: true
+        type: string
+      tag:
+        description: 'The tag to deploy'
+        required: true
+        type: string
+      force_deploy:
+        description: 'Force deployment'
+        required: false
+        type: boolean
+      notify:
+        description: 'Notify users'
+        required: false
+        type: boolean
+      slack_channel:
+        description: 'Slack channel to notify'
+        required: false
+        type: string
+      parallel_jobs:
+        description: 'Number of parallel jobs'
+        required: false
+        type: number
+      timeout:
+        description: 'Timeout duration in minutes'
+        required: false
+        type: integer
+      config_file:
+        description: 'Path to custom configuration file'
+        required: false
+        type: path
+      matrix:
+        description: 'Matrix configuration'
+        required: false
+        type: array
+      image:
+        description: 'Docker image to use for the job'
+        required: false
+        type: object
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        run: |
+          echo "Deploying branch: ${{ github.event.inputs.branch }}"
+          echo "Deploying tag: ${{ github.event.inputs.tag }}"
+          if [ "${{ github.event.inputs.force_deploy }}" = "true" ]; then
+            echo "Forcing deployment"
+          fi
+          if [ "${{ github.event.inputs.notify }}" = "true" ]; then
+            echo "Notifying users"
+          fi
+          if [ "${{ github.event.inputs.slack_channel }}" ]; then
+            echo "Notifying Slack channel: ${{ github.event.inputs.slack_channel }}"
+          fi
+          echo "Number of parallel jobs: ${{ github.event.inputs.parallel_jobs }}"
+          echo "Timeout duration: ${{ github.event.inputs.timeout }} minutes"
+          if [ "${{ github.event.inputs.config_file }}" ]; then
+            echo "Using custom config file: ${{ github.event.inputs.config_file }}"
+          fi
+          if [ "${{ github.event.inputs.matrix }}" ]; then
+            echo "Matrix configuration: ${{ github.event.inputs.matrix }}"
+          fi
+          if [ "${{ github.event.inputs.image }}" ]; then
+            echo "Docker image to use: ${{ github.event.inputs.image }}"
+          fi
