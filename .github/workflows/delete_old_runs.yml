@@ -51,10 +51,6 @@ jobs:
         env:
           HOUR_COUNT: ${{ github.event.inputs.hour_count }}
           GITHUB_ACTIONS: ${{github.actions}}
-          URL: ${{ secrets.URL }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          TOKEN: ${{ secrets.TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}

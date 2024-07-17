@@ -44,7 +44,7 @@ class GitHubActionsManager:
                     run_time = datetime.strptime(run["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
                     # 计算当前时间与运行记录创建时间的差值
                     time_difference = self.current_time - run_time
-                    if time_difference > timedelta(hours=168):  # 如果差值超过168小时
+                    if time_difference > timedelta(hours=hour_count):  # 如果差值超过指定小时 默认168小时
                         self.delete_run(run["id"])  # 删除运行记录
             else:  # 如果请求失败
                 self.log(f"Failed to fetch runs. Status code: {response.status_code}")  # 打印错误信息
@@ -58,8 +58,9 @@ class GitHubActionsManager:
 if __name__ == "__main__":
     repository_name = os.environ.get("REPOSITORY_NAME")
     github_token = os.environ.get("GITHUB_TOKEN")
+    hour_count = os.environ.get("HOUR_COUNT")
     repo_url = f"https://api.github.com/repos/{repository_name}"  # GitHub仓库URL
     token = f"{github_token}"  # GitHub个人访问令牌
 
     manager = GitHubActionsManager(repo_url, token)  # 创建GitHubActionsManager实例
-    manager.delete_old_runs()  # 删除168小时前的运行记录
+    manager.delete_old_runs()  # 删除指定小时前的运行记录
