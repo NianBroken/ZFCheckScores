@@ -147,7 +147,7 @@ jobs:
             # 组合协议、匿名化后的域名和路径，输出结果
             echo "${protocol}${anonymized_domain}${path}"
           }
-          LOGINURL="/xtgl/login_slogin.html"
+          LOGINURL="xtgl/login_slogin.html"
           FULLURL="${URL}${LOGINURL}"
 
           # 方便通过截图快速定位到用户

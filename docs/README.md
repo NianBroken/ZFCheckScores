@@ -15,6 +15,10 @@
 	</tr>
 </table>
 
+<p>1. <a href="https://github.com/NianBroken/ZFCheckScores/fork">点击 Fork</a></p>
+
+<p>2. 点击 Create fork</p>
+
 ## 2. 开启工作流读写权限
 
 <table>
@@ -31,16 +35,28 @@
 	</tr>
 </table>
 
+<p>1. 点击 Settings</p>
+
+<p>2. 点击 Actions</p>
+
+<p>3. 点击 General</p>
+
+<p>4. 找到 Workflow permissions</p>
+
+<p>5. 点击 Read and write permissions</p>
+
+<p>6. 点击 Save</p>
+
 ## 3. 添加 Secrets
 
 > Name = Name，Secret = 例子
 
-| Name     | 例子                        | 说明                                                 |
-| -------- | --------------------------- | ---------------------------------------------------- |
-| URL      | https://www.nianbroken.top/ | 教务系统地址                                         |
-| USERNAME | 2971802058                  | 教务系统用户名                                       |
-| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                         |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [PushPlus 的 token](#获取-token "PushPlus 的 token") |
+| Name     | 例子                        | 说明                                               |
+| -------- | --------------------------- | -------------------------------------------------- |
+| URL      | https://www.nianbroken.top/ | 教务系统地址                                       |
+| USERNAME | 2971802058                  | 教务系统用户名                                     |
+| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                       |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [Showdoc 的 token](#获取-token "Showdoc 的 token") |
 
 <table>
 	<tr>
@@ -56,45 +72,49 @@
 	</tr>
 </table>
 
+<p>1. 点击 Settings</p>
+
+<p>2. 点击 Secrets and variables</p>
+
+<p>3. 点击 Actions</p>
+
+<p>4. 点击 Secrets 选项卡</p>
+
+<p>5. 找到 Repository secrets</p>
+
+<p>6. 点击 New repository secret</p>
+
+<p>7. 根据上面的表格填写正确的 Name 以及 Secret</p>
+
+<p>8. 点击 Add secret</p>
+
 ### 获取 TOKEN
 
-<p>1. <a href="https://www.pushplus.plus/login.html">登录 PushPlus </a></p>
+<p>1. <a href="https://push.showdoc.com.cn/#/push">登录 Showdoc 推送服务</a></p>
 
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" width="60%" />
+<p>2. 使用微信扫码关注公众号</p>
 
-<p>2. <a href="https://www.pushplus.plus/api/open/user/token">获取 Token</a></p>
-
-打开“获取 Token”的页面后，你会得到一个与下列所示几乎一致的 Json 代码块，`data`中的值就是 TOKEN
-
-```json
-{
-	"code": 200,
-	"msg": "请求成功",
-	"data": "cd735c356aa14d16b1452aa932ac89cc",
-	"count": null
-}
-```
-
-当你的 Secrets 添加完成后，你的页面应该与下图所示的页面完全一致或几乎一致
-
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/19.png" width="60%"/>
-
-<p>3. <a href="https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token">相关文档</a></p>
-
-## 4. 开启 Actions
+<p>3. 红框内的字符就是token</p>
 
 <table>
 	<tr>
 		<td>
-			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/20.png" />
+			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/18.png" />
 		</td>
 		<td>
-			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/21.png" />
+			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/19.png" />
+		</td>
+        <td>
+			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/20.png" />
 		</td>
 	</tr>
 </table>
 
-## 5. 运行程序
+当你的 Secrets 添加完成后，你的页面应该与下图所示的页面完全一致或几乎一致
+
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/21.png" width="60%"/>
+
+## 4. 开启 Actions
 
 <table>
 	<tr>
@@ -107,7 +127,15 @@
 	</tr>
 </table>
 
-## 6. 查看运行结果
+<p>1. 点击 Actions</p>
+
+<p>2. 点击 I understand my workflows, go ahead and enable them</p>
+
+<p>3. 点击 CheckScores</p>
+
+<p>4. 点击 Enable workflow</p>
+
+## 5. 运行程序
 
 <table>
 	<tr>
@@ -120,6 +148,27 @@
 	</tr>
 </table>
 
+<p>1. 点击 Actions</p>
+
+<p>2. 点击 CheckScores</p>
+
+<p>3. 点击 Run workflow</p>
+
+<p>4. 再次点击 Run workflow</p>
+
+## 6. 查看运行结果
+
+<table>
+	<tr>
+		<td>
+			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/26.png" />
+		</td>
+		<td>
+			<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/27.png" />
+		</td>
+	</tr>
+</table>
+
 当你的页面与上图所示的页面完全一致或几乎一致，则代表程序正常运行且未报错
 
 在此之后，程序将会每隔 30 分钟自动检测一次成绩是否有更新
@@ -128,4 +177,4 @@
 
 当检测到成绩更新时，你的页面应该与下图所示的页面完全一致或几乎一致
 
-<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/26.png" width="60%" />
+<img src="https://raw.githubusercontent.com/NianBroken/ZFCheckScores/main/img/8.png" width="60%" />

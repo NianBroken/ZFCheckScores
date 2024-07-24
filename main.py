@@ -7,7 +7,7 @@ from scripts.user_login import login
 from scripts.get_user_info import get_user_info
 from scripts.get_grade import get_grade
 from scripts.get_selected_courses import get_selected_courses
-from scripts.pushplus import send_message
+from scripts.push import send_message
 from datetime import datetime
 
 

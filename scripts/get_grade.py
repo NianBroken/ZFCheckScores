@@ -28,7 +28,9 @@ def get_grade(student_client, output_type="none"):
             total_xfjd = sum(float(course["xfjd"]) for course in grade)
 
             # (百分制成绩*学分)的总和
-            sum_of_percentage_grades_multiplied_by_credits = sum(float(course["percentage_grades"]) * float(course["credit"]) for course in grade)
+            sum_of_percentage_grades_multiplied_by_credits = sum(
+                float(course["percentage_grades"]) * float(course["credit"]) for course in grade
+            )
 
             # GPA计算 (学分*绩点)的总和/学分总和
             gpa = "{:.2f}".format(total_xfjd / total_credit)
@@ -49,7 +51,16 @@ def get_grade(student_client, output_type="none"):
                     score_grades = f"{course['grade']} ({course['percentage_grades']})"
 
                 # 整合成绩信息
-                integrated_grade_info += f"\n" f"教学班ID：{course['class_id']}\n" f"课程名称：{course['title']}\n" f"任课教师：{course['teacher']}\n" f"成绩：{score_grades}\n" f"提交时间：{course['submission_time']}\n" f"提交人姓名：{course['name_of_submitter']}\n" f"------"
+                integrated_grade_info += (
+                    f"\n"
+                    f"教学班ID：{course['class_id']}\n"
+                    f"课程名称：{course['title']}\n"
+                    f"任课教师：{course['teacher']}\n"
+                    f"成绩：{score_grades}\n"
+                    f"提交时间：{course['submission_time']}\n"
+                    f"提交人姓名：{course['name_of_submitter']}\n"
+                    f"------"
+                )
 
             if output_type == "grade":
                 return grade

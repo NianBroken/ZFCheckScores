@@ -53,12 +53,12 @@
 
 > Name = Name，Secret = 例子
 
-| Name     | 例子                        | 说明                                                                                                                 |
-| -------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| URL      | https://www.nianbroken.top/ | 教务系统地址                                                                                                         |
-| USERNAME | 2971802058                  | 教务系统用户名                                                                                                       |
-| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                                                                                         |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [PushPlus 的 token](https://www.pushplus.plus/doc/guide/openApi.html#_1-%E8%8E%B7%E5%8F%96token "PushPlus 的 token") |
+| Name     | 例子                        | 说明                                                                      |
+| -------- | --------------------------- | ------------------------------------------------------------------------- |
+| URL      | https://www.nianbroken.top/ | 教务系统地址                                                              |
+| USERNAME | 2971802058                  | 教务系统用户名                                                            |
+| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                                              |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [Showdoc 的 token](https://push.showdoc.com.cn/#/push "Showdoc 的 token") |
 
 ### 4. 开启 Actions
 
@@ -101,4 +101,3 @@ _若是第一次运行程序，上述步骤会执行两遍_
 ## 其他
 
 欢迎提交 `Issues` 和 `Pull requests`
-

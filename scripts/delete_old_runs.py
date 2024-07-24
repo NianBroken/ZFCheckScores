@@ -61,7 +61,8 @@ class GitHubActionsManager:
                 break
 
     def log(self, message):
-        current_time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]  # 获取当前时间，精确到三位毫秒
+        beijing_time = datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=8)))  # 获取北京时间
+        current_time_str = beijing_time.strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]  # 获取当前时间，精确到三位毫秒
         print(f"{current_time_str} {message}")  # 打印日志消息
 
 
