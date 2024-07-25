@@ -229,7 +229,7 @@ if run_log:
     print(run_log)
 
     # 整合JobSummary信息
-    github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}"
+    github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright}"
 
     if github_actions:
         # 将任意个数的换行替换为两个换行
