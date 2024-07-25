@@ -64,7 +64,6 @@ jobs:
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
 
-
           # 如果 hour_count 为空，则设置为 168
           if [[ -z "${{ github.event.inputs.hour_count }}" ]]; then
             # 设置步骤输出的 hour_count 为 168
