@@ -11,7 +11,7 @@ def get_selected_courses(student_client):
         selected_courses_data = student_client.get_selected_courses().get("data", {})
         selected_courses = selected_courses_data.get("courses", [])
 
-        # 已选课程信息不为空时,处理未公布成绩的课程和异常课程
+        # 已选课程信息不为空时,处理未公布成绩的课程
         if selected_courses:
             # 按照学年学期降序排序
             # 对于没有学年学期参数的课程，则将学年学期设置为1970至1971学年第1学期，否则将无法排序
@@ -26,8 +26,6 @@ def get_selected_courses(student_client):
 
             # 初始化空字典用于存储未公布成绩的课程,按学年学期分组
             ungraded_courses_by_semester = {}
-            # 初始化空字典用于存储异常的课程,按学年学期分组
-            abnormal_courses_by_semester = {}
 
             # 获取成绩列表中的class_id集合
             grade_class_ids = {course["class_id"] for course in grade} if grade else ""
@@ -46,13 +44,10 @@ def get_selected_courses(student_client):
                 # 构建年学期名称,例如 "a至b学年第c学期"
                 yearsemester_name = f"{year}至{semester}学年第{seq}学期"
 
-                # 判断课程是否未公布成绩或为异常课程
+                # 判断课程是否未公布成绩
                 if course["class_id"] not in grade_class_ids:
                     # 未公布成绩
                     ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}")
-                elif course["class_id"] not in {course["class_id"] for course in selected_courses}:
-                    # 异常课程
-                    abnormal_courses_by_semester.setdefault(yearsemester_name, []).append(f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}")
 
             # 构建输出内容
             if ungraded_courses_by_semester:
@@ -64,23 +59,10 @@ def get_selected_courses(student_client):
                     selected_courses_filtering += f"\n{semester}："
                     for course in courses:
                         selected_courses_filtering += f"\n{course}"
-
-            if abnormal_courses_by_semester:
-                # 存在异常的课程
-                if ungraded_courses_by_semester:
-                    # 如果存在课程,添加分隔线
-                    selected_courses_filtering += "\n"
-                selected_courses_filtering += "------\n异常的课程："
-                for i, (semester, courses) in enumerate(abnormal_courses_by_semester.items()):
-                    if i > 0:
-                        selected_courses_filtering += "\n------"
-                    selected_courses_filtering += f"\n{semester}："
-                    for course in courses:
-                        selected_courses_filtering += f"\n{course}"
         else:
             selected_courses_filtering = "------\n已选课程信息为空"
         return selected_courses_filtering
 
     except Exception:
         print(traceback.format_exc())
-        return "------\n获取未公布成绩的课程或异常的课程时出错"
+        return "------\n获取未公布成绩的课程时出错"
