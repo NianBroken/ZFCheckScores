@@ -163,6 +163,8 @@ jobs:
           echo "Workflow Number: $GITHUB_RUN_NUMBER"
           echo "Workflow ID: $GITHUB_RUN_ID"
           echo "Beijing Time: $BEIJING_TIME"
+          echo "Copyright © 2024 NianBroken. All rights reserved."
+          echo "https://www.nianbroken.top/"
 
       - name: Delete __pycache__ folder
         run: |
