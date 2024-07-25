@@ -9,6 +9,9 @@ def get_grade(student_client, output_type="none"):
 
         # 成绩不为空时
         if grade:
+            # 过滤出成绩大于等于60分的课程
+            filtered_grade = list(filter(lambda x: int(x["percentage_grades"]) >= 60, grade))
+
             # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
             for course_data_grade in grade:
                 course_data_grade["title"] = course_data_grade["title"].replace("（", "(").replace("）", ")")
@@ -22,14 +25,14 @@ def get_grade(student_client, output_type="none"):
             )
 
             # 学分总和
-            total_credit = sum(float(course["credit"]) for course in grade)
+            total_credit = sum(float(course["credit"]) for course in filtered_grade)
 
             # 学分绩点总和
-            total_xfjd = sum(float(course["xfjd"]) for course in grade)
+            total_xfjd = sum(float(course["xfjd"]) for course in filtered_grade)
 
             # (百分制成绩*学分)的总和
             sum_of_percentage_grades_multiplied_by_credits = sum(
-                float(course["percentage_grades"]) * float(course["credit"]) for course in grade
+                float(course["percentage_grades"]) * float(course["credit"]) for course in filtered_grade
             )
 
             # GPA计算 (学分*绩点)的总和/学分总和
