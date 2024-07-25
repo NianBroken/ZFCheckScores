@@ -150,6 +150,8 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
+copyright = "Copyright © 2024 NianBroken. All rights reserved."
+
 # 第一次运行时的提示文本
 first_run_text = (
     "你的程序运行成功\n"
@@ -165,7 +167,8 @@ integrated_send_info = (
     f"{integrated_info}\n"
     f"{integrated_grade_info}\n"
     f"{selected_courses_filtering}\n"
-    f"{workflow_info if github_actions else current_time}"
+    f"{workflow_info if github_actions else current_time}\n"
+    f"{copyright}"
 )
 
 # 整合首次运行时需要使用到的所有信息
