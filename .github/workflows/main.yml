@@ -117,7 +117,7 @@ jobs:
             local input=$1  # 获取输入参数并赋值给局部变量 input
             local length=${#input}  # 计算输入字符串的长度并赋值给局部变量 length
 
-            # 如果字符串长度小于等于2，则将其全部替换为 '*'
+            # 如果字符串长度小于等于3，则将其全部替换为 '*'
             if [ $length -le 3 ]; then
               echo $(printf '%*s' $length | tr ' ' '*')  # 使用 printf 和 tr 命令生成与长度相同数量的 '*'
             else
