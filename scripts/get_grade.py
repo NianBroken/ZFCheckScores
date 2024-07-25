@@ -24,22 +24,26 @@ def get_grade(student_client, output_type="none"):
                 reverse=True,
             )
 
-            # 学分总和
-            total_credit = sum(float(course["credit"]) for course in filtered_grade)
+            # 大于等于60分的课程不为空时
+            if filtered_grade:
+                # 学分总和
+                total_credit = sum(float(course["credit"]) for course in filtered_grade)
 
-            # 学分绩点总和
-            total_xfjd = sum(float(course["xfjd"]) for course in filtered_grade)
+                # 学分绩点总和
+                total_xfjd = sum(float(course["xfjd"]) for course in filtered_grade)
 
-            # (百分制成绩*学分)的总和
-            sum_of_percentage_grades_multiplied_by_credits = sum(
-                float(course["percentage_grades"]) * float(course["credit"]) for course in filtered_grade
-            )
+                # (百分制成绩*学分)的总和
+                sum_of_percentage_grades_multiplied_by_credits = sum(
+                    float(course["percentage_grades"]) * float(course["credit"]) for course in filtered_grade
+                )
 
-            # GPA计算 (学分*绩点)的总和/学分总和
-            gpa = "{:.2f}".format(total_xfjd / total_credit)
+                # GPA计算 (学分*绩点)的总和/学分总和
+                gpa = "{:.2f}".format(total_xfjd / total_credit)
 
-            # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
-            percentage_gpa = "{:.2f}".format(sum_of_percentage_grades_multiplied_by_credits / total_credit)
+                # 百分制GPA计算 (百分制成绩*学分)的总和/学分总和
+                percentage_gpa = "{:.2f}".format(sum_of_percentage_grades_multiplied_by_credits / total_credit)
+            else:
+                total_credit = total_xfjd = sum_of_percentage_grades_multiplied_by_credits = gpa = percentage_gpa = 0
 
             # 初始化输出成绩信息字符串
             integrated_grade_info = "成绩信息："
