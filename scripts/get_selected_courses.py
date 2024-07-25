@@ -11,19 +11,19 @@ def get_selected_courses(student_client):
         selected_courses_data = student_client.get_selected_courses().get("data", {})
         selected_courses = selected_courses_data.get("courses", [])
 
-        # 按照学年学期降序排序
-        # 对于没有学年学期参数的课程，则将学年学期设置为1970至1971学年第1学期，否则将无法排序
-        selected_courses = sorted(
-            selected_courses,
-            key=lambda x: (
-                (x["course_year"] if x["course_year"] else "1970-1971"),
-                (x["course_semester"] if x["course_semester"] else "1"),
-            ),
-            reverse=True,
-        )
-
         # 已选课程信息不为空时,处理未公布成绩的课程和异常课程
         if selected_courses:
+            # 按照学年学期降序排序
+            # 对于没有学年学期参数的课程，则将学年学期设置为1970至1971学年第1学期，否则将无法排序
+            selected_courses = sorted(
+                selected_courses,
+                key=lambda x: (
+                    (x["course_year"] if x["course_year"] else "1970-1971"),
+                    (x["course_semester"] if x["course_semester"] else "1"),
+                ),
+                reverse=True,
+            )
+
             # 初始化空字典用于存储未公布成绩的课程,按学年学期分组
             ungraded_courses_by_semester = {}
             # 初始化空字典用于存储异常的课程,按学年学期分组
