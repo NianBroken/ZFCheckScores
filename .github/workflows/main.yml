@@ -148,10 +148,9 @@ jobs:
             echo "${protocol}${anonymized_domain}${path}"
           }
           LOGINURL="xtgl/login_slogin.html"
-          FULLURL="${URL}${LOGINURL}"
 
           # 方便通过截图快速定位到用户
-          echo "Url: $(anonymize_domain "$FULLURL")"  # 调用 anonymize_domain 函数处理 URL 并输出结果
+          echo "Url: $(anonymize_domain "$URL")${LOGINURL}"  # 调用 anonymize_domain 函数处理 URL 并输出结果
           echo "Username: $(mask_middle "$USERNAME")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Password: $(mask_middle "$PASSWORD")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
