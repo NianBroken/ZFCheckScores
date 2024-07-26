@@ -37,6 +37,6 @@ def login(url, username, password):
             """
         elif lgn["code"] != 1000:
             pprint(lgn)
-            sys.exit()
+            sys.exit("登录失败")
 
     return student_client
