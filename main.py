@@ -16,6 +16,8 @@ def md5_encrypt(string):
     return hashlib.md5(string.encode()).hexdigest()
 
 
+print("远程分支测试通过")
+
 # 从环境变量中提取教务系统的URL、用户名、密码和TOKEN等信息
 force_push_message = os.environ.get("FORCE_PUSH_MESSAGE")
 github_actions = os.environ.get("GITHUB_ACTIONS")
