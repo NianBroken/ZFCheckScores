@@ -23,7 +23,10 @@ url = os.environ.get("URL")
 username = os.environ.get("USERNAME")
 password = os.environ.get("PASSWORD")
 token = os.environ.get("TOKEN")
+github_ref_name = os.environ.get("GITHUB_REF_NAME")
 github_event_name = os.environ.get("GITHUB_EVENT_NAME")
+github_actor = os.environ.get("GITHUB_ACTOR")
+github_actor_id = os.environ.get("GITHUB_ACTOR_ID")
 github_triggering_actor = os.environ.get("GITHUB_TRIGGERING_ACTOR")
 repository_name = os.environ.get("REPOSITORY_NAME")
 github_sha = os.environ.get("GITHUB_SHA")
@@ -140,8 +143,11 @@ workflow_info = (
     f"------\n"
     f"工作流信息：\n"
     f"Force Push Message：{force_push_message}\n"
+    f"Github Ref Name：{github_ref_name}\n"
     f"Triggered By：{github_event_name}\n"
-    f"Run By：{github_triggering_actor}\n"
+    f"Initial Run By：{github_actor}\n"
+    f"Initial Run By ID：{github_actor_id}\n"
+    f"Initiated Run By：{github_triggering_actor}\n"
     f"Repository Name：{repository_name}\n"
     f"Commit SHA：{github_sha}\n"
     f"Workflow Name：{github_workflow}\n"
