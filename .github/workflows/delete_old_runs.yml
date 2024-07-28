@@ -16,7 +16,7 @@ on:
         default: "168"
         type: string
 jobs:
-  # 检查成绩
+  # 删除旧的运行记录
   DeleteOldRuns:
     name: DeleteOldRuns
 
@@ -24,6 +24,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 判断 GITHUB_TOKEN 是否存在，如果不存在就退出
+      - name: Check Secret
+        run: |
+          if [ -z "$GITHUB_TOKEN" ]; then
+            exit 0
+          fi
+
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
@@ -85,12 +92,8 @@ jobs:
             export HOUR_COUNT="${{ github.event.inputs.hour_count }}"
           fi
 
-          if [ -n "$GITHUB_TOKEN" ]; then
-            python scripts/delete_old_runs.py
-            echo "------"
-          else
-            exit 0
-          fi
+          python scripts/delete_old_runs.py
+          echo "------"
 
           # 方便通过截图快速定位到用户
           echo "Hour Count: $HOUR_COUNT"
