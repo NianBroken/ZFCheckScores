@@ -52,6 +52,7 @@ jobs:
           HOUR_COUNT: ${{ github.event.inputs.hour_count }}
           GITHUB_ACTIONS: ${{github.actions}}
           GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_ACTOR_ID: ${{ github.actor_id }}
@@ -93,6 +94,7 @@ jobs:
 
           # 方便通过截图快速定位到用户
           echo "Hour Count: $HOUR_COUNT"
+          echo "Branch Name: $GITHUB_REF_NAME"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Initial Run By: $GITHUB_ACTOR"
           echo "Initial Run By ID: $GITHUB_ACTOR_ID"
@@ -103,6 +105,9 @@ jobs:
           echo "Workflow Number: $GITHUB_RUN_NUMBER"
           echo "Workflow ID: $GITHUB_RUN_ID"
           echo "Beijing Time: $BEIJING_TIME"
+          echo "Copyright © 2024 NianBroken. All rights reserved."
+          echo "Author's website: https://www.nianbroken.top/"
+          echo "Author's Repository URL: https://github.com/NianBroken/ZFCheckScores/"
 
       - name: Delete __pycache__ folder
         run: |
