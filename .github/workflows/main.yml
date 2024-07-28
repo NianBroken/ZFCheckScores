@@ -155,7 +155,7 @@ jobs:
           echo "Username: $(mask_middle "$USERNAME")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Password: $(mask_middle "$PASSWORD")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
-          echo "Branches that trigger a workflow to run: $GITHUB_REF_NAME"
+          echo "Name of the branch that triggered the workflow run: $GITHUB_REF_NAME"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Run By: $GITHUB_TRIGGERING_ACTOR"
           echo "Repository Name: $REPOSITORY_NAME"
