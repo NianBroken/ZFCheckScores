@@ -143,7 +143,7 @@ workflow_info = (
     f"------\n"
     f"工作流信息：\n"
     f"Force Push Message：{force_push_message}\n"
-    f"Github Ref Name：{github_ref_name}\n"
+    f"Branch Name：{github_ref_name}\n"
     f"Triggered By：{github_event_name}\n"
     f"Initial Run By：{github_actor}\n"
     f"Initial Run By ID：{github_actor_id}\n"
