@@ -66,6 +66,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
           TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
           REPOSITORY_NAME: ${{ github.repository }}
@@ -154,6 +155,7 @@ jobs:
           echo "Username: $(mask_middle "$USERNAME")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Password: $(mask_middle "$PASSWORD")"  # 调用 mask_middle 函数处理字符串并输出结果
           echo "Force Push Message: $FORCE_PUSH_MESSAGE"
+          echo "Branches that trigger a workflow to run: $GITHUB_REF_NAME"
           echo "Triggered By: $GITHUB_EVENT_NAME"
           echo "Run By: $GITHUB_TRIGGERING_ACTOR"
           echo "Repository Name: $REPOSITORY_NAME"
@@ -172,9 +174,9 @@ jobs:
           rm -rf __pycache__
           rm -rf scripts/__pycache__
 
-      - name: Force push changes to main branch
+      - name: Force push changes to the running branch
         run: |
-          # 将更改强制推送到main分支
+          # 将更改强制推送到运行分支
           git add .
           git commit -m "Update from GitHub Actions" || true
-          git push origin main --force
+          git push origin $GITHUB_REF_NAME --force
