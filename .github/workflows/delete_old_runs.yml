@@ -53,6 +53,8 @@ jobs:
           GITHUB_ACTIONS: ${{github.actions}}
           GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_ACTOR_ID: ${{ github.actor_id }}
           GITHUB_TRIGGERING_ACTOR: ${{ github.triggering_actor }}
           REPOSITORY_NAME: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
@@ -92,7 +94,9 @@ jobs:
           # 方便通过截图快速定位到用户
           echo "Hour Count: $HOUR_COUNT"
           echo "Triggered By: $GITHUB_EVENT_NAME"
-          echo "Run By: $GITHUB_TRIGGERING_ACTOR"
+          echo "Initial Run By: $GITHUB_ACTOR"
+          echo "Initial Run By ID: $GITHUB_ACTOR_ID"
+          echo "Initiated Run By: $GITHUB_TRIGGERING_ACTOR"
           echo "Repository Name: $REPOSITORY_NAME"
           echo "Commit SHA: $GITHUB_SHA"
           echo "Workflow Name: $GITHUB_WORKFLOW"
