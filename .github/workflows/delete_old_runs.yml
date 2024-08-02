@@ -24,13 +24,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 判断 GITHUB_TOKEN 是否存在，如果不存在就退出
-      - name: Check Secret
-        run: |
-          if [ -z "$GITHUB_TOKEN" ]; then
-            exit 0
-          fi
-
       # 使用GitHub Actions提供的动作来检出代码库
       - name: Checkout Repository
         uses: actions/checkout@main
@@ -70,6 +63,11 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          # 判断 GITHUB_TOKEN 是否存在，如果不存在就退出
+          if [ -z "$GITHUB_TOKEN" ]; then
+            exit 0
+          fi
+
           # 运行主程序
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
@@ -92,9 +90,6 @@ jobs:
             export HOUR_COUNT="${{ github.event.inputs.hour_count }}"
           fi
 
-          python scripts/delete_old_runs.py
-          echo "------"
-
           # 方便通过截图快速定位到用户
           echo "Hour Count: $HOUR_COUNT"
           echo "Branch Name: $GITHUB_REF_NAME"
@@ -111,6 +106,9 @@ jobs:
           echo "Copyright © 2024 NianBroken. All rights reserved."
           echo "Author's website: https://www.nianbroken.top/"
           echo "Author's Repository URL: https://github.com/NianBroken/ZFCheckScores/"
+
+          echo "------"
+          python scripts/delete_old_runs.py
 
       - name: Delete __pycache__ folder
         run: |

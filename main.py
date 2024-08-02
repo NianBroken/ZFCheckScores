@@ -156,7 +156,7 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
-copyright = "Copyright © 2024 NianBroken. All rights reserved."
+copyright_text = "Copyright © 2024 NianBroken. All rights reserved."
 
 # 第一次运行时的提示文本
 first_run_text = (
@@ -174,7 +174,7 @@ integrated_send_info = (
     f"{integrated_grade_info}\n"
     f"{selected_courses_filtering}\n"
     f"{workflow_info if github_actions else current_time}\n"
-    f"{copyright}"
+    f"{copyright_text}"
 )
 
 # 整合首次运行时需要使用到的所有信息
@@ -234,10 +234,11 @@ with open(info_file_path, "r") as info_file:
 if run_log:
     print(run_log)
 
-    # 整合JobSummary信息
-    github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright}"
-
+    # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
     if github_actions:
+        # 整合JobSummary信息
+        github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright_text}"
+
         # 将任意个数的换行替换为两个换行
         github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
 
