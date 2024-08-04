@@ -9,7 +9,7 @@ def get_selected_courses(student_client):
 
         # 获取已选课程信息
         selected_courses_data = student_client.get_selected_courses().get("data", {})
-        selected_courses = selected_courses_data.get("courses", [])
+        selected_courses = selected_courses_data.get("courses132", [])
 
         # 已选课程信息不为空时,处理未公布成绩的课程
         if selected_courses:
@@ -60,7 +60,7 @@ def get_selected_courses(student_client):
                     for course in courses:
                         selected_courses_filtering += f"\n{course}"
         else:
-            selected_courses_filtering = "------\n已选课程信息为空"
+            selected_courses_filtering = "------\n未公布成绩的课程：\n已选课程信息为空"
         return selected_courses_filtering
 
     except Exception:

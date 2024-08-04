@@ -108,11 +108,11 @@ for _ in range(run_count):
 
     if not grade:
         # 成绩为空时将成绩信息定义为"成绩为空"
-        integrated_grade_info = "\n------成绩为空\n------"
+        integrated_grade_info = "------\n成绩信息：\n成绩为空\n------"
 
     elif "获取成绩时出错" in grade:
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
-        integrated_grade_info = "\n------获取成绩时出错\n------"
+        integrated_grade_info = "------\n成绩信息：\n获取成绩时出错\n------"
 
     else:
         # 清空grade.txt文件内容
@@ -204,16 +204,17 @@ if run_count == 2:
     # 输出响应内容
     run_log += f"{first_run_text_response_text}\n"
 else:
-    # 如果非第一次运行,则输出成绩信息
-    if grade:
-        run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
-        run_log += f"旧成绩：{old_grade_content}\n"
-    else:
-        run_log += "成绩为空\n"
-    run_log += "------\n"
-
     # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
     if grade_content != old_grade_content or force_push_message:
+
+        # 如果非第一次运行,则输出成绩信息
+        if grade:
+            run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
+            run_log += f"旧成绩：{old_grade_content}\n"
+        else:
+            run_log += "成绩为空\n"
+        run_log += "------\n"
+
         # 判断是否选中了强制推送信息
         run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n"
 
