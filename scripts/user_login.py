@@ -104,6 +104,6 @@ def login(url, username, password):
             if github_actions:
                 write_github_summary(run_log, lgn["code"])
 
-            sys.exit(1)
+            sys.exit(0)
 
     return student_client
