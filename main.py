@@ -118,7 +118,7 @@ for _ in range(run_count):
             integrated_grade_info += "\n------"
     else:
         # 成绩为空时将成绩信息定义为"成绩为空"
-        integrated_grade_info = "------\n成绩为空\n------"
+        integrated_grade_info = "成绩为空\n------"
 
     # 加密保存成绩
     encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)

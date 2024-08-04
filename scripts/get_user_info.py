@@ -26,7 +26,7 @@ def get_user_info(student_client, output_type="none"):
             else:
                 return "获取个人信息：参数缺失"
         else:
-            return info
+            return f"{info}\n------"
 
     except Exception:
         print(traceback.format_exc())
