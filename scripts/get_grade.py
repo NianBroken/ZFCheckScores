@@ -5,7 +5,7 @@ def get_grade(student_client, output_type="none"):
     try:
         # 获取成绩信息
         grade_data = student_client.get_grade().get("data", {})
-        grade = grade_data.get("courses123456", [])
+        grade = grade_data.get("courses", [])
 
         # 成绩不为空时
         if grade:
