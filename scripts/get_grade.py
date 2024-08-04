@@ -82,4 +82,4 @@ def get_grade(student_client, output_type="none"):
 
     except Exception:
         print(traceback.format_exc())
-        return "获取成绩时出错"
+        return "获取成绩时出错\n------"

@@ -114,18 +114,19 @@ for _ in range(run_count):
 
         # 获取整合后的成绩信息
         integrated_grade_info = get_grade(student_client, output_type="integrated_grade_info")
-        if integrated_grade_info == "获取成绩时出错":
-            integrated_grade_info += "\n------"
+
+        # 加密保存成绩
+        encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
+
+        # 将加密后的成绩信息写入grade.txt文件
+        with open(grade_file_path, "w") as grade_file:
+            grade_file.write(encrypted_integrated_grade_info)
     else:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "成绩为空\n------"
 
-    # 加密保存成绩
-    encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
-
-    # 将加密后的成绩信息写入grade.txt文件
-    with open(grade_file_path, "w") as grade_file:
-        grade_file.write(encrypted_integrated_grade_info)
+        # 加密保存成绩
+        encrypted_integrated_grade_info = md5_encrypt(integrated_grade_info)
 
 # 读取grade.txt和old_grade.txt文件的内容
 with open(grade_file_path, "r") as grade_file, open(old_grade_file_path, "r") as old_grade_file:
