@@ -107,7 +107,7 @@ for _ in range(run_count):
     grade = get_grade(student_client, output_type="grade")
 
     # 成绩不为空时
-    if grade:
+    if grade and "获取成绩时出错" not in grade:
         # 清空grade.txt文件内容
         with open(grade_file_path, "w") as grade_file:
             grade_file.truncate()
