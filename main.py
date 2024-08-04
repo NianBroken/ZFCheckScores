@@ -108,11 +108,11 @@ for _ in range(run_count):
 
     if not grade:
         # 成绩为空时将成绩信息定义为"成绩为空"
-        integrated_grade_info = "成绩为空\n------"
+        integrated_grade_info = "\n------成绩为空\n------"
 
     elif "获取成绩时出错" in grade:
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
-        integrated_grade_info = "获取成绩时出错\n------"
+        integrated_grade_info = "\n------获取成绩时出错\n------"
 
     else:
         # 清空grade.txt文件内容

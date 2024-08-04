@@ -46,7 +46,7 @@ def get_grade(student_client, output_type="none"):
                 total_credit = total_xfjd = sum_of_percentage_grades_multiplied_by_credits = gpa = percentage_gpa = 0
 
             # 初始化输出成绩信息字符串
-            integrated_grade_info = "成绩信息："
+            integrated_grade_info = "------\n成绩信息："
 
             # 遍历前8条成绩信息
             for _, course in enumerate(sorted_grade[:8]):
@@ -82,4 +82,4 @@ def get_grade(student_client, output_type="none"):
 
     except Exception:
         print(traceback.format_exc())
-        return "获取成绩时出错\n------"
+        return "获取成绩时出错"

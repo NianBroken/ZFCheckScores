@@ -16,7 +16,7 @@ def get_user_info(student_client, output_type="none"):
             gpa = get_grade(student_client, output_type="gpa")
             percentage_gpa = get_grade(student_client, output_type="percentage_gpa")
             # 整合个人信息
-            gpa_info = f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}\n" f"------"
+            gpa_info = f"\n当前GPA：{gpa}\n" f"当前百分制GPA：{percentage_gpa}"
             integrated_info = f"{info}{gpa_info}"
 
             if output_type == "info":
@@ -26,8 +26,8 @@ def get_user_info(student_client, output_type="none"):
             else:
                 return "获取个人信息：参数缺失"
         else:
-            return f"{info}\n------"
+            return f"{info}"
 
     except Exception:
         print(traceback.format_exc())
-        return "获取个人信息时出错\n------"
+        return "获取个人信息时出错"
