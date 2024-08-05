@@ -65,4 +65,4 @@ def get_selected_courses(student_client):
 
     except Exception:
         print(traceback.format_exc())
-        return "------\n获取未公布成绩的课程时出错"
+        return "------\n未公布成绩的课程：\n获取未公布成绩的课程时出错"

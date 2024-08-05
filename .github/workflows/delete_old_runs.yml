@@ -63,12 +63,13 @@ jobs:
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          # 运行主程序
           # 判断 GITHUB_TOKEN 是否存在，如果不存在就退出
           if [ -z "$GITHUB_TOKEN" ]; then
             exit 0
           fi
 
-          # 运行主程序
+          # 获取北京时间
           export BEIJING_TIME="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S:%3N')"
           echo "BEIJING_TIME=$BEIJING_TIME" >> $GITHUB_OUTPUT
 
@@ -108,6 +109,7 @@ jobs:
           echo "Author's Repository URL: https://github.com/NianBroken/ZFCheckScores/"
 
           echo "------"
+          # 运行主程序
           python scripts/delete_old_runs.py
 
       - name: Delete __pycache__ folder

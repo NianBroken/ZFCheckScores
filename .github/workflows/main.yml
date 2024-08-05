@@ -137,6 +137,7 @@ jobs:
               echo "${first}${middle}${last}"  # 组合首字符、中间部分的 '*' 和尾字符，并输出结果
             fi
           }
+
           # 定义 anonymize_domain 函数，接收一个 URL 作为输入参数
           anonymize_domain() {
             local url=$1  # 获取输入参数并赋值给局部变量 url
@@ -180,6 +181,7 @@ jobs:
           echo "Author's Repository URL: https://github.com/NianBroken/ZFCheckScores/"
 
           echo "------"
+          # 运行主程序
           python main.py
 
       - name: Delete __pycache__ folder

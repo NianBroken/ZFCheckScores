@@ -30,4 +30,4 @@ def get_user_info(student_client, output_type="none"):
 
     except Exception:
         print(traceback.format_exc())
-        return "获取个人信息时出错"
+        return "个人信息：\n获取个人信息时出错"
