@@ -121,7 +121,7 @@ for _ in range(run_count):
     if not grade:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩信息：\n成绩为空\n------"
-        error_content.append("成绩为空")
+        run_count == 1
 
     elif "获取成绩时出错" in grade:
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
