@@ -68,26 +68,35 @@ info = get_user_info(student_client, output_type="info")
 # 获取完整个人信息
 integrated_info = get_user_info(student_client, output_type="integrated_info")
 
-# 加密个人信息
-encrypted_info = md5_encrypt(info)
+if not info and not integrated_info:
+    run_log += "个人信息为空\n"
+    run_count = 1
 
-# 检查文件夹是否存在，如果不存在则创建
-if not os.path.exists(folder_path):
-    os.makedirs(folder_path)
+elif "获取个人信息时出错" in info and "获取个人信息时出错" in integrated_info:
+    run_log += "获取个人信息时出错\n"
+    run_count = 1
 
-# 判断info.txt文件是否存在
-if not os.path.exists(info_file_path):
-    # 如果文件不存在,创建并写入加密后的个人信息
-    with open(info_file_path, "w") as info_file:
-        info_file.write(encrypted_info)
 else:
-    # 如果文件存在,读取文件内容并比较
-    with open(info_file_path, "r") as info_file:
-        info_file_content = info_file.read()
-        # 若info.txt文件中保存的个人信息与获取到的个人信息一致,则代表非第一次运行程序
-        if info_file_content == encrypted_info:
-            # 非第一次运行程序
-            run_count = 1
+    # 加密个人信息
+    encrypted_info = md5_encrypt(info)
+
+    # 检查文件夹是否存在，如果不存在则创建
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    # 判断info.txt文件是否存在
+    if not os.path.exists(info_file_path):
+        # 如果文件不存在,创建并写入加密后的个人信息
+        with open(info_file_path, "w") as info_file:
+            info_file.write(encrypted_info)
+    else:
+        # 如果文件存在,读取文件内容并比较
+        with open(info_file_path, "r") as info_file:
+            info_file_content = info_file.read()
+            # 若info.txt文件中保存的个人信息与获取到的个人信息一致,则代表非第一次运行程序
+            if info_file_content == encrypted_info:
+                # 非第一次运行程序
+                run_count = 1
 
 # 第一次运行程序则运行两遍,否则运行一遍
 for _ in range(run_count):
@@ -109,10 +118,12 @@ for _ in range(run_count):
     if not grade:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩信息：\n成绩为空\n------"
+        run_log += "成绩为空\n"
 
     elif "获取成绩时出错" in grade:
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
         integrated_grade_info = "------\n成绩信息：\n获取成绩时出错\n------"
+        run_log += "获取成绩时出错\n"
 
     else:
         # 清空grade.txt文件内容
@@ -187,7 +198,9 @@ first_time_run_integrated_send_info = f"{first_run_text}\n" f"{integrated_send_i
 
 # 整合成绩已更新时需要使用到的所有信息
 grades_updated_push_integrated_send_info = (
-    f"{'强制推送信息成功' if force_push_message else '教务管理系统成绩已更新'}\n" f"------\n" f"{integrated_send_info}"
+    f"{'强制推送信息成功' if force_push_message else '教务管理系统成绩已更新'}\n"
+    f"------\n"
+    f"{integrated_send_info}"
 )
 
 # 如果是第一次运行,则提示程序运行成功
@@ -211,8 +224,6 @@ else:
         if grade:
             run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
             run_log += f"旧成绩：{old_grade_content}\n"
-        else:
-            run_log += "成绩为空\n"
         run_log += "------\n"
 
         # 判断是否选中了强制推送信息
@@ -230,11 +241,12 @@ else:
         run_log += "成绩未更新"
 
 # 更新info.txt
-with open(info_file_path, "r") as info_file:
-    info_file_content = info_file.read()
-    if info_file_content != encrypted_info:
-        with open(info_file_path, "w") as info_file:
-            info_file.write(encrypted_info)
+if run_count == 2:
+    with open(info_file_path, "r") as info_file:
+        info_file_content = info_file.read()
+        if info_file_content != encrypted_info:
+            with open(info_file_path, "w") as info_file:
+                info_file.write(encrypted_info)
 
 # 输出运行日志
 if run_log:
@@ -243,7 +255,9 @@ if run_log:
     # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
     if github_actions:
         # 整合JobSummary信息
-        github_step_summary_run_log = f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright_text}"
+        github_step_summary_run_log = (
+            f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright_text}"
+        )
 
         # 将任意个数的换行替换为两个换行
         github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
