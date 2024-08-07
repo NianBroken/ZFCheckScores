@@ -128,6 +128,7 @@ for _ in range(run_count):
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
         integrated_grade_info = "------\n成绩信息：\n获取成绩时出错\n------"
         error_content.append("获取成绩时出错")
+        run_count = 1
 
     else:
         # 清空grade.txt文件内容
@@ -207,7 +208,7 @@ grades_updated_push_integrated_send_info = (
     f"{integrated_send_info}"
 )
 
-if error_content:
+if error_content and "成绩为空" not in run_log:
     error_content = "、".join(map(str, error_content))
     run_log += f"你因{error_content}原因而运行失败。\n"
 else:
