@@ -68,11 +68,11 @@ info = get_user_info(student_client, output_type="info")
 # 获取完整个人信息
 integrated_info = get_user_info(student_client, output_type="integrated_info")
 
-if not info and not integrated_info:
+if not info or not integrated_info:
     run_log += "个人信息为空\n"
     run_count = 1
 
-elif "获取个人信息时出错" in info and "获取个人信息时出错" in integrated_info:
+elif "获取个人信息时出错" in info or "获取个人信息时出错" in integrated_info:
     run_log += "获取个人信息时出错\n"
     run_count = 1
 
