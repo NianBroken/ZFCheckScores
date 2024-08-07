@@ -209,7 +209,6 @@ grades_updated_push_integrated_send_info = (
 if error_content:
     error_content = "、".join(map(str, error_content))
     run_log += f"你因{error_content}原因而运行失败。\n"
-    run_log += "------\n"
 else:
     # 如果是第一次运行,则提示程序运行成功
     if run_count == 2:
