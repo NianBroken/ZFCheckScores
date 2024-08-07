@@ -238,6 +238,7 @@ else:
         # 输出响应内容
         run_log += f"{response_text}"
     else:
+        run_log += "------\n"
         run_log += "成绩未更新"
 
 # 更新info.txt
