@@ -13,7 +13,7 @@ def get_selected_courses(student_client):
         # 初始化selected_courses为空列表
         selected_courses = []
 
-        # 使用while循环最多重试5次获取个人信息
+        # 使用while循环最多重试5次获取已选课程信息
         while attempts > 0:
             # 调用student_client的get_selected_courses方法获取已选课程信息
             selected_courses_data = student_client.get_selected_courses().get("data", {})

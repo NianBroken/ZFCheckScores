@@ -9,7 +9,7 @@ def get_grade(student_client, output_type="none"):
         # 初始化grade为空列表
         grade = []
 
-        # 使用while循环最多重试5次获取个人信息
+        # 使用while循环最多重试5次获取成绩信息
         while attempts > 0:
 
             # 调用student_client的get_grade方法获取成绩信息

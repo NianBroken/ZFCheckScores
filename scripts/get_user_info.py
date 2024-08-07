@@ -59,9 +59,7 @@ def get_user_info(student_client, output_type="none"):
             else:
                 # 如果未获取到成绩信息，返回仅包含个人信息的字符串
                 return f"{info}"
-        else:
-            # 如果重试5次仍未获取到个人信息，返回错误提示
-            return "个人信息：\n获取个人信息失败"
+
     except Exception:
         # 捕获并打印所有异常的详细信息
         print(traceback.format_exc())
