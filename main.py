@@ -53,6 +53,9 @@ run_count = 2
 # 初始化运行日志
 run_log = ""
 
+# 初始化错误内容
+error_content = []
+
 # 当前时间
 current_time = "------\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]
 
@@ -69,11 +72,11 @@ info = get_user_info(student_client, output_type="info")
 integrated_info = get_user_info(student_client, output_type="integrated_info")
 
 if not info or not integrated_info:
-    run_log += "个人信息为空\n"
+    error_content.append("个人信息为空")
     run_count = 1
 
 elif "获取个人信息时出错" in info or "获取个人信息时出错" in integrated_info:
-    run_log += "获取个人信息时出错\n"
+    error_content.append("获取个人信息时出错")
     run_count = 1
 
 else:
@@ -118,12 +121,12 @@ for _ in range(run_count):
     if not grade:
         # 成绩为空时将成绩信息定义为"成绩为空"
         integrated_grade_info = "------\n成绩信息：\n成绩为空\n------"
-        run_log += "成绩为空\n"
+        error_content.append("成绩为空")
 
     elif "获取成绩时出错" in grade:
         # 获取成绩时出错时将成绩信息定义为"获取成绩时出错"
         integrated_grade_info = "------\n成绩信息：\n获取成绩时出错\n------"
-        run_log += "获取成绩时出错\n"
+        error_content.append("获取成绩时出错")
 
     else:
         # 清空grade.txt文件内容
@@ -203,43 +206,47 @@ grades_updated_push_integrated_send_info = (
     f"{integrated_send_info}"
 )
 
-# 如果是第一次运行,则提示程序运行成功
-if run_count == 2:
-    run_log += f"{first_run_text}\n"
-
-    # 推送信息
-    first_run_text_response_text = send_message(
-        token,
-        "正方教务管理系统成绩推送",
-        first_time_run_integrated_send_info,
-    )
-
-    # 输出响应内容
-    run_log += f"{first_run_text_response_text}\n"
+if error_content:
+    error_content = "、".join(map(str, error_content))
+    run_log += f"你因{error_content}原因而运行失败。\n"
+    run_log += "------\n"
 else:
-    # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
-    if grade_content != old_grade_content or force_push_message:
-
-        # 如果非第一次运行,则输出成绩信息
-        if grade:
-            run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
-            run_log += f"旧成绩：{old_grade_content}\n"
-        run_log += "------\n"
-
-        # 判断是否选中了强制推送信息
-        run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n"
+    # 如果是第一次运行,则提示程序运行成功
+    if run_count == 2:
+        run_log += f"{first_run_text}\n"
 
         # 推送信息
-        response_text = send_message(
+        first_run_text_response_text = send_message(
             token,
             "正方教务管理系统成绩推送",
-            grades_updated_push_integrated_send_info,
+            first_time_run_integrated_send_info,
         )
+
         # 输出响应内容
-        run_log += f"{response_text}"
+        run_log += f"{first_run_text_response_text}\n"
     else:
-        run_log += "------\n"
-        run_log += "成绩未更新"
+        # 对grade.txt和old_grade.txt两个文件的内容进行比对,输出成绩是否更新
+        if grade_content != old_grade_content or force_push_message:
+
+            # 如果非第一次运行,则输出成绩信息
+            if grade:
+                run_log += f"新成绩：{encrypted_integrated_grade_info}\n"
+                run_log += f"旧成绩：{old_grade_content}\n"
+            run_log += "------\n"
+
+            # 判断是否选中了强制推送信息
+            run_log += f"{'强制推送信息' if force_push_message else '成绩已更新'}\n"
+
+            # 推送信息
+            response_text = send_message(
+                token,
+                "正方教务管理系统成绩推送",
+                grades_updated_push_integrated_send_info,
+            )
+            # 输出响应内容
+            run_log += f"{response_text}"
+        else:
+            run_log += "成绩未更新"
 
 # 更新info.txt
 if run_count == 2:
@@ -259,9 +266,21 @@ if run_log:
         github_step_summary_run_log = (
             f"# 正方教务管理系统成绩推送\n{run_log}\n{workflow_info}\n{copyright_text}"
         )
+        # 定义正则表达式模式
+        error_content_pattern = r"你因(.*?)原因而运行失败。"
+        error_content_replacement = (
+            r"你因 **\1** 原因而运行失败。\n"
+            r"若你不明白或不理解为什么登录失败，请到上游仓库的 "
+            r"[Issue](https://github.com/NianBroken/ZFCheckScores/issues/new 'Issue') 中寻求帮助。\n"
+        )
 
         # 将任意个数的换行替换为两个换行
         github_step_summary_run_log = re.sub("\n+", "\n\n", github_step_summary_run_log)
+
+        # 将你因xx原因而运行失败。替换为你因**xx**原因而运行失败。
+        github_step_summary_run_log = re.sub(
+            error_content_pattern, error_content_replacement, github_step_summary_run_log
+        )
 
         # 将 github_step_summary_run_log 写入到 GitHub Actions 的环境文件中
         with open(github_step_summary, "w", encoding="utf-8") as file:

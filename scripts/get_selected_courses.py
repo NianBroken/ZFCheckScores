@@ -1,3 +1,4 @@
+import time
 import traceback
 from .get_grade import get_grade
 
@@ -7,9 +8,25 @@ def get_selected_courses(student_client):
         # 获取成绩信息
         grade = get_grade(student_client, output_type="grade")
 
-        # 获取已选课程信息
-        selected_courses_data = student_client.get_selected_courses().get("data", {})
-        selected_courses = selected_courses_data.get("courses", [])
+        # 定义重试次数上限为5次
+        attempts = 5
+        # 初始化selected_courses为空列表
+        selected_courses = []
+
+        # 使用while循环最多重试5次获取个人信息
+        while attempts > 0:
+            # 调用student_client的get_selected_courses方法获取已选课程信息
+            selected_courses_data = student_client.get_selected_courses().get("data", {})
+            selected_courses = selected_courses_data.get("courses", [])
+
+            # 如果selected_courses不为空，跳出循环
+            if selected_courses:
+                break
+
+            # 如果selected_courses为空，等待1秒后重试
+            time.sleep(1)
+            # 减少剩余重试次数
+            attempts -= 1
 
         # 已选课程信息不为空时,处理未公布成绩的课程
         if selected_courses:
