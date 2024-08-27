@@ -96,6 +96,9 @@ def get_grade(student_client, output_type="none"):
                     f"------"
                 )
 
+            last_submission_time = sorted_grade[0]["submission_time"]
+            print(last_submission_time)
+
             if output_type == "grade":
                 return grade
             elif output_type == "gpa":
@@ -104,6 +107,8 @@ def get_grade(student_client, output_type="none"):
                 return percentage_gpa
             elif output_type == "integrated_grade_info":
                 return integrated_grade_info
+            elif output_type == "last_submission_time":
+                return last_submission_time
             else:
                 return "获取成绩：参数缺失"
 
