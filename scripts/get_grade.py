@@ -97,7 +97,6 @@ def get_grade(student_client, output_type="none"):
                 )
 
             last_submission_time = sorted_grade[0]["submission_time"]
-            print(last_submission_time)
 
             if output_type == "grade":
                 return grade
