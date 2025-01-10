@@ -28,7 +28,7 @@ def get_grade(student_client, output_type="none"):
         # 成绩不为空时
         if grade:
             # 过滤出成绩大于等于60分的课程
-            filtered_grade = list(filter(lambda x: int(x["percentage_grades"]) >= 60, grade))
+            filtered_grade = list(filter(lambda x: int(x["percentage_grades"][0:2]) >= 60, grade))
 
             # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
             for course_data_grade in grade:
