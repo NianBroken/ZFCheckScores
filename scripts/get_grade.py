@@ -28,7 +28,7 @@ def get_grade(student_client, output_type="none"):
         # 成绩不为空时
         if grade:
             # 过滤出成绩大于等于60分的课程
-            filtered_grade = list(filter(lambda x: int(x["percentage_grades"]) >= 60, grade))
+            filtered_grade = list(filter(lambda x: float(x["percentage_grades"]) >= 60, grade))
 
             # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
             for course_data_grade in grade:
@@ -79,9 +79,10 @@ def get_grade(student_client, output_type="none"):
             for _, course in enumerate(sorted_grade[:8]):
 
                 # 如果成绩非数字，如及格、良好、中等、优秀等，则显示百分制成绩
-                if str(course["grade"]).isdigit():
+                try:
+                    float(course["grade"])  # 检查成绩是否为数字
                     score_grades = course["grade"]
-                else:
+                except ValueError:
                     score_grades = f"{course['grade']} ({course['percentage_grades']})"
 
                 # 整合成绩信息
