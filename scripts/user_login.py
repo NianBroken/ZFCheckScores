@@ -100,12 +100,13 @@ def login(url, username, password):
                 pprint(ret)
                 """
             elif lgn["code"] != 1000:
-                pprint(lgn)
-                run_log = lgn["msg"]
+                if attempts == 1:
+                    pprint(lgn)
+                    run_log = lgn["msg"]
 
-                # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
-                if github_actions:
-                    write_github_summary(run_log, lgn["code"])
+                    # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
+                    if github_actions:
+                        write_github_summary(run_log, lgn["code"])
 
                 # 如果未成功登录，等待1秒后重试
                 time.sleep(1)
