@@ -38,7 +38,7 @@ class Client:
         self.raspisanie = kwargs.get("raspisanie", RASPIANIE)
         self.ignore_type = kwargs.get("ignore_type", [])
         self.detail_category_type = kwargs.get("detail_category_type", [])
-        self.timeout = kwargs.get("timeout", 3)
+        self.timeout = kwargs.get("timeout", 10)
         Client.raspisanie = self.raspisanie
         Client.ignore_type = self.ignore_type
 

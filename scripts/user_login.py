@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import time
 from pprint import pprint
 from .zfn_api import Client
 
@@ -64,7 +65,7 @@ def login(url, username, password):
     raspisanie = []
     ignore_type = []
     detail_category_type = []
-    timeout = 5
+    timeout = 10
 
     student_client = Client(
         cookies=cookies,
@@ -75,35 +76,46 @@ def login(url, username, password):
         timeout=timeout,
     )
 
-    if cookies == {}:
-        lgn = student_client.login(username, password)
-        if lgn["code"] == 1001:
-            run_log = "登录需要验证码"
+    attempts = 5  # 最大重试次数
+    while attempts > 0:
+        if cookies == {}:
+            lgn = student_client.login(username, password)
+            if lgn["code"] == 1001:
+                run_log = "登录需要验证码"
 
-            # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
-            if github_actions:
-                write_github_summary(run_log, lgn["code"])
+                # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
+                if github_actions:
+                    write_github_summary(run_log, lgn["code"])
 
-            sys.exit(f"你因{run_log}原因而登录失败，错误代码为{lgn['code']}。")
-            """
-            verify_data = lgn["data"]
-            with open(os.path.abspath("kaptcha.png"), "wb") as pic:
-                pic.write(base64.b64decode(verify_data.pop("kaptcha_pic")))
-            verify_data["kaptcha"] = input("输入验证码：")
-            ret = student_client.login_with_kaptcha(**verify_data)
-            if ret["code"] != 1000:
+                sys.exit(f"你因{run_log}原因而登录失败，错误代码为{lgn['code']}。")
+                """
+                verify_data = lgn["data"]
+                with open(os.path.abspath("kaptcha.png"), "wb") as pic:
+                    pic.write(base64.b64decode(verify_data.pop("kaptcha_pic")))
+                verify_data["kaptcha"] = input("输入验证码：")
+                ret = student_client.login_with_kaptcha(**verify_data)
+                if ret["code"] != 1000:
+                    pprint(ret)
+                    sys.exit()
                 pprint(ret)
-                sys.exit()
-            pprint(ret)
-            """
-        elif lgn["code"] != 1000:
-            pprint(lgn)
-            run_log = lgn["msg"]
+                """
+            elif lgn["code"] != 1000:
+                pprint(lgn)
+                run_log = lgn["msg"]
 
-            # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
-            if github_actions:
-                write_github_summary(run_log, lgn["code"])
+                # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
+                if github_actions:
+                    write_github_summary(run_log, lgn["code"])
 
-            sys.exit(0)
+                # 如果未成功登录，等待1秒后重试
+                time.sleep(1)
+                attempts -= 1  # 剩余重试次数减1
+                continue
+
+            # 如果登录成功，则跳出重试循环
+            break
+
+    if attempts == 0:
+        sys.exit(0)
 
     return student_client
