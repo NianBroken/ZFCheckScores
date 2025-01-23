@@ -247,9 +247,10 @@ else:
             # 输出响应内容
             run_log += f"{response_text}"
         else:
-            last_submission_time = get_grade(student_client, output_type="last_submission_time")
-            run_log += "成绩未更新\n"
-            run_log += f"最近一次更新时间：{last_submission_time}"
+            run_log += "成绩未更新"
+            if "成绩为空" not in run_log:
+                last_submission_time = get_grade(student_client, output_type="last_submission_time")
+                run_log += f"\n最近一次更新时间：{last_submission_time}"
 
 # 更新info.txt
 if run_count == 2:
