@@ -43,6 +43,14 @@ copyright_text = "Copyright © 2024 NianBroken. All rights reserved."
 
 
 def write_github_summary(run_log, lgn_code):
+    # 检查 run_log 是否为空，若为空则赋值为“未知错误”
+    if not run_log:
+        run_log = "未知错误"
+
+    # 检查 lgn_code 是否为空，若为空则赋值为“未知代码”
+    if not lgn_code:
+        lgn_code = "未知代码"
+
     summary_log = (
         f"# 正方教务管理系统成绩推送\n"
         f"你因 **{run_log}** 原因而登录失败，错误代码为 **{lgn_code}**。\n"
@@ -51,6 +59,7 @@ def write_github_summary(run_log, lgn_code):
         f"{workflow_info}\n"
         f"{copyright_text}"
     )
+
     # 将任意个数的换行替换为两个换行
     summary_log = re.sub("\n+", "\n\n", summary_log)
 
