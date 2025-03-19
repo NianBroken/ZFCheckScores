@@ -54,12 +54,12 @@
 
 > 程序会自动填充 `URL` 尾部的 `xtgl/login_slogin.html`，因此你无需重复添加
 
-| Name     | 例子                        | 说明                                                                      |
-| -------- | --------------------------- | ------------------------------------------------------------------------- |
-| URL      | https://www.nianbroken.top/ | 教务系统地址                                                              |
-| USERNAME | 2971802058                  | 教务系统用户名                                                            |
-| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                                              |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [Showdoc 的 token](https://push.showdoc.com.cn/#/push "Showdoc 的 token") |
+| Name     | 例子                   | 说明                                                                      |
+| -------- | ---------------------- | ------------------------------------------------------------------------- |
+| URL      | https://www.klaio.top/ | 教务系统地址                                                              |
+| USERNAME | 2971802058             | 教务系统用户名                                                            |
+| PASSWORD | Y3xhaCkb5PZ4           | 教务系统密码                                                              |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8   | [Showdoc 的 token](https://push.showdoc.com.cn/#/push "Showdoc 的 token") |
 
 ### 4. 开启 Actions
 
@@ -87,7 +87,7 @@ _若是第一次运行程序，上述步骤会执行两遍_
 
 ## 许可证
 
-`Copyright © 2024 NianBroken. All rights reserved.`
+`Copyright © 2024 Klauthmos. All rights reserved.`
 
 本项目采用 [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0 "Apache-2.0") 许可证。简而言之，你可以自由使用、修改和分享本项目的代码，但前提是在其衍生作品中必须保留原始许可证和版权信息，并且必须以相同的许可证发布所有修改过的代码。
 

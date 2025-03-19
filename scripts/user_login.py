@@ -39,7 +39,7 @@ workflow_info = (
     f"Beijing Time：{beijing_time}"
 )
 
-copyright_text = "Copyright © 2024 NianBroken. All rights reserved."
+copyright_text = "Copyright © 2024 Klauthmos. All rights reserved."
 
 
 def write_github_summary(run_log, lgn_code):

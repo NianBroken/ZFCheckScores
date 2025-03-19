@@ -53,12 +53,12 @@
 
 > 程序会自动填充 `URL` 尾部的 `xtgl/login_slogin.html`，因此你无需重复添加
 
-| Name     | 例子                        | 说明                                               |
-| -------- | --------------------------- | -------------------------------------------------- |
-| URL      | https://www.nianbroken.top/ | 教务系统地址                                       |
-| USERNAME | 2971802058                  | 教务系统用户名                                     |
-| PASSWORD | Y3xhaCkb5PZ4                | 教务系统密码                                       |
-| TOKEN    | J65KWMBfyDh3YPLpcvm8        | [Showdoc 的 token](#获取-token "Showdoc 的 token") |
+| Name     | 例子                   | 说明                                               |
+| -------- | ---------------------- | -------------------------------------------------- |
+| URL      | https://www.klaio.top/ | 教务系统地址                                       |
+| USERNAME | 2971802058             | 教务系统用户名                                     |
+| PASSWORD | Y3xhaCkb5PZ4           | 教务系统密码                                       |
+| TOKEN    | J65KWMBfyDh3YPLpcvm8   | [Showdoc 的 token](#获取-token "Showdoc 的 token") |
 
 <table>
 	<tr>

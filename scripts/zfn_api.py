@@ -898,7 +898,10 @@ class Client:
                 "year": year,
                 "term": temp_term,
                 "count": len(selected),
-                "courses": [{"class_id": i.get("jxb_id"), "class_name": i.get("jxbmc"), "title": i.get("kcmc"), "teacher": i.get("jsxm"), "course_year": i.get("xnmc"), "course_semester": i.get("xqmmc")} for i in selected["items"]],
+                "courses": [
+                    {"class_id": i.get("jxb_id"), "class_name": i.get("jxbmc"), "title": i.get("kcmc"), "teacher": i.get("jsxm"), "course_year": i.get("xnmc"), "course_semester": i.get("xqmmc")}
+                    for i in selected["items"]
+                ],
             }
             return {"code": 1000, "msg": "获取已选课程成功", "data": result}
         except exceptions.Timeout:
@@ -1340,7 +1343,9 @@ class Client:
             content,
         )
         finder_list = list({}.fromkeys(finder).keys())
-        academia_list = [list(i) for i in finder_list if i[0] != "" and len(i[0]) <= 20 and "span" not in i[-1] and i[0] not in cls.ignore_type]  # 类型名称不为空  # 避免正则到首部过长类型名称  # 避免正则到尾部过长类型名称  # 忽略的类型名称
+        academia_list = [
+            list(i) for i in finder_list if i[0] != "" and len(i[0]) <= 20 and "span" not in i[-1] and i[0] not in cls.ignore_type
+        ]  # 类型名称不为空  # 避免正则到首部过长类型名称  # 避免正则到尾部过长类型名称  # 忽略的类型名称
         result = {
             i[0]: {
                 "id": i[-1],
@@ -1384,7 +1389,11 @@ class Client:
             for index in range(len(schedule["courses"])):
                 if (schedule["courses"]).index(items) == count:  # 如果对比到自己就忽略
                     continue
-                elif items["course_id"] == schedule["courses"][index]["course_id"] and items["weekday"] == schedule["courses"][index]["weekday"] and items["weeks"] == schedule["courses"][index]["weeks"]:  # 同周同天同课程
+                elif (
+                    items["course_id"] == schedule["courses"][index]["course_id"]
+                    and items["weekday"] == schedule["courses"][index]["weekday"]
+                    and items["weeks"] == schedule["courses"][index]["weeks"]
+                ):  # 同周同天同课程
                     repetIndex.append(index)  # 满足条件记录索引
             count += 1  # 记录当前对比课程的索引
         if len(repetIndex) % 2 != 0:  # 暂时考虑一天两个时段上同一门课，不满足条件不进行修改
@@ -1442,7 +1451,7 @@ if __name__ == "__main__":
     import sys
     import os
 
-    base_url = "https://www.nianbroken.top/"  # 教务系统URL
+    base_url = "https://www.klaio.top/"  # 教务系统URL
     sid = "2971802058"  # 学号
     password = "2971802058"  # 密码
     lgn_cookies = (

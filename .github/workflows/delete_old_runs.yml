@@ -104,8 +104,8 @@ jobs:
           echo "Workflow Number: $GITHUB_RUN_NUMBER"
           echo "Workflow ID: $GITHUB_RUN_ID"
           echo "Beijing Time: $BEIJING_TIME"
-          echo "Copyright © 2024 NianBroken. All rights reserved."
-          echo "Author's website: https://www.nianbroken.top/"
+          echo "Copyright © 2024 Klauthmos. All rights reserved."
+          echo "Author's website: https://www.klaio.top/"
           echo "Author's Repository URL: https://github.com/NianBroken/ZFCheckScores/"
 
           echo "------"
