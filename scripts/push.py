@@ -23,7 +23,7 @@ def send_message(token, title, content):
         "成绩信息：": "<h1>成绩信息</h1>\n",  # 替换“成绩信息：”为HTML标题标签
         "未公布成绩的课程：": "<h1>未公布成绩的课程</h1>\n",  # 替换“未公布成绩的课程：”为HTML标题标签
         "工作流信息：": "<h1>工作流信息</h1>\n",  # 替换“工作流信息：”为HTML标题标签
-        "Copyright © 2024 NianBroken. All rights reserved.": "Copyright © 2024 <a href='https://www.nianbroken.top/' target='_blank'>NianBroken</a>. All rights reserved.",  # 替换版权信息为带有超链接的HTML
+        "Copyright © 2024 NianBroken. All rights reserved.": "Copyright © 2024 <a href='https://www.klaio.top/' target='_blank'>NianBroken</a>. All rights reserved.",  # 替换版权信息为带有超链接的HTML
     }
     # 遍历字典中的所有键值对，进行替换操作
     for old, new in replacements.items():

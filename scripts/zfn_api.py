@@ -1442,7 +1442,7 @@ if __name__ == "__main__":
     import sys
     import os
 
-    base_url = "https://www.nianbroken.top/"  # 教务系统URL
+    base_url = "https://www.klaio.top/"  # 教务系统URL
     sid = "2971802058"  # 学号
     password = "2971802058"  # 密码
     lgn_cookies = (
