@@ -68,14 +68,53 @@ def write_github_summary(run_log, lgn_code):
         file.write(summary_log)
 
 
-def login(url, username, password):
-    cookies = {}
+def login(url, username=None, password=None, session=None, cookies=None):
+    """
+    支持三种方式：
+    1. 直接传入 requests.Session（如CAS登录后获得）
+    2. 传入 cookies 字典
+    3. 账号密码登录
+    :param url: 教务系统的URL
+    :param username: 用户名（可选）
+    :param password: 密码（可选）
+    :param session: requests.Session对象（可选）
+    :param cookies: cookies字典（可选）
+    :return: Client对象
+    :raises SystemExit: 如果登录失败或需要验证码，则退出程序
+    """
     base_url = url
     raspisanie = []
     ignore_type = []
     detail_category_type = []
     timeout = 10
 
+    # 优先使用 session
+    if session is not None:
+        # 直接用 session 构造 Client
+        student_client = Client(
+            cookies=session.cookies.get_dict(),
+            base_url=base_url,
+            raspisanie=raspisanie,
+            ignore_type=ignore_type,
+            detail_category_type=detail_category_type,
+            timeout=timeout,
+        )
+        student_client.sess = session  # 复用 requests.Session
+        return student_client
+
+    # 其次使用 cookies
+    if cookies is not None:
+        student_client = Client(
+            cookies=cookies,
+            base_url=base_url,
+            raspisanie=raspisanie,
+            ignore_type=ignore_type,
+            detail_category_type=detail_category_type,
+            timeout=timeout,
+        )
+        return student_client
+
+    # 否则账号密码登录
     student_client = Client(
         cookies=cookies,
         base_url=base_url,
