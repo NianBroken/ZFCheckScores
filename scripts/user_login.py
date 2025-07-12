@@ -70,40 +70,38 @@ def write_github_summary(run_log, lgn_code):
 
 def login(url, username=None, password=None, session=None, cookies=None):
     """
-    支持三种方式：
-    1. 直接传入 requests.Session（如CAS登录后获得）
-    2. 传入 cookies 字典
+    封装登录逻辑，兼容三种场景：
+    1. 直接复用已登录的 requests.Session
+    2. 使用现成 cookies
     3. 账号密码登录
-    :param url: 教务系统的URL
-    :param username: 用户名（可选）
-    :param password: 密码（可选）
-    :param session: requests.Session对象（可选）
-    :param cookies: cookies字典（可选）
-    :return: Client对象
-    :raises SystemExit: 如果登录失败或需要验证码，则退出程序
     """
+    # 统一 cookies 为 dict，方便后续判断
+    if cookies is None:
+        cookies = {}
+
     base_url = url
     raspisanie = []
     ignore_type = []
     detail_category_type = []
     timeout = 10
 
-    # 优先使用 session
+    # 若已提供 session，则直接复用
     if session is not None:
-        # 直接用 session 构造 Client
+        cookies = session.cookies.get_dict()
         student_client = Client(
-            cookies=session.cookies.get_dict(),
+            cookies=cookies,
             base_url=base_url,
             raspisanie=raspisanie,
             ignore_type=ignore_type,
             detail_category_type=detail_category_type,
             timeout=timeout,
         )
-        student_client.sess = session  # 复用 requests.Session
+        # 复用会话，保持连接池、代理等设置
+        student_client.sess = session
         return student_client
 
-    # 其次使用 cookies
-    if cookies is not None:
+    # 若提供了 cookies，直接使用
+    if cookies:
         student_client = Client(
             cookies=cookies,
             base_url=base_url,
@@ -114,9 +112,13 @@ def login(url, username=None, password=None, session=None, cookies=None):
         )
         return student_client
 
-    # 否则账号密码登录
+    # 走到这里说明只能账号密码登录，缺失则直接退出
+    if username is None or password is None:
+        sys.exit("未提供有效登录方式（session/cookies/账号密码均为空），无法登录。")
+
+    # 账号密码登录
     student_client = Client(
-        cookies=cookies,
+        cookies={},
         base_url=base_url,
         raspisanie=raspisanie,
         ignore_type=ignore_type,
@@ -126,45 +128,45 @@ def login(url, username=None, password=None, session=None, cookies=None):
 
     attempts = 5  # 最大重试次数
     while attempts > 0:
-        if cookies == {}:
-            lgn = student_client.login(username, password)
-            if lgn["code"] == 1001:
-                run_log = "登录需要验证码"
+        lgn = student_client.login(username, password)
 
-                # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
+        if lgn["code"] == 1001:
+            run_log = "登录需要验证码"
+
+            # 如果是 GitHub Actions 运行，则将运行日志写入到 GitHub Actions 的日志文件中
+            if github_actions:
+                write_github_summary(run_log, lgn["code"])
+
+            sys.exit(f"你因{run_log}原因而登录失败，错误代码为{lgn['code']}。")
+            """
+            verify_data = lgn["data"]
+            with open(os.path.abspath("kaptcha.png"), "wb") as pic:
+                pic.write(base64.b64decode(verify_data.pop("kaptcha_pic")))
+            verify_data["kaptcha"] = input("输入验证码：")
+            ret = student_client.login_with_kaptcha(**verify_data)
+            if ret["code"] != 1000:
+                pprint(ret)
+                sys.exit()
+            pprint(ret)
+            """
+        elif lgn["code"] != 1000:
+            # 登录失败但非验证码
+            if attempts == 1:
+                pprint(lgn)
+                run_log = lgn["msg"]
                 if github_actions:
                     write_github_summary(run_log, lgn["code"])
 
-                sys.exit(f"你因{run_log}原因而登录失败，错误代码为{lgn['code']}。")
-                """
-                verify_data = lgn["data"]
-                with open(os.path.abspath("kaptcha.png"), "wb") as pic:
-                    pic.write(base64.b64decode(verify_data.pop("kaptcha_pic")))
-                verify_data["kaptcha"] = input("输入验证码：")
-                ret = student_client.login_with_kaptcha(**verify_data)
-                if ret["code"] != 1000:
-                    pprint(ret)
-                    sys.exit()
-                pprint(ret)
-                """
-            elif lgn["code"] != 1000:
-                if attempts == 1:
-                    pprint(lgn)
-                    run_log = lgn["msg"]
+            # 重试
+            time.sleep(1)
+            attempts -= 1
+            continue
 
-                    # 如果是Github Actions运行,则将运行日志写入到GitHub Actions的日志文件中
-                    if github_actions:
-                        write_github_summary(run_log, lgn["code"])
-
-                # 如果未成功登录，等待1秒后重试
-                time.sleep(1)
-                attempts -= 1  # 剩余重试次数减1
-                continue
-
-            # 如果登录成功，则跳出重试循环
-            break
+        # 登录成功，跳出循环
+        break
 
     if attempts == 0:
+        # 尝试次数耗尽依旧失败
         sys.exit(0)
 
     return student_client
