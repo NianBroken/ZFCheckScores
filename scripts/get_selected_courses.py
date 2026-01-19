@@ -8,6 +8,10 @@ def get_selected_courses(student_client):
         # 获取成绩信息
         grade = get_grade(student_client, output_type="grade")
 
+        # 成绩信息异常时，保证grade为列表，避免后续索引报错
+        if not isinstance(grade, list):
+            grade = []
+
         # 定义重试次数上限为5次
         attempts = 5
         # 初始化selected_courses为空列表
@@ -35,8 +39,8 @@ def get_selected_courses(student_client):
             selected_courses = sorted(
                 selected_courses,
                 key=lambda x: (
-                    (x["course_year"] if x["course_year"] else "1970-1971"),
-                    (x["course_semester"] if x["course_semester"] else "1"),
+                    (x.get("course_year") if x.get("course_year") else "1970-1971"),
+                    (x.get("course_semester") if x.get("course_semester") else "1"),
                 ),
                 reverse=True,
             )
@@ -45,7 +49,7 @@ def get_selected_courses(student_client):
             ungraded_courses_by_semester = {}
 
             # 获取成绩列表中的class_id集合
-            grade_class_ids = {course["class_id"] for course in grade} if grade else ""
+            grade_class_ids = {course.get("class_id") for course in grade} if grade else set()
 
             # 初始化输出内容
             selected_courses_filtering = ""
@@ -56,15 +60,17 @@ def get_selected_courses(student_client):
                 try:
                     year, semester, seq = course["course_year"].split("-") + [course["course_semester"]]
                 except Exception:
-                    pass
+                    year, semester, seq = "1970", "1971", "1"
 
                 # 构建年学期名称,例如 "a至b学年第c学期"
                 yearsemester_name = f"{year}至{semester}学年第{seq}学期"
 
                 # 判断课程是否未公布成绩
-                if course["class_id"] not in grade_class_ids:
+                if course.get("class_id") not in grade_class_ids:
                     # 未公布成绩
-                    ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(f"{course['title'].replace('（', '(').replace('）', ')')} - {course['teacher']}")
+                    ungraded_courses_by_semester.setdefault(yearsemester_name, []).append(
+                        f"{course.get('title', '').replace('（', '(').replace('）', ')')} - {course.get('teacher')}"
+                    )
 
             # 构建输出内容
             if ungraded_courses_by_semester:
