@@ -34,10 +34,27 @@ def get_grade(student_client, output_type="none"):
 
         # 成绩不为空时
         if grade:
-            # 过滤出成绩大于等于60分的课程
-            filtered_grade = list(
-                filter(lambda x: safe_float(x.get("percentage_grades")) >= 60, grade)
-            )
+            # 过滤出百分制成绩大于等于60分的课程
+            # 只纳入百分制成绩（grade字段为数字），自动排除优良制成绩、PNP课程和免修课程
+            def is_percentage_grade(course):
+                grade_value = course.get("grade", "")
+                percentage_value = course.get("percentage_grades", "")
+                
+                # 检查grade字段是否为数字（百分制成绩）
+                try:
+                    float(grade_value)
+                except (TypeError, ValueError):
+                    # grade不是数字，说明是优良制成绩、PNP课程或免修课程，排除
+                    return False
+                
+                # 检查百分制成绩是否>=60
+                try:
+                    percentage_num = float(percentage_value)
+                    return percentage_num >= 60
+                except (TypeError, ValueError):
+                    return False
+            
+            filtered_grade = list(filter(is_percentage_grade, grade))
 
             # 遍历 grade 中的每个字典，将 title 中的中文括号替换为英文括号
             for course_data_grade in grade:
