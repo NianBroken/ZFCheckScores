@@ -97,17 +97,15 @@ _若是第一次运行程序，上述步骤会执行两遍_
 
 [openschoolcn/zfn_api](https://github.com/openschoolcn/zfn_api "openschoolcn/zfn_api")
 
-## 最便宜的 VPN
+## 恰饭
 
-[https://nianbroken.github.io/Great-Firewall/](https://nianbroken.github.io/Great-Firewall/)
+[Great-Firewall](https://nianbroken.github.io/Great-Firewall/) 好用的 VPN
 
-## Code中转
+[Cubence](https://cubence.klaio.top/) AI API Code 中转
 
-[Cubence](https://cubence.klaio.top/)
+[Aizex](https://aizex.klaio.top/) ChatGPT 镜像站
 
-## ChatGPT 镜像站
-
-[Aizex](https://aizex.klaio.top/) 性价比最高的 ChatGPT 镜像站
+以上绝对都是性价比最高的。
 
 ## 其他
 
