@@ -101,8 +101,13 @@ _若是第一次运行程序，上述步骤会执行两遍_
 
 [https://nianbroken.github.io/Great-Firewall/](https://nianbroken.github.io/Great-Firewall/)
 
-## 性价比最高的 ChatGPT 镜像站
-[Aizex 合租面板](https://aizex.klaio.top/)
+## Code中转
+
+[Cubence](https://cubence.klaio.top/)
+
+## ChatGPT 镜像站
+
+[Aizex](https://aizex.klaio.top/) 性价比最高的 ChatGPT 镜像站
 
 ## 其他
 
